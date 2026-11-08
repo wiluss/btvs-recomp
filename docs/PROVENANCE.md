@@ -33,3 +33,5 @@ Local Qwen was used for bounded proposals, translation and review, with human/ho
 Detailed private development histories, captures, generated snippets and long traces remain local. This public summary records the provenance of included source and adaptations; it does not distribute those inputs or assert full campaign validation.
 
 The user subsequently requested the original game's violet moon behind the selected wordmark. The built-in image editor isolated the moon and reconstructed its obscured portions. The approved moon layer is included under docs/branding, while the wordmark PNG remains unchanged. SVG and SwiftUI compose the two without redrawing the lettering.
+
+The silver-grey raised-letter treatment is an original SVG/SwiftUI presentation effect applied to the existing lettering mask. It does not regenerate either approved PNG or alter the game renderer.

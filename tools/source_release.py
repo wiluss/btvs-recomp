@@ -56,7 +56,7 @@ def check_text(data,name):
     if name in BRANDING_SVGS:
         try:root=ET.fromstring(text)
         except ET.ParseError as exc:raise ValueError('Invalid branding SVG') from exc
-        allowed={'svg','defs','linearGradient','stop','rect','path','circle','text','g','title','filter','feColorMatrix','feDropShadow'}
+        allowed={'svg','defs','linearGradient','stop','rect','path','circle','text','g','title','filter','feColorMatrix','feDropShadow','mask','feGaussianBlur'}
         for node in root.iter():
             tag=node.tag.rsplit('}',1)[-1]
             if tag not in allowed and not (name==BRANDING_DISPLAY and tag=='image'):
