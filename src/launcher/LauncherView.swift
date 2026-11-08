@@ -76,7 +76,7 @@ struct LauncherView: View {
         VStack(spacing: 0) {
             Spacer(minLength: 0)
             if let logo = model.logo {
-                Image(nsImage: logo).resizable().interpolation(.high).scaledToFit().colorInvert()
+                LogoArtwork(logo: logo, moon: model.logoMoon)
                     .frame(maxWidth: 560).frame(height: 310)
                     .shadow(color: Theme.violet.opacity(0.2), radius: 25)
                     .accessibilityLabel("btvs-recomp")

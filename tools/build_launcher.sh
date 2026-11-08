@@ -10,6 +10,7 @@ xcrun swift -module-cache-path "$PWD/build/launcher-module-cache" tools/launcher
 iconutil -c icns build/Launcher.iconset -o "$app/Contents/Resources/Launcher.icns"
 cp src/launcher/Localizations.json "$app/Contents/Resources/Localizations.json"
 cp docs/branding/logo.png "$app/Contents/Resources/Logo.png"
+cp docs/branding/moon.png "$app/Contents/Resources/LogoMoon.png"
 cat > "$app/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

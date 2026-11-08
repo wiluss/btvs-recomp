@@ -17,9 +17,10 @@ ROOT=Path(__file__).resolve().parents[1]
 CONFIG='release/files.json'
 MANIFEST='RELEASE_MANIFEST.json'
 BRANDING_LOGO='docs/branding/logo.png'
+BRANDING_PNGS={BRANDING_LOGO,'docs/branding/moon.png'}
 BRANDING_DISPLAY='docs/branding/logo-display.svg'
 BRANDING_SVGS={f'docs/branding/{name}.svg' for name in ('download','setup','hd','issues','status')}|{BRANDING_DISPLAY}
-BRANDING_FILES=BRANDING_SVGS|{BRANDING_LOGO}
+BRANDING_FILES=BRANDING_SVGS|BRANDING_PNGS
 BLOCKED_DIRS={'.git','.venv','private','generated','build','artifacts','logs','__pycache__','vendor'}
 BLOCKED_SUFFIXES={'.iso','.xiso','.xbe','.map','.ses','.img','.xrtp','.png','.jpg','.jpeg','.bmp',
                   '.ttf','.otf','.icns','.gguf','.safetensors','.mlmodel','.log','.dylib','.a','.o','.pyc','.zip'}
@@ -29,8 +30,8 @@ SECRET=re.compile(r'(?:gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{32,})')
 
 
 def check_text(data,name):
-    if name == BRANDING_LOGO:
-        # Explicit user-approved project logo only. Game PNGs remain forbidden.
+    if name in BRANDING_PNGS:
+        # Approved wordmark/moon only. Other game PNGs remain forbidden.
         if len(data)<33 or data[:8]!=b'\x89PNG\r\n\x1a\n' or data[12:16]!=b'IHDR':
             raise ValueError('Invalid branding PNG')
         w,h=struct.unpack('>II',data[16:24])
@@ -55,7 +56,7 @@ def check_text(data,name):
     if name in BRANDING_SVGS:
         try:root=ET.fromstring(text)
         except ET.ParseError as exc:raise ValueError('Invalid branding SVG') from exc
-        allowed={'svg','defs','linearGradient','stop','rect','path','circle','text','g','title','filter','feColorMatrix'}
+        allowed={'svg','defs','linearGradient','stop','rect','path','circle','text','g','title','filter','feColorMatrix','feDropShadow'}
         for node in root.iter():
             tag=node.tag.rsplit('}',1)[-1]
             if tag not in allowed and not (name==BRANDING_DISPLAY and tag=='image'):
@@ -87,7 +88,8 @@ def source_bytes(root,name):
     for part in relative.parts:
         path=path/part
         if path.is_symlink():raise ValueError('Symbolic release source refused: '+name)
-    if not stat.S_ISREG(path.stat().st_mode) or path.stat().st_size>2*1024**2:
+    limit=6*1024**2 if name==BRANDING_DISPLAY else 2*1024**2
+    if not stat.S_ISREG(path.stat().st_mode) or path.stat().st_size>limit:
         raise ValueError('Unexpected release source: '+name)
     data=path.read_bytes()
     check_text(data,name)
@@ -156,7 +158,8 @@ def audit(archive):
         for info in z.infolist():
             if info.filename==MANIFEST:continue
             checked_path(info.filename)
-            if info.file_size>2*1024**2 or not stat.S_ISREG(info.external_attr>>16):raise ValueError('Unexpected ZIP entry')
+            limit=6*1024**2 if info.filename==BRANDING_DISPLAY else 2*1024**2
+            if info.file_size>limit or not stat.S_ISREG(info.external_attr>>16):raise ValueError('Unexpected ZIP entry')
             data=z.read(info)
             if len(data)!=files[info.filename]['bytes'] or hashlib.sha256(data).hexdigest()!=files[info.filename]['sha256']:
                 raise ValueError('ZIP content differs from its manifest')

@@ -16,7 +16,7 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 <a href="https://github.com/wiluss/btvs-recomp/issues/new/choose"><img src="docs/branding/issues.svg" alt="Report a bug" width="190"></a>
 </p>
 
-**Source alpha `0.1.0-alpha.3`** · Unofficial fan project · No game download
+**Source alpha `0.1.0-alpha.4`** · Unofficial fan project · No game download
 
 </div>
 
@@ -30,7 +30,7 @@ A five-language launcher follows a supported system language until you choose on
 
 ## Start playing
 
-**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.3-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
+**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.4-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
 
 **2. Build the launcher.** You need an Apple Silicon Mac, Apple's Command Line Tools and the listed Homebrew packages. Follow the [installation guide](docs/SETUP.md), or expand the commands below.
 

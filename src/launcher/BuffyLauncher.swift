@@ -61,6 +61,7 @@ struct LaunchSettings {
 final class LauncherModel: ObservableObject {
     let root: URL
     @Published private(set) var logo: NSImage?
+    @Published private(set) var logoMoon: NSImage?
     @Published private(set) var mist: NSImage?
     @Published private(set) var veil: NSImage?
     @Published private(set) var decorativeFontAvailable = false
@@ -155,6 +156,7 @@ final class LauncherModel: ObservableObject {
     }
 
     private func reloadArtwork() {
+        logoMoon = Bundle.main.url(forResource: "LogoMoon", withExtension: "png").flatMap(NSImage.init(contentsOf:))
         logo = Bundle.main.url(forResource: "Logo", withExtension: "png").flatMap(NSImage.init(contentsOf:))
             ?? NSImage(contentsOf: assetURL("launcher/logo.png"))
         mist = NSImage(contentsOf: assetURL("launcher/mist-1.png"))

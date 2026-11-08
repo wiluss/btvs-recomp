@@ -37,3 +37,7 @@ For `0.1.0-alpha.2`, 150 asset-free tests passed, including five synthetic HD-in
 ## btvs-recomp identity candidate
 
 For `0.1.0-alpha.3`, 151 asset-free tests and the Apple Silicon host probe passed. The renamed launcher compiled and its name/logo were inspected natively. The game rebuilt incrementally in the isolated supported ISO installation with the new generated host title; no new gameplay, audio or performance validation is claimed. GitHub-rendered README markup was inspected in a local browser. A dedicated regression checks the narrowly allowed branding PNG/SVG assets while keeping other game data excluded. The HD v1 bytes are unchanged after renaming the attachment.
+
+## Moon branding layer
+
+For `0.1.0-alpha.4`, 151 tests, the ARM64 host probe and launcher build passed. The moon composition was inspected in a local browser and the native launcher. The wordmark PNG is byte-identical to alpha.3; the original game-logo moon was isolated with its obscured portions reconstructed, then layered separately. No new game launch, gameplay, audio or runtime validation is claimed for this visual change.

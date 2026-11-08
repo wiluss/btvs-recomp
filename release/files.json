@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "files": [
     {
       "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -156,6 +156,10 @@
     {
       "source": "docs/branding/logo.png",
       "path": "docs/branding/logo.png"
+    },
+    {
+      "source": "docs/branding/moon.png",
+      "path": "docs/branding/moon.png"
     },
     {
       "source": "docs/branding/setup.svg",
@@ -316,6 +320,10 @@
     {
       "source": "src/launcher/Localizations.json",
       "path": "src/launcher/Localizations.json"
+    },
+    {
+      "source": "src/launcher/LogoArtwork.swift",
+      "path": "src/launcher/LogoArtwork.swift"
     },
     {
       "source": "src/launcher/SetupView.swift",

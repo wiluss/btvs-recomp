@@ -28,3 +28,5 @@ The separate `docs/branding/logo.png` wordmark is a user-requested lettering ada
 - [LGPL 2.1, Free Software Foundation](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
 
 The bundled notice and license copies are preserved from the pinned toolkit. Future releases that change dependencies or distribute binaries need their own distribution review.
+
+The selected `docs/branding/moon.png` branding layer was prepared from the original game logo's violet moon with lettering removed and occluded areas reconstructed by the built-in image editor. Its use behind the unchanged wordmark was explicitly requested by the user. This layer belongs to the same narrow branding exception; it does not extend MIT to the underlying game artwork.

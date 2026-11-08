@@ -13,3 +13,5 @@
 - Optional local-AI developer proposals need review. An AI model is not required for setup, tests or gameplay. Do not execute a model's suggested commands automatically.
 - Use the explicit release file list and audit the resulting archive. Preserve third-party headers, notices and license scopes.
 - The user explicitly requested the title-inspired btvs-recomp wordmark and visual README. Only the selected logo and passive SVG buttons/status strip under docs/branding are allowed in Git and the source kit. This does not authorize other game images or HD data in source.
+
+- The user also explicitly requested the original-style moon behind that wordmark. docs/branding/moon.png is the only additional approved bitmap; keep the wordmark unchanged and compose the layers in the presentation/launcher.

@@ -16,3 +16,5 @@
 14. Describe the actual validation stage. One Mac, real menu/save/load evidence and existing user gameplay are not proof of full campaign, audio stability or cross-machine support.
 
 13. Name the project and repository btvs-recomp. Keep save identifiers, the source-folder location and internal runtime filenames compatible. Include only the explicitly requested title-inspired wordmark and original README navigation graphics in source; their narrow allowlist does not admit gameplay assets. The HD v1 bytes are unchanged, with a renamed attachment and updated checksum filename entry.
+
+14. Include the explicitly requested original-style moon as a separate branding layer behind the unchanged wordmark. Permit only docs/branding/moon.png in addition to the existing graphics allowlist. The self-contained presentation SVG has a 6 MiB limit to accommodate its two embedded PNGs; other source/member limits remain unchanged.

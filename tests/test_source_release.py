@@ -56,11 +56,12 @@ class SourceReleaseTests(unittest.TestCase):
     def test_only_approved_branding_images_are_allowed_and_passive(self):
         for name in ['docs/branding/other.png','docs/branding/other.svg','private/logo.png']:
             with self.subTest(name=name),self.assertRaises(ValueError):release.checked_path(name)
-        png=(ROOT/release.BRANDING_LOGO).read_bytes()
-        release.check_text(png,release.BRANDING_LOGO)
-        damaged=bytearray(png);damaged[20]^=1
-        with self.assertRaises(ValueError):release.check_text(bytes(damaged),release.BRANDING_LOGO)
-        with self.assertRaises(ValueError):release.check_text(png+b'XBEH',release.BRANDING_LOGO)
+        for name in release.BRANDING_PNGS:
+            png=(ROOT/name).read_bytes()
+            release.check_text(png,name)
+            damaged=bytearray(png);damaged[20]^=1
+            with self.assertRaises(ValueError):release.check_text(bytes(damaged),name)
+            with self.assertRaises(ValueError):release.check_text(png+b'XBEH',name)
         for name in release.BRANDING_SVGS:release.check_text((ROOT/name).read_bytes(),name)
         for svg in ['<svg><script/></svg>','<svg><image href="https://example.com"/></svg>',
                     '<svg onload="alert(1)"/>']:

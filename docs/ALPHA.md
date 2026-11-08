@@ -1,6 +1,6 @@
 # Alpha release status
 
-Version: `0.1.0-alpha.3`, source-build prerelease candidate with an optional HD add-on.
+Version: `0.1.0-alpha.4`, source-build prerelease candidate with an optional HD add-on.
 
 Players build locally from their own supported ISO. The source kit contains original project source, public build recipes, metadata, English documentation, runtime patches, license notices and the selected project-branding graphics. A separate optional HD ZIP contains prepared game-derived textures, HUD, text and launcher artwork; see [HD-PACK.md](HD-PACK.md). No ISO, XBE, MAP, save, editable HD master, model, generated game source or recompiled game executable is included in either attachment.
 
