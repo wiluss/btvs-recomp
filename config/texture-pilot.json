@@ -1,0 +1,266 @@
+{
+  "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f",
+  "scope": "First mission spawn, 22 AI surfaces/clothes + 4 conservative font/HUD textures; not the full game",
+  "entries": [
+    {
+      "hash": "AEDC9CF9BB32CE6A",
+      "width": 128,
+      "height": 128,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "stone-trim"
+    },
+    {
+      "hash": "1C4C8AED90A42543",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "stone-lattice"
+    },
+    {
+      "hash": "88F1602A12573BE2",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "ground-stone"
+    },
+    {
+      "hash": "E8C5146F7F578F89",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "ground-moss"
+    },
+    {
+      "hash": "C53464E79A7F7603",
+      "width": 128,
+      "height": 128,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "tree-bark"
+    },
+    {
+      "hash": "67E94EFB809438F9",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "stone-debris"
+    },
+    {
+      "hash": "99131556427D6665",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "stone-ornament"
+    },
+    {
+      "hash": "DB2C928E5E07648D",
+      "width": 128,
+      "height": 32,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "wood-bark"
+    },
+    {
+      "hash": "B9B33E913879321A",
+      "width": 128,
+      "height": 128,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "wood-purple"
+    },
+    {
+      "hash": "F9A8C60904FF5D5F",
+      "width": 128,
+      "height": 128,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "wood-grey"
+    },
+    {
+      "hash": "CB53B8AC241FDABF",
+      "width": 128,
+      "height": 128,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "wood-orange"
+    },
+    {
+      "hash": "19D80287E95A5988",
+      "width": 64,
+      "height": 64,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "window-dark"
+    },
+    {
+      "hash": "403BB2E221E18081",
+      "width": 64,
+      "height": 64,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "window-frame"
+    },
+    {
+      "hash": "A9CA85FEAE67573B",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "rock-moss"
+    },
+    {
+      "hash": "395F760F329A0396",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "rock-wall"
+    },
+    {
+      "hash": "9229844732AF92E4",
+      "width": 128,
+      "height": 128,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "ground-gravel"
+    },
+    {
+      "hash": "CF027161B08AA53C",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "ground-leaves"
+    },
+    {
+      "hash": "A943B76B3AE7663A",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "wall-plaster"
+    },
+    {
+      "hash": "2FD93D19ED2188A0",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "wall-stone"
+    },
+    {
+      "hash": "1A78484226195932",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "wrap",
+      "mipmaps": true,
+      "label": "ground-dirt"
+    },
+    {
+      "hash": "DFA8ECFAFC325AAE",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "buffy-trousers"
+    },
+    {
+      "hash": "934983B40ED101CA",
+      "width": 256,
+      "height": 256,
+      "kind": "art",
+      "method": "ai",
+      "border": "clamp",
+      "mipmaps": true,
+      "label": "buffy-shirt"
+    },
+    {
+      "hash": "C25CE3B89C4374EE",
+      "width": 128,
+      "height": 256,
+      "kind": "font",
+      "method": "lanczos",
+      "border": "clamp",
+      "mipmaps": false,
+      "label": "font-atlas"
+    },
+    {
+      "hash": "2D68EC4C7053FC43",
+      "width": 128,
+      "height": 256,
+      "kind": "art",
+      "method": "lanczos",
+      "border": "clamp",
+      "mipmaps": false,
+      "label": "controller-icons"
+    },
+    {
+      "hash": "DC095DC8CAAA131D",
+      "width": 32,
+      "height": 32,
+      "kind": "art",
+      "method": "lanczos",
+      "border": "clamp",
+      "mipmaps": false,
+      "label": "hud-heart"
+    },
+    {
+      "hash": "A42E5E8EBEDB38C7",
+      "width": 64,
+      "height": 64,
+      "kind": "art",
+      "method": "lanczos",
+      "border": "clamp",
+      "mipmaps": false,
+      "label": "hud-flame"
+    }
+  ]
+}

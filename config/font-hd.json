@@ -1,0 +1,42 @@
+{
+  "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f",
+  "texture_hash": "C25CE3B89C4374EE",
+  "atlas_rgba_sha256": "30a0dd9b50064db25d927327d479e962d256d17baabf680c4c3652069b0581cf",
+  "layout_sha256": "97431737b9fcddac2a9238701b19c9aef86ee2a8990d163fcfb98037d68107b7",
+  "scale": 8,
+  "schema": "GUI FontData: float4 UV, signed16 bearing/width/advance, padding16; UV denominators width-1,height-1",
+  "capture_proof": "own MAP, XBE constructor 0x001EB7B0 vtable 0x006634D8, stopped heap snapshot; no guest writes",
+  "font_family": "Buffy Reconstructed",
+  "font_version": "1",
+  "method": "original-guided-outlines-v1",
+  "master_sha256": "06b8ea0cbd4016536fff8843d4c1679764faaf6e2f7d15bd751e72c248622694",
+  "font_sha256": "dfeb2404834e426651242b85aa0f13c9262bd3bf01a80b3d03e1473e0cc1ff4c",
+  "asset_scope": "Local game-derived glyph assets, not distributed",
+  "font_source": {
+    "kind": "manual original-guided reconstruction, not identified original outlines",
+    "master_path": "private/fonts/buffy-reconstructed/master.json",
+    "builder": "tools/font_outline.py",
+    "fonttools_version": "4.60.2",
+    "approved_prototype_codes": [
+      77,
+      101,
+      111,
+      118
+    ]
+  },
+  "render": {
+    "font_size": 20,
+    "baseline": 15,
+    "width_scale": 1.0
+  },
+  "additional_fonts": [
+    {
+      "recipe": "config/font-decorative-hd.json",
+      "recipe_sha256": "d7fdd372dd3c1217aea7fbedf07a63a1fb5e30ac145bf0aba540e46d53071383",
+      "font": "private/fonts/buffy-decorative/BuffyDecorative.ttf",
+      "atlas": "private/textures/font-decorative-source.png",
+      "objects": "private/textures/font-objects.json"
+    }
+  ],
+  "word_recipe_sha256": "bdc0bddb65b934ff7275534639a59590e9c3a7d5d2f05b91679c3a5fbf6c26b5"
+}

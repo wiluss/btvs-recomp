@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "xboxrecomp": {
+    "repository": "https://github.com/apexJCL/xboxrecomp.git",
+    "branch_reference": "blinx2/portability",
+    "revision": "5d2e6fedfe12e950e2a9285c34257c01647c5bb2",
+    "path": "vendor/xboxrecomp",
+    "purpose": "Generic Xbox recompilation and macOS/Metal runtime",
+    "buffy_integration_validated": false,
+    "runtime_patches": [
+      "patches/xboxrecomp/0001-screen-w-infinity.patch",
+      "patches/xboxrecomp/0002-apu-image-sample-dma.patch",
+      "patches/xboxrecomp/0003-metal-compact-vertices.patch",
+      "patches/xboxrecomp/0004-metal-hud-anchor.patch",
+      "patches/xboxrecomp/0005-metal-uhd.patch",
+      "patches/xboxrecomp/0006-launch-page-handoff.patch"
+    ]
+  },
+  "local_model_candidate": {
+    "id": "mlx-community/Qwen3.6-35B-A3B-4bit",
+    "revision_researched": "38740b847e4cb78f352aba30aa41c76e08e6eb46",
+    "safetensors_bytes": 20402204271,
+    "runtime": "LM Studio MLX",
+    "context_tokens_initial": 32768,
+    "downloaded_or_benchmarked": true,
+    "weight_revision_verified": false,
+    "verification_scope": "User-downloaded local MLX artifact loaded and probed; no general quality or game-performance benchmark"
+  }
+}

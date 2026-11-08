@@ -1,0 +1,27 @@
+# Buffy macOS 0.1.0-alpha.1
+
+First source alpha for **Buffy the Vampire Slayer (2002, original Xbox)** on Apple Silicon.
+
+## Installation
+
+Download the attached `Buffy-macOS-v0.1.0-alpha.1-source.zip` and `SHA256SUMS`. Verify the checksum, extract the source folder and follow `README.md` or `docs/SETUP.md`.
+
+You need your own supported USA ISO, Apple build tools and the listed Homebrew packages. Run `python3 tools/bootstrap_runtime.py`, build the launcher with `make launcher`, then choose **Set up from an ISO…**. The game is generated and compiled locally. No game download is provided.
+
+## Included
+
+- ARM64/Metal runtime integration and a local ISO setup flow.
+- Persistent saves with first-time blank profiles and lossless idle disk compression.
+- Resolution scaling, optional 4K/16:9, fullscreen, VSync and FPS overlay.
+- Keyboard/controller remapping and a five-language launcher.
+- Original project source under MIT, separate runtime patches and third-party notices.
+
+No ISO, game executable, MAP, generated game source, game-derived asset, save, model weight or private HD pack is attached. Clean installs use original game graphics; the development HD masters are not part of this alpha.
+
+## Known limitations
+
+Audio can stutter and an intermittent audio crash remains open. Performance varies with effects and resolution. The complete campaign, long-session stability, custom physical controller mappings, older macOS versions and other Mac models still need validation. The setup path has been tested on one Mac; scripted setup checks used dummy audio and confirmed menu, first-save creation and loading into the first level's cutscene.
+
+Please read `docs/TROUBLESHOOTING.md` before reporting a problem. Do not upload game files, saves, disk images, full memory-bearing logs or complete project folders.
+
+This is an unofficial project, not affiliated with the original rights holders.

@@ -1,0 +1,218 @@
+{
+  "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f",
+  "scale": 8,
+  "method": "original-guided-word-outlines-v1",
+  "master_sha256": "dc7e9c527d60ecbf9c92b3d0607b28ce3e34e583912064b8bacfeeff817375a8",
+  "entries": [
+    {
+      "label": "Difficulty heading",
+      "texture_hash": "16E58C257E72AFDA",
+      "dimensions": [
+        128,
+        32
+      ],
+      "compressed_sha256": "c13ee09a601f2ec4c0296c022d665bddfd8a4410a9a8892d6b50b19bb86cb219",
+      "rgba_sha256": "4189360478a1be5cb0f5fb237525ad26ed32b04d6a1a737d28a3dcf1610deaea",
+      "mode": "gradient"
+    },
+    {
+      "label": "BACK",
+      "texture_hash": "90798F623E21F4DE",
+      "dimensions": [
+        64,
+        16
+      ],
+      "compressed_sha256": "74a899c47586e5515ebdb8c6acf98e7f1fe54c76dd4118b0ad39c2bef3fa3351",
+      "rgba_sha256": "9f872ff14b47097fdf313943444b9de3e98168a172d52435feff4e426131124c",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        156,
+        115,
+        194
+      ],
+      "shadow_rgb": [
+        8,
+        0,
+        41
+      ]
+    },
+    {
+      "label": "SELECT",
+      "texture_hash": "DA4728CC569A8774",
+      "dimensions": [
+        64,
+        16
+      ],
+      "compressed_sha256": "8072176bdfbe78040a9b36262829abd5e1475cc4fd653e58e62f975852a4c105",
+      "rgba_sha256": "334183ff0abb291cda3edc6721387d493929ba4bf525c13d5eb8333a16db7653",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        155,
+        115,
+        194
+      ],
+      "shadow_rgb": [
+        8,
+        0,
+        41
+      ]
+    },
+    {
+      "label": "Start Game heading",
+      "texture_hash": "443A6835DB8F9352",
+      "dimensions": [
+        128,
+        32
+      ],
+      "compressed_sha256": "dafbeba7af6bcb2cb265b3f119bf59c91ef5bf525e61d44315de2e2b0a28111a",
+      "rgba_sha256": "174fc4edcad87bd6a95191a6e8c84156a89f34760f16d066691884077df3991a",
+      "mode": "gradient"
+    },
+    {
+      "label": "CANCEL",
+      "texture_hash": "F8EFD21F2BA31B6D",
+      "dimensions": [
+        64,
+        16
+      ],
+      "compressed_sha256": "a042d72c8aeeed86f248f309fbfe0163b4c489028168a6baca3afb7b648ca19e",
+      "rgba_sha256": "fe0f070401be5478e41a328247ee894666a36afa9ffada05fb7441965180974e",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        154,
+        114,
+        192
+      ],
+      "shadow_rgb": [
+        8,
+        0,
+        41
+      ]
+    },
+    {
+      "label": "CONFIRM",
+      "texture_hash": "BF08742DD488B655",
+      "dimensions": [
+        128,
+        16
+      ],
+      "compressed_sha256": "fc42f8b4e169b0ea8013f1e24c0ab3945ad4cc6c0f32001e043c6e7cd929f214",
+      "rgba_sha256": "e18ff0adbcea8a9602c43277bb70e780c3527f92466441209ebfdd0e7445fd3d",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        154,
+        114,
+        193
+      ],
+      "shadow_rgb": [
+        8,
+        0,
+        41
+      ]
+    },
+    {
+      "label": "Extras heading",
+      "texture_hash": "94506094FC059250",
+      "dimensions": [
+        128,
+        32
+      ],
+      "rgba_sha256": "a3f89bd0dba86fd0f57ce114c57b7f0c94fba92022b3fbb38892635a98a6989a",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        212,
+        174,
+        245
+      ],
+      "shadow_rgb": [
+        50,
+        26,
+        97
+      ]
+    },
+    {
+      "label": "Pause heading",
+      "texture_hash": "1654C3A5ACD14D1D",
+      "dimensions": [
+        64,
+        32
+      ],
+      "compressed_sha256": "3961320eaa8156f3af23ac3e3408ea1163427fb75f8251db5e60b6e304604f4d",
+      "rgba_sha256": "776e12d44ba529ed83bfd3ea3e411f0937568617d5a235e575007f3a3ceb7fc8",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        212,
+        174,
+        245
+      ],
+      "shadow_rgb": [
+        50,
+        26,
+        97
+      ]
+    },
+    {
+      "label": "EXIT",
+      "texture_hash": "F0F722A1E935BEF3",
+      "dimensions": [
+        64,
+        16
+      ],
+      "compressed_sha256": "1da240af7d8048ffe9a2221452ff9a4f64fb64d7f5a13ad39cd6d8b69fe7d734",
+      "rgba_sha256": "8a9268b6ad0c9ec4bfb52527cd97e68c09e667a423786ca63310a1fbeada2dab",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        155,
+        115,
+        194
+      ],
+      "shadow_rgb": [
+        8,
+        0,
+        41
+      ]
+    },
+    {
+      "label": "DELETE",
+      "texture_hash": "A1216A9AC69EFC86",
+      "dimensions": [
+        64,
+        16
+      ],
+      "compressed_sha256": "b0fc41bf21fc605f9e894a372b0b1d75b070bb467e1862aa6990df2563e18bfd",
+      "rgba_sha256": "289f6dfdd4095678c941533e4c966727481e7f2cf7f80da32232038f225c856c",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        155,
+        115,
+        194
+      ],
+      "shadow_rgb": [
+        8,
+        0,
+        41
+      ]
+    },
+    {
+      "label": "Load Game heading",
+      "texture_hash": "7E44533D74E0D780",
+      "dimensions": [
+        128,
+        32
+      ],
+      "compressed_sha256": "5ba174485ca45453f6e45b11d79039ab293ffa120001db2b695ff830fb80f917",
+      "rgba_sha256": "6afbcf2355daad260ee7aade4bf4b0953bf2d5f9722570d5f58be43d0d8a3bc8",
+      "mode": "ink-and-shadow",
+      "ink_rgb": [
+        212,
+        174,
+        245
+      ],
+      "shadow_rgb": [
+        50,
+        26,
+        97
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Current engineering decisions
+
+1. Port the original 2002 Xbox game independently, using generic tools; no BuffyNX-specific code, symbols, seeds or overrides.
+2. Pin the generic XboxRecomp fork and keep runtime changes in six separate source patches. Preserve component licenses and notices.
+3. Accept only the identified XBE/MAP hashes. Derive game addresses from the supplied inputs; refuse other editions before adaptation.
+4. Fix generated behavior through the generator adapter, with calling-convention evidence and tests. Preserve guest state and relevant floating-point semantics.
+5. Start the player launcher at the menu, indefinitely, with a title-bound persistent profile. Direct mission boot remains a private-state diagnostic outside the release setup.
+6. Generate a blank disk from generic retail geometry for first-time players. Never use the developer save as the installation seed.
+7. Compress dormant partitions losslessly, restore them before execution, and retain raw data on failure. Do not shrink the geometry seen by the guest.
+8. Keep original assets as the clean-install default. Private HD masters, game-derived launcher art and model weights are not included.
+9. Use a five-language launcher with persistent keyboard/controller remapping loaded before input threads; no live remapping in a game session.
+10. Validate all ISO paths/extents and resources before extraction. Use staging and macOS exclusive rename; never overwrite an existing installation.
+11. Install Python packages only in the local venv. Native build prerequisites remain explicit. No game download or development AI requirement.
+12. Export a reviewed source-only file list. Keep private development history, generated game data, logs and binaries out of the public package.
+13. Use MIT for original project code, as chosen by the owner on 8 November 2026. Third-party file licenses retain precedence.
+14. Describe the actual validation stage. One Mac, real menu/save/load evidence and existing user gameplay are not proof of full campaign, audio stability or cross-machine support.

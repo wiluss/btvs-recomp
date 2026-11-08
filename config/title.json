@@ -1,0 +1,29 @@
+{
+  "project": "Buffy macOS",
+  "expected_game": "Buffy the Vampire Slayer (2002, original Xbox)",
+  "identification_status": "identified_from_user_xbe",
+  "title_id": "45410012",
+  "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f",
+  "edition": {
+    "type": "retail",
+    "certificate_region_mask": "0x00000001",
+    "certificate_region": "North America",
+    "certificate_version": 1,
+    "disc_number": 0,
+    "build_utc": "2002-07-17T19:44:56+00:00",
+    "commercial_revision": "not established beyond certificate and hash"
+  },
+  "function_seeds": [
+    "generated/symbols/seeds.json"
+  ],
+  "overrides": [],
+  "note": "Metadata and MAP concordance measured from user files; no BuffyNX offsets or symbols imported. Signature not verified; no game execution implied.",
+  "entry_point": "0x00579EA2",
+  "symbols": {
+    "source": "user-supplied private/game/final.map",
+    "map_sha256": "ce6e0d00dd2cff78b9de68c54bd208815a0b0883b9aff73e6c56e1663b80ba5b",
+    "status": "structurally_concordant",
+    "report": "generated/symbols/report.json",
+    "index": "generated/symbols/index.json"
+  }
+}

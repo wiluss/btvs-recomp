@@ -1,0 +1,39 @@
+name: Bug report
+description: Report a reproducible alpha problem.
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not attach ISOs, XBEs, MAPs, saves, disk images, generated game code, game binaries, packs or full project folders. Review any log excerpt for private paths and guest memory before sharing it.
+  - type: input
+    id: version
+    attributes:
+      label: Alpha version
+      description: Include the source kit version or commit.
+    validations:
+      required: true
+  - type: input
+    id: mac
+    attributes:
+      label: Mac and macOS
+      description: Chip, RAM, macOS version and available disk space.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Include the checkpoint, actions, expected result and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Settings and frequency
+      description: Resolution/scale, aspect ratio, packs, input device, and whether the problem repeats.
+  - type: textarea
+    id: excerpt
+    attributes:
+      label: Short reviewed error excerpt
+      description: Optional. No game files, saves, complete logs or personal paths.

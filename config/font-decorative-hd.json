@@ -1,0 +1,45 @@
+{
+  "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f",
+  "texture_hash": "1C30A389985BA357",
+  "atlas_rgba_sha256": "c21b7c931ae9189a4c8f2fb7235008e0659894b689ebc0d3bc7d733a60ee449e",
+  "layout_sha256": "28e3cbd0c50a3421f7f9220f3b948b3be202ea0f998c60451a2a383e5833e232",
+  "scale": 8,
+  "schema": "GUI FontData float4 UV + signed16 bearing/width/advance; width-1,height-1 UV",
+  "font_family": "Buffy Decorative",
+  "font_version": "1",
+  "method": "original-guided-outlines-v1",
+  "master_sha256": "7343f7ae472aa60313ea925e5400ce48631093efacd388aff425aebd8870e52c",
+  "font_sha256": "dbd1036af69a664bfe48e663ceeaf97c02470942b7eae39e35f3d6e1d864910b",
+  "asset_scope": "Local game-derived glyph assets, not distributed",
+  "font_source": {
+    "kind": "manual original-guided reconstruction, not identified original outlines",
+    "master_path": "private/fonts/buffy-decorative/master.json",
+    "builder": "tools/font_outline.py",
+    "fonttools_version": "4.60.2",
+    "approved_prototype_codes": [
+      68,
+      71,
+      78,
+      83,
+      97,
+      99,
+      101,
+      102,
+      105,
+      108,
+      109,
+      111,
+      114,
+      116,
+      121
+    ]
+  },
+  "render": {
+    "font_size": 32,
+    "baseline": 21,
+    "width_scale": 1.0
+  },
+  "revised_codes": [
+    117
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "about": {
+    "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f",
+    "evidence": "Measured hot PC in D3D KickOff; original TEST/JNE preserved. See docs/BRINGUP.md."
+  },
+  "auto": false,
+  "sites": [
+    {
+      "va": "0x00596D00",
+      "sleep": "kick_event",
+      "note": "PFB kick-bit read-only wait; requires the pinned runtime kick event mode for sleeping."
+    }
+  ],
+  "exclude": []
+}

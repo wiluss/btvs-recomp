@@ -1,0 +1,23 @@
+name: Source release checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-kit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Test source packaging and synthetic bootstrap
+        run: |
+          python3 -m unittest discover -s tests -p test_source_release.py -v
+          python3 -m unittest discover -s tests -p test_bootstrap_runtime.py -v
+      - name: Build and audit the source kit
+        run: |
+          python3 tools/source_release.py
+          python3 tools/source_release.py --audit artifacts/release-alpha/dist/Buffy-macOS-v0.1.0-alpha.1-source.zip

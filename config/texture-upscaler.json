@@ -1,0 +1,30 @@
+{
+  "implementation": "xinntao/Real-ESRGAN-ncnn-vulkan",
+  "binary_release": "v0.2.0",
+  "model": "realesrgan-x4plus",
+  "model_release": "xinntao/Real-ESRGAN v0.2.5.0 (20220424 macOS package)",
+  "binary_archive_url": "https://github.com/xinntao/Real-ESRGAN-ncnn-vulkan/releases/download/v0.2.0/realesrgan-ncnn-vulkan-v0.2.0-macos.zip",
+  "model_archive_url": "https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesrgan-ncnn-vulkan-20220424-macos.zip",
+  "licenses": "NCNN wrapper MIT; Real-ESRGAN BSD-3-Clause; notices retained locally, no weights committed",
+  "executable": {
+    "sha256": "c1c35d92079085de96b9d547fd7e4464bc8a2e9ccf28d7b8c712d72ade91b7cc",
+    "bytes": 26787080
+  },
+  "weights": {
+    "sha256": "713ee713b0353afaa27976f0563a64a5043bd70b9bd8936c2e26e25ebcdbcddf",
+    "bytes": 33424520
+  },
+  "network": {
+    "sha256": "35330ececcea33b6c397a72548e788d5d53becee4734c50b7fada36e89f10a86",
+    "bytes": 116029
+  },
+  "binary_archive": {
+    "sha256": "f1cc31f13398126ddec25a186b9e50c7ab3e4f2bc011d0222331b43ce2037d3b",
+    "bytes": 8532236
+  },
+  "model_archive": {
+    "sha256": "e0ad05580abfeb25f8d8fb55aaf7bedf552c375b5b4d9bd3c8d59764d2cc333a",
+    "bytes": 51817124
+  },
+  "source_tree_inspected": "37026f49824c5cf84062e7c6a5dd71445dcf610f"
+}

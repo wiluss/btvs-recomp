@@ -1,0 +1,35 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+/private/*
+!/private/README.md
+/generated/*
+!/generated/README.md
+/build/
+/artifacts/*
+!/artifacts/README.md
+/logs/*
+!/logs/README.md
+*.xbe
+*.iso
+*.xiso
+*.safetensors
+*.gguf
+*.log
+
+# Game/runtime logs may use mixed-case extensions.
+*.[lL][oO][gG]
+*.ses
+*.img
+*.xrtp
+*.map
+
+# The public source kit fetches the generic toolkit locally.
+/vendor/
+
+# Generated inventory belongs inside the source ZIP, not in Git.
+/RELEASE_MANIFEST.json

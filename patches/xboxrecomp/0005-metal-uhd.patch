@@ -1,0 +1,96 @@
+diff --git a/src/enhance/enhance.c b/src/enhance/enhance.c
+--- a/src/enhance/enhance.c
++++ b/src/enhance/enhance.c
+@@ -18,7 +18,7 @@
+ #include "recomp_exe_dir.h"
+ 
+ #define LOGP "[ENHANCE] "
+-#define SCALE_MAX 4
++#define SCALE_MAX 5
+ /* display.overscan: 10% of a 640-wide frame a side, past any TV's overscan */
+ #define OVERSCAN_MAX 64
+ 
+@@ -67,7 +67,7 @@
+ /* Indexes match XBOX_PACING_SPIN / XBOX_PACING_SLEEP. */
+ static const char *const s_pacing[] = { "spin", "sleep", NULL };
+ /* present.surface: "auto" (index 0) is resolved here, never stored. */
+-static const char *const s_surface[] = { "auto", "window", "internal", NULL };
++static const char *const s_surface[] = { "auto", "window", "internal", "uhd", NULL };
+ /* textures.font / textures.text: words, as the menu shows them. */
+ static const char *const s_onoff[] = { "off", "on", NULL };
+ /* Indexes match enum nv2a_movie_mode. */
+@@ -124,7 +124,8 @@
+         snprintf(surface_txt, sizeof surface_txt, "%s(auto%s)",
+                  gs ? "internal" : "window", gs ? ": gamescope" : "");
+     } else {
+-        o.present_surface = surface == 2 ? NV2A_PRESENT_SURFACE_INTERNAL
++        o.present_surface = surface == 3 ? NV2A_PRESENT_SURFACE_UHD
++                          : surface == 2 ? NV2A_PRESENT_SURFACE_INTERNAL
+                                          : NV2A_PRESENT_SURFACE_WINDOW;
+         snprintf(surface_txt, sizeof surface_txt, "%s", s_surface[surface]);
+     }
+diff --git a/src/kernel/nv2a_backend_common.h b/src/kernel/nv2a_backend_common.h
+--- a/src/kernel/nv2a_backend_common.h
++++ b/src/kernel/nv2a_backend_common.h
+@@ -1363,7 +1363,8 @@
+  * so it has no NV2A_OPT_* bit: the menu cannot change it. */
+ enum nv2a_present_surface {
+     NV2A_PRESENT_SURFACE_WINDOW = 0,    /* stock: the swap chain follows the window */
+-    NV2A_PRESENT_SURFACE_INTERNAL       /* swap chain = the frame; the compositor scales */
++    NV2A_PRESENT_SURFACE_INTERNAL,      /* swap chain = the frame; the compositor scales */
++    NV2A_PRESENT_SURFACE_UHD            /* Metal drawable fixed at 3840 x 2160 */
+ };
+ 
+ struct nv2a_host_opts {
+diff --git a/src/kernel/nv2a_hud_anchor.c b/src/kernel/nv2a_hud_anchor.c
+--- a/src/kernel/nv2a_hud_anchor.c
++++ b/src/kernel/nv2a_hud_anchor.c
+@@ -22,7 +22,7 @@
+     if (!b || !b->two_d || b->place || !b->texture_hash
+         || !b->width || !b->height || !b->pad || b->pad > 16384u
+         || b->width > 16384u || b->height > 16384u
+-        || b->scale < 1 || b->scale > 4)
++        || b->scale < 1 || b->scale > 5)
+         return 0;
+     fn = atomic_load_explicit(&s_anchor, memory_order_acquire);
+     if (!fn)
+diff --git a/src/video/fb_present_metal.m b/src/video/fb_present_metal.m
+--- a/src/video/fb_present_metal.m
++++ b/src/video/fb_present_metal.m
+@@ -78,6 +78,8 @@
+ static uint32_t                   *s_conv;     /* R5G6B5 -> BGRA8 rows */
+ static size_t                      s_conv_cap;
+ static int                         s_internal;  /* present.surface=internal */
++static int                         s_uhd;       /* present.surface=uhd */
++enum { UHD_WIDTH = 3840, UHD_HEIGHT = 2160 };
+ static int                         s_layer_filter = -1;
+ #ifdef XBOXRECOMP_ENHANCE
+ static id<MTLRenderPipelineState>  s_pso_ovl;  /* the overlay, premultiplied */
+@@ -219,7 +221,12 @@
+         s_layer.maximumDrawableCount = 3;
+         s_layer.allowsNextDrawableTimeout = YES;
+         s_internal = nv2a_host_opts()->present_surface == NV2A_PRESENT_SURFACE_INTERNAL;
+-        if (s_internal) {
++        s_uhd = nv2a_host_opts()->present_surface == NV2A_PRESENT_SURFACE_UHD;
++        if (s_uhd) {
++            s_layer.contentsGravity = kCAGravityResizeAspect;
++            w = UHD_WIDTH;
++            h = UHD_HEIGHT;
++        } else if (s_internal) {
+             /* Letterboxed like nv2a_present_rect's fit; fbm_present keeps
+              * the drawable at the frame's size. */
+             s_layer.contentsGravity = kCAGravityResizeAspect;
+@@ -545,8 +552,12 @@
+          * displays of another scale need not arrive as SIZE_CHANGED. Under
+          * present.surface=internal the drawable is the frame instead (a
+          * render.scale change from the menu resizes it). */
+-        if (s_internal) {
++        if (s_uhd) {
+             layer_filter(filter);
++            dw = UHD_WIDTH;
++            dh = UHD_HEIGHT;
++        } else if (s_internal) {
++            layer_filter(filter);
+             if (fw && fh) {
+                 dw = (int)fw;
+                 dh = (int)fh;

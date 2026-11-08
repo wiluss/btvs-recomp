@@ -1,0 +1,91 @@
+diff --git a/src/platform/recomp_env.h b/src/platform/recomp_env.h
+--- a/src/platform/recomp_env.h
++++ b/src/platform/recomp_env.h
+@@ -136,6 +136,8 @@
+     X(AUDIO_BUF_COUNT,   CONFIG, "RECOMP_AUDIO_BUF_COUNT",   NULL, "audio output buffer count (default 4; XA2_NUM_BUFS_WINE under Wine)") \
+     X(AUDIO_THREAD_PRIORITY, CONFIG, "RECOMP_AUDIO_THREAD_PRIORITY", NULL, "audio: APU frame thread priority (normal, highest; Windows only)") \
+     X(APU_DSP,           CONFIG, "RECOMP_APU_DSP",           NULL, "audio: 1 runs the APU's GP and EP on the DSP56300 JIT (builds with XBOXRECOMP_APU_DSP and its device), forcing apu_dsp_ack off and ignoring apu_mixdown_all; the stereo output is the GP's mixbuf bins 0/1; in a build without the device, 1 keeps the stub with a line; 0 (default): the stub") \
++    X(LAUNCH_PAGE_IN,    CONFIG, "RECOMP_LAUNCH_PAGE_IN", NULL, "host file containing the previous launch page") \
++    X(LAUNCH_PAGE_OUT,   CONFIG, "RECOMP_LAUNCH_PAGE_OUT", NULL, "host file for a launch page from a quick reboot") \
+     X(CMDLINE,           CONFIG, "RECOMP_CMDLINE",           NULL, "launch-data command line handed to the title") \
+     X(FMV_HOST,          CONFIG, "RECOMP_FMV_HOST",          NULL, "play the title's movies through the host player") \
+     X(RASTER_THREADS,    CONFIG, "RECOMP_RASTER_THREADS",    NULL, "CPU raster threads, 1..16 (default: cores - 4)") \
+diff --git a/src/kernel/kernel_bridge.c b/src/kernel/kernel_bridge.c
+--- a/src/kernel/kernel_bridge.c
++++ b/src/kernel/kernel_bridge.c
+@@ -205,6 +205,45 @@
+     }
+ }
+ 
++static uint32_t import_launch_page(const char *path)
++{
++    uint8_t buffer[4096];
++    FILE *file = fopen(path, "rb");
++    uint32_t page;
++    int valid;
++
++    if (!file)
++        return 0;
++    valid = fread(buffer, 1, sizeof buffer, file) == sizeof buffer &&
++            fgetc(file) == EOF && !ferror(file);
++    fclose(file);
++    if (!valid)
++        return 0;
++    page = xbox_ContiguousAlloc(sizeof buffer, sizeof buffer);
++    if (page)
++        memcpy(XBOX_TO_NATIVE(page), buffer, sizeof buffer);
++    return page;
++}
++
++static void export_launch_page(uint32_t page)
++{
++    const char *path = recomp_env(RENV_LAUNCH_PAGE_OUT);
++    FILE *file;
++    int valid;
++
++    if (!path || !*path)
++        return;
++    if (page % 4096 || !bridge_va_mapped(page, 4096) || !(file = fopen(path, "wb"))) {
++        fprintf(stderr, "[RELAUNCH] could not save launch page\n");
++        return;
++    }
++    valid = fwrite(XBOX_TO_NATIVE(page), 1, 4096, file) == 4096;
++    if (fclose(file) || !valid) {
++        remove(path);
++        fprintf(stderr, "[RELAUNCH] could not write complete launch page\n");
++    }
++}
++
+ /**
+  * Initialize kernel data export values at the kernel data area.
+  * Called during bridge init, after Xbox memory is mapped.
+@@ -250,8 +289,18 @@
+      */
+     {
+         const char *cmdline = recomp_env(RENV_CMDLINE);
+-
+-        if (cmdline && *cmdline) {
++        const char *input = recomp_env(RENV_LAUNCH_PAGE_IN);
++
++        if (input && *input) {
++            uint32_t page = import_launch_page(input);
++            if (!page) {
++                fprintf(stderr, "[RELAUNCH] could not import launch page\n");
++                ExitProcess(1);
++                return;
++            }
++            BRIDGE_MEM32(XBOX_KERNEL_DATA_BASE + KDATA_LAUNCH_DATA_PAGE) = page;
++            fprintf(stderr, "[RELAUNCH] imported launch page at 0x%08X\n", page);
++        } else if (cmdline && *cmdline) {
+             uint32_t page = xbox_HeapAlloc(0x1000 + 0x0C00, 4096);
+             if (page) {
+                 size_t n = strlen(cmdline);
+@@ -1894,6 +1943,8 @@
+     {
+         uint32_t page = BRIDGE_MEM32(XBOX_KERNEL_DATA_BASE + KDATA_LAUNCH_DATA_PAGE);
+ 
++        if (routine == 2)
++            export_launch_page(page);
+         if (page) {
+             char path[64];
+             uint32_t i;

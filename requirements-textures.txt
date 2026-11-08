@@ -1,0 +1,5 @@
+# Offline image preparation and synthetic image tests; no ML weights or Torch.
+# Pilot validated with Pillow 10.4.0 on the project's Python 3.9 host.
+Pillow>=10.4,<12
+# Offline private outline master compilation, validated version.
+fonttools==4.60.2

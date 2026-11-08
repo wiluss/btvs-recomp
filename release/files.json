@@ -1,0 +1,613 @@
+{
+  "version": "0.1.0-alpha.1",
+  "files": [
+    {
+      "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml"
+    },
+    {
+      "source": ".github/PULL_REQUEST_TEMPLATE.md",
+      "path": ".github/PULL_REQUEST_TEMPLATE.md"
+    },
+    {
+      "source": ".github/workflows/source-check.yml",
+      "path": ".github/workflows/source-check.yml"
+    },
+    {
+      "source": ".gitignore",
+      "path": ".gitignore"
+    },
+    {
+      "source": "AGENTS.md",
+      "path": "AGENTS.md"
+    },
+    {
+      "source": "CMakeLists.txt",
+      "path": "CMakeLists.txt"
+    },
+    {
+      "source": "LICENSE",
+      "path": "LICENSE"
+    },
+    {
+      "source": "Makefile",
+      "path": "Makefile"
+    },
+    {
+      "source": "README.md",
+      "path": "README.md"
+    },
+    {
+      "source": "THIRD_PARTY_NOTICES.md",
+      "path": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "source": "VERSION",
+      "path": "VERSION"
+    },
+    {
+      "source": "ai/tasks/diagnose-black-frame.md",
+      "path": "ai/tasks/diagnose-black-frame.md"
+    },
+    {
+      "source": "ai/tasks/review-xbe-parser.md",
+      "path": "ai/tasks/review-xbe-parser.md"
+    },
+    {
+      "source": "config/font-decorative-hd.json",
+      "path": "config/font-decorative-hd.json"
+    },
+    {
+      "source": "config/font-hd.json",
+      "path": "config/font-hd.json"
+    },
+    {
+      "source": "config/hud-hd.json",
+      "path": "config/hud-hd.json"
+    },
+    {
+      "source": "config/menu-words-hd.json",
+      "path": "config/menu-words-hd.json"
+    },
+    {
+      "source": "config/spin-waits.json",
+      "path": "config/spin-waits.json"
+    },
+    {
+      "source": "config/texture-pilot.json",
+      "path": "config/texture-pilot.json"
+    },
+    {
+      "source": "config/texture-upscaler.json",
+      "path": "config/texture-upscaler.json"
+    },
+    {
+      "source": "config/title.json",
+      "path": "config/title.json"
+    },
+    {
+      "source": "dependencies.lock.json",
+      "path": "dependencies.lock.json"
+    },
+    {
+      "source": "docs/ALPHA.md",
+      "path": "docs/ALPHA.md"
+    },
+    {
+      "source": "docs/BRINGUP.md",
+      "path": "docs/BRINGUP.md"
+    },
+    {
+      "source": "docs/DECISIONS.md",
+      "path": "docs/DECISIONS.md"
+    },
+    {
+      "source": "docs/DEVELOPMENT.md",
+      "path": "docs/DEVELOPMENT.md"
+    },
+    {
+      "source": "docs/GRAPHICS.md",
+      "path": "docs/GRAPHICS.md"
+    },
+    {
+      "source": "docs/PROVENANCE.md",
+      "path": "docs/PROVENANCE.md"
+    },
+    {
+      "source": "docs/ROADMAP.md",
+      "path": "docs/ROADMAP.md"
+    },
+    {
+      "source": "docs/SETUP.md",
+      "path": "docs/SETUP.md"
+    },
+    {
+      "source": "docs/TROUBLESHOOTING.md",
+      "path": "docs/TROUBLESHOOTING.md"
+    },
+    {
+      "source": "patches/xboxrecomp/0001-screen-w-infinity.patch",
+      "path": "patches/xboxrecomp/0001-screen-w-infinity.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/0002-apu-image-sample-dma.patch",
+      "path": "patches/xboxrecomp/0002-apu-image-sample-dma.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/0003-metal-compact-vertices.patch",
+      "path": "patches/xboxrecomp/0003-metal-compact-vertices.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/0004-metal-hud-anchor.patch",
+      "path": "patches/xboxrecomp/0004-metal-hud-anchor.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/0005-metal-uhd.patch",
+      "path": "patches/xboxrecomp/0005-metal-uhd.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/0006-launch-page-handoff.patch",
+      "path": "patches/xboxrecomp/0006-launch-page-handoff.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/README.md",
+      "path": "patches/xboxrecomp/README.md"
+    },
+    {
+      "source": "release/NOTES.md",
+      "path": "release/NOTES.md"
+    },
+    {
+      "source": "release/PUBLISHING.md",
+      "path": "release/PUBLISHING.md"
+    },
+    {
+      "source": "release/files.json",
+      "path": "release/files.json"
+    },
+    {
+      "source": "release/licenses/Apache-2.0.txt",
+      "path": "release/licenses/Apache-2.0.txt"
+    },
+    {
+      "source": "release/licenses/LGPL-2.1.txt",
+      "path": "release/licenses/LGPL-2.1.txt"
+    },
+    {
+      "source": "release/licenses/LLVM-exception.txt",
+      "path": "release/licenses/LLVM-exception.txt"
+    },
+    {
+      "source": "release/licenses/MIT-dsp56300.txt",
+      "path": "release/licenses/MIT-dsp56300.txt"
+    },
+    {
+      "source": "release/licenses/MIT-microui.txt",
+      "path": "release/licenses/MIT-microui.txt"
+    },
+    {
+      "source": "release/licenses/MIT-stb.txt",
+      "path": "release/licenses/MIT-stb.txt"
+    },
+    {
+      "source": "release/licenses/OFL-1.1-atkinson-hyperlegible.txt",
+      "path": "release/licenses/OFL-1.1-atkinson-hyperlegible.txt"
+    },
+    {
+      "source": "release/licenses/THIRDPARTY-dsp56300-emu.txt",
+      "path": "release/licenses/THIRDPARTY-dsp56300-emu.txt"
+    },
+    {
+      "source": "release/licenses/Unicode-3.0.txt",
+      "path": "release/licenses/Unicode-3.0.txt"
+    },
+    {
+      "source": "release/licenses/XboxRecomp-MIT.txt",
+      "path": "release/licenses/XboxRecomp-MIT.txt"
+    },
+    {
+      "source": "release/licenses/XboxRecomp-NOTICE.txt",
+      "path": "release/licenses/XboxRecomp-NOTICE.txt"
+    },
+    {
+      "source": "release/licenses/Zlib-foldhash.txt",
+      "path": "release/licenses/Zlib-foldhash.txt"
+    },
+    {
+      "source": "requirements-textures.txt",
+      "path": "requirements-textures.txt"
+    },
+    {
+      "source": "requirements-toolkit.txt",
+      "path": "requirements-toolkit.txt"
+    },
+    {
+      "source": "scripts/local-codex.sh",
+      "path": "scripts/local-codex.sh"
+    },
+    {
+      "source": "src/game/README.md",
+      "path": "src/game/README.md"
+    },
+    {
+      "source": "src/host/arenas.c",
+      "path": "src/host/arenas.c"
+    },
+    {
+      "source": "src/host/controls.c",
+      "path": "src/host/controls.c"
+    },
+    {
+      "source": "src/host/controls.h",
+      "path": "src/host/controls.h"
+    },
+    {
+      "source": "src/host/probe.c",
+      "path": "src/host/probe.c"
+    },
+    {
+      "source": "src/host/widescreen.c",
+      "path": "src/host/widescreen.c"
+    },
+    {
+      "source": "src/host/widescreen.h",
+      "path": "src/host/widescreen.h"
+    },
+    {
+      "source": "src/launcher/BuffyLauncher.swift",
+      "path": "src/launcher/BuffyLauncher.swift"
+    },
+    {
+      "source": "src/launcher/ControlProfile.swift",
+      "path": "src/launcher/ControlProfile.swift"
+    },
+    {
+      "source": "src/launcher/ControlsView.swift",
+      "path": "src/launcher/ControlsView.swift"
+    },
+    {
+      "source": "src/launcher/LauncherView.swift",
+      "path": "src/launcher/LauncherView.swift"
+    },
+    {
+      "source": "src/launcher/Localization.swift",
+      "path": "src/launcher/Localization.swift"
+    },
+    {
+      "source": "src/launcher/Localizations.json",
+      "path": "src/launcher/Localizations.json"
+    },
+    {
+      "source": "src/launcher/SetupView.swift",
+      "path": "src/launcher/SetupView.swift"
+    },
+    {
+      "source": "tests/apu_image.c",
+      "path": "tests/apu_image.c"
+    },
+    {
+      "source": "tests/controls_remap.c",
+      "path": "tests/controls_remap.c"
+    },
+    {
+      "source": "tests/hud_anchor.c",
+      "path": "tests/hud_anchor.c"
+    },
+    {
+      "source": "tests/hud_selector.c",
+      "path": "tests/hud_selector.c"
+    },
+    {
+      "source": "tests/screen_w.c",
+      "path": "tests/screen_w.c"
+    },
+    {
+      "source": "tests/test_apu_image.py",
+      "path": "tests/test_apu_image.py"
+    },
+    {
+      "source": "tests/test_arenas_fix.py",
+      "path": "tests/test_arenas_fix.py"
+    },
+    {
+      "source": "tests/test_bootstrap_runtime.py",
+      "path": "tests/test_bootstrap_runtime.py"
+    },
+    {
+      "source": "tests/test_control_settings.py",
+      "path": "tests/test_control_settings.py"
+    },
+    {
+      "source": "tests/test_debugger_handoff.py",
+      "path": "tests/test_debugger_handoff.py"
+    },
+    {
+      "source": "tests/test_disc_import.py",
+      "path": "tests/test_disc_import.py"
+    },
+    {
+      "source": "tests/test_factory_switch.py",
+      "path": "tests/test_factory_switch.py"
+    },
+    {
+      "source": "tests/test_font_collection.py",
+      "path": "tests/test_font_collection.py"
+    },
+    {
+      "source": "tests/test_font_hd.py",
+      "path": "tests/test_font_hd.py"
+    },
+    {
+      "source": "tests/test_font_outline.py",
+      "path": "tests/test_font_outline.py"
+    },
+    {
+      "source": "tests/test_graphics_settings.py",
+      "path": "tests/test_graphics_settings.py"
+    },
+    {
+      "source": "tests/test_hdd_storage.py",
+      "path": "tests/test_hdd_storage.py"
+    },
+    {
+      "source": "tests/test_hud_anchor.py",
+      "path": "tests/test_hud_anchor.py"
+    },
+    {
+      "source": "tests/test_kick_spin.py",
+      "path": "tests/test_kick_spin.py"
+    },
+    {
+      "source": "tests/test_launcher_art.py",
+      "path": "tests/test_launcher_art.py"
+    },
+    {
+      "source": "tests/test_launcher_localization.py",
+      "path": "tests/test_launcher_localization.py"
+    },
+    {
+      "source": "tests/test_letterbox_fix.py",
+      "path": "tests/test_letterbox_fix.py"
+    },
+    {
+      "source": "tests/test_loadvars_fix.py",
+      "path": "tests/test_loadvars_fix.py"
+    },
+    {
+      "source": "tests/test_local_ai.py",
+      "path": "tests/test_local_ai.py"
+    },
+    {
+      "source": "tests/test_map_symbols.py",
+      "path": "tests/test_map_symbols.py"
+    },
+    {
+      "source": "tests/test_menu_words_hd.py",
+      "path": "tests/test_menu_words_hd.py"
+    },
+    {
+      "source": "tests/test_recomp_driver.py",
+      "path": "tests/test_recomp_driver.py"
+    },
+    {
+      "source": "tests/test_run_game.py",
+      "path": "tests/test_run_game.py"
+    },
+    {
+      "source": "tests/test_save_profile.py",
+      "path": "tests/test_save_profile.py"
+    },
+    {
+      "source": "tests/test_screen_w.py",
+      "path": "tests/test_screen_w.py"
+    },
+    {
+      "source": "tests/test_setup_game.py",
+      "path": "tests/test_setup_game.py"
+    },
+    {
+      "source": "tests/test_source_release.py",
+      "path": "tests/test_source_release.py"
+    },
+    {
+      "source": "tests/test_texture_mod.py",
+      "path": "tests/test_texture_mod.py"
+    },
+    {
+      "source": "tests/test_texture_pilot.py",
+      "path": "tests/test_texture_pilot.py"
+    },
+    {
+      "source": "tests/test_title_relaunch.py",
+      "path": "tests/test_title_relaunch.py"
+    },
+    {
+      "source": "tests/test_ui_hd.py",
+      "path": "tests/test_ui_hd.py"
+    },
+    {
+      "source": "tests/test_vertex_compact.py",
+      "path": "tests/test_vertex_compact.py"
+    },
+    {
+      "source": "tests/test_vertex_metrics.py",
+      "path": "tests/test_vertex_metrics.py"
+    },
+    {
+      "source": "tests/test_widescreen_fix.py",
+      "path": "tests/test_widescreen_fix.py"
+    },
+    {
+      "source": "tests/test_xbe_inspect.py",
+      "path": "tests/test_xbe_inspect.py"
+    },
+    {
+      "source": "tests/vertex_compact.c",
+      "path": "tests/vertex_compact.c"
+    },
+    {
+      "source": "tools/arenas_fix.py",
+      "path": "tools/arenas_fix.py"
+    },
+    {
+      "source": "tools/bootstrap_runtime.py",
+      "path": "tools/bootstrap_runtime.py"
+    },
+    {
+      "source": "tools/build_launcher.sh",
+      "path": "tools/build_launcher.sh"
+    },
+    {
+      "source": "tools/capture_textures.py",
+      "path": "tools/capture_textures.py"
+    },
+    {
+      "source": "tools/control_settings.py",
+      "path": "tools/control_settings.py"
+    },
+    {
+      "source": "tools/debugger_handoff.py",
+      "path": "tools/debugger_handoff.py"
+    },
+    {
+      "source": "tools/disc_import.py",
+      "path": "tools/disc_import.py"
+    },
+    {
+      "source": "tools/doctor.py",
+      "path": "tools/doctor.py"
+    },
+    {
+      "source": "tools/factory_switch_fix.py",
+      "path": "tools/factory_switch_fix.py"
+    },
+    {
+      "source": "tools/font_hd.py",
+      "path": "tools/font_hd.py"
+    },
+    {
+      "source": "tools/font_outline.py",
+      "path": "tools/font_outline.py"
+    },
+    {
+      "source": "tools/font_snapshot_lldb.py",
+      "path": "tools/font_snapshot_lldb.py"
+    },
+    {
+      "source": "tools/fresh_hdd.py",
+      "path": "tools/fresh_hdd.py"
+    },
+    {
+      "source": "tools/graphics_settings.py",
+      "path": "tools/graphics_settings.py"
+    },
+    {
+      "source": "tools/hdd_storage.py",
+      "path": "tools/hdd_storage.py"
+    },
+    {
+      "source": "tools/launcher_art.py",
+      "path": "tools/launcher_art.py"
+    },
+    {
+      "source": "tools/launcher_icon.swift",
+      "path": "tools/launcher_icon.swift"
+    },
+    {
+      "source": "tools/letterbox_fix.py",
+      "path": "tools/letterbox_fix.py"
+    },
+    {
+      "source": "tools/loadvars_fix.py",
+      "path": "tools/loadvars_fix.py"
+    },
+    {
+      "source": "tools/local_ai.py",
+      "path": "tools/local_ai.py"
+    },
+    {
+      "source": "tools/map_symbols.py",
+      "path": "tools/map_symbols.py"
+    },
+    {
+      "source": "tools/menu_words_hd.py",
+      "path": "tools/menu_words_hd.py"
+    },
+    {
+      "source": "tools/pipeline.py",
+      "path": "tools/pipeline.py"
+    },
+    {
+      "source": "tools/play.py",
+      "path": "tools/play.py"
+    },
+    {
+      "source": "tools/prepare_host.py",
+      "path": "tools/prepare_host.py"
+    },
+    {
+      "source": "tools/recomp_driver.py",
+      "path": "tools/recomp_driver.py"
+    },
+    {
+      "source": "tools/run_game.py",
+      "path": "tools/run_game.py"
+    },
+    {
+      "source": "tools/safe_publish.py",
+      "path": "tools/safe_publish.py"
+    },
+    {
+      "source": "tools/save_profile.py",
+      "path": "tools/save_profile.py"
+    },
+    {
+      "source": "tools/setup_game.py",
+      "path": "tools/setup_game.py"
+    },
+    {
+      "source": "tools/source_release.py",
+      "path": "tools/source_release.py"
+    },
+    {
+      "source": "tools/spin_config.py",
+      "path": "tools/spin_config.py"
+    },
+    {
+      "source": "tools/text_pack.py",
+      "path": "tools/text_pack.py"
+    },
+    {
+      "source": "tools/texture_decode.c",
+      "path": "tools/texture_decode.c"
+    },
+    {
+      "source": "tools/texture_mod.py",
+      "path": "tools/texture_mod.py"
+    },
+    {
+      "source": "tools/texture_pilot.py",
+      "path": "tools/texture_pilot.py"
+    },
+    {
+      "source": "tools/texture_profiles.py",
+      "path": "tools/texture_profiles.py"
+    },
+    {
+      "source": "tools/texture_snapshot_lldb.py",
+      "path": "tools/texture_snapshot_lldb.py"
+    },
+    {
+      "source": "tools/ui_hd.py",
+      "path": "tools/ui_hd.py"
+    },
+    {
+      "source": "tools/widescreen_fix.py",
+      "path": "tools/widescreen_fix.py"
+    },
+    {
+      "source": "tools/xbe_inspect.py",
+      "path": "tools/xbe_inspect.py"
+    }
+  ]
+}
