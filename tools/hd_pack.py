@@ -13,7 +13,7 @@ from safe_publish import publish_directory
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK_ID = '1'
-ARCHIVE = 'Buffy-macOS-HD-v1.zip'
+ARCHIVE = 'btvs-recomp-HD-v1.zip'
 MANIFEST = 'manifest.json'
 MEMBERS = {
     'textures/campaign-ui-hd.xrtp': 'private/textures/campaign-ui-hd.xrtp',
@@ -28,6 +28,7 @@ MEMBERS = {
 }
 RECIPES = ['font-hd.json', 'font-decorative-hd.json', 'menu-words-hd.json',
            'hud-hd.json', 'texture-pilot.json', 'texture-upscaler.json']
+# Preserve v1's exact bytes; renaming its attachment does not rebuild the add-on.
 README = b'''Buffy macOS optional HD add-on, version 1
 
 Install the supported game from your own ISO first. In the launcher, open

@@ -8,10 +8,18 @@ from pathlib import Path, PurePosixPath
 import stat
 import tempfile
 import zipfile
+import struct
+import zlib
+import xml.etree.ElementTree as ET
+import base64
 
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG='release/files.json'
 MANIFEST='RELEASE_MANIFEST.json'
+BRANDING_LOGO='docs/branding/logo.png'
+BRANDING_DISPLAY='docs/branding/logo-display.svg'
+BRANDING_SVGS={f'docs/branding/{name}.svg' for name in ('download','setup','hd','issues','status')}|{BRANDING_DISPLAY}
+BRANDING_FILES=BRANDING_SVGS|{BRANDING_LOGO}
 BLOCKED_DIRS={'.git','.venv','private','generated','build','artifacts','logs','__pycache__','vendor'}
 BLOCKED_SUFFIXES={'.iso','.xiso','.xbe','.map','.ses','.img','.xrtp','.png','.jpg','.jpeg','.bmp',
                   '.ttf','.otf','.icns','.gguf','.safetensors','.mlmodel','.log','.dylib','.a','.o','.pyc','.zip'}
@@ -21,12 +29,44 @@ SECRET=re.compile(r'(?:gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{32,})')
 
 
 def check_text(data,name):
+    if name == BRANDING_LOGO:
+        # Explicit user-approved project logo only. Game PNGs remain forbidden.
+        if len(data)<33 or data[:8]!=b'\x89PNG\r\n\x1a\n' or data[12:16]!=b'IHDR':
+            raise ValueError('Invalid branding PNG')
+        w,h=struct.unpack('>II',data[16:24])
+        if not 1<=w<=4096 or not 1<=h<=4096 or data[24:26]!=bytes((8,6)):
+            raise ValueError('Unexpected branding PNG dimensions or alpha format')
+        offset=8
+        while offset+12<=len(data):
+            size=struct.unpack_from('>I',data,offset)[0];end=offset+12+size
+            if end>len(data) or zlib.crc32(data[offset+4:end-4])!=struct.unpack_from('>I',data,end-4)[0]:
+                raise ValueError('Invalid branding PNG chunk')
+            if data[offset+4:offset+8]==b'IEND':
+                if size or end!=len(data):raise ValueError('Unexpected branding PNG tail')
+                return
+            offset=end
+        raise ValueError('Truncated branding PNG')
     if data.startswith((b'XBEH',b'XRTP',b'FATX',b'MZ',b'PK\x03\x04',b'\xcf\xfa\xed\xfe')):
         raise ValueError('Binary/game header in source: '+name)
     text=data.decode('utf-8')
     if ('\0' in text or LOCAL_HOME in text or SECRET.search(text)
             or any(p in text for p in ('-----BEGIN '+'PRIVATE KEY-----','-----BEGIN '+'OPENSSH PRIVATE KEY-----'))):
         raise ValueError('Private or binary content in release source: '+name)
+    if name in BRANDING_SVGS:
+        try:root=ET.fromstring(text)
+        except ET.ParseError as exc:raise ValueError('Invalid branding SVG') from exc
+        allowed={'svg','defs','linearGradient','stop','rect','path','circle','text','g','title','filter','feColorMatrix'}
+        for node in root.iter():
+            tag=node.tag.rsplit('}',1)[-1]
+            if tag not in allowed and not (name==BRANDING_DISPLAY and tag=='image'):
+                raise ValueError('Active or external branding SVG content')
+            for key,value in node.attrib.items():
+                if name==BRANDING_DISPLAY and tag=='image' and key=='href' and value.startswith('data:image/png;base64,'):
+                    try:check_text(base64.b64decode(value.split(',',1)[1],validate=True),BRANDING_LOGO)
+                    except (ValueError,TypeError) as exc:raise ValueError('Invalid embedded branding PNG') from exc
+                    continue
+                if key.rsplit('}',1)[-1].lower().startswith(('on','href')) or '://' in value or ('url(' in value and not value.startswith('url(#')):
+                    raise ValueError('Active or external branding SVG attribute')
 
 
 def checked_path(value):
@@ -35,9 +75,9 @@ def checked_path(value):
     p=PurePosixPath(value)
     if (p.is_absolute() or any(s in ('','.','..') for s in value.split('/'))
             or any(s.casefold() in BLOCKED_DIRS for s in p.parts)
-            or p.suffix.casefold() in BLOCKED_SUFFIXES):
+            or (p.suffix.casefold() in BLOCKED_SUFFIXES and value not in BRANDING_FILES)):
         raise ValueError('Forbidden release path: '+value)
-    if p.suffix.casefold() not in ALLOWED_SUFFIXES and value not in {'LICENSE','VERSION','Makefile','.gitignore','.gitmodules'}:
+    if p.suffix.casefold() not in ALLOWED_SUFFIXES and value not in BRANDING_FILES|{'LICENSE','VERSION','Makefile','.gitignore','.gitmodules'}:
         raise ValueError('Unexpected release file type: '+value)
     return p
 
@@ -87,7 +127,7 @@ def build(root,output):
               'files':{p:{'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data)} for p,data in sorted(files.items())}}
     files[MANIFEST]=(json.dumps(manifest,indent=2,sort_keys=True)+'\n').encode()
     output=Path(output);output.mkdir(parents=True,exist_ok=True)
-    archive=output/('Buffy-macOS-v'+version+'-source.zip')
+    archive=output/('btvs-recomp-v'+version+'-source.zip')
     fd,name=tempfile.mkstemp(prefix='.source-',dir=output);os.close(fd);temp=Path(name)
     try:
         with zipfile.ZipFile(temp,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:

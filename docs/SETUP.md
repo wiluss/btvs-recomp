@@ -48,7 +48,7 @@ In a terminal inside the extracted source folder:
 ```sh
 python3 tools/bootstrap_runtime.py
 make launcher
-open "build/Buffy Launcher.app"
+open "build/btvs-recomp.app"
 ```
 
 Bootstrap fetches only the generic public XboxRecomp toolkit at the commit in `dependencies.lock.json`. It does not fetch a game or change a toolkit checkout at an unexpected revision.

@@ -155,7 +155,8 @@ final class LauncherModel: ObservableObject {
     }
 
     private func reloadArtwork() {
-        logo = NSImage(contentsOf: assetURL("launcher/logo.png"))
+        logo = Bundle.main.url(forResource: "Logo", withExtension: "png").flatMap(NSImage.init(contentsOf:))
+            ?? NSImage(contentsOf: assetURL("launcher/logo.png"))
         mist = NSImage(contentsOf: assetURL("launcher/mist-1.png"))
         veil = NSImage(contentsOf: assetURL("launcher/mist-2.png"))
         let font = assetURL("fonts/buffy-decorative/BuffyDecorative.ttf")
@@ -166,7 +167,7 @@ final class LauncherModel: ObservableObject {
     }
 
     func openHDDownload() {
-        NSWorkspace.shared.open(URL(string: "https://github.com/wiluss/Buffy-macOS/releases")!)
+        NSWorkspace.shared.open(URL(string: "https://github.com/wiluss/btvs-recomp/releases")!)
     }
 
     func chooseHDArchive() {
@@ -348,7 +349,7 @@ final class LauncherModel: ObservableObject {
         exitCode = nil
         let script = root.appendingPathComponent("tools/play.py")
         guard FileManager.default.isReadableFile(atPath: script.path) else {
-            statusKey = "Dossier Buffy-macOS introuvable"
+            statusKey = "Dossier btvs-recomp introuvable"
             launchFailed = true
             return
         }
@@ -414,7 +415,7 @@ struct BuffyLauncher: App {
     @StateObject private var model = LauncherModel()
 
     var body: some Scene {
-        Window("Buffy", id: "launcher") {
+        Window("btvs-recomp", id: "launcher") {
             LauncherView(model: model)
                 .onDisappear { model.stop() }
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in

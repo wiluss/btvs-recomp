@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "files": [
     {
       "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -132,6 +132,38 @@
     {
       "source": "docs/TROUBLESHOOTING.md",
       "path": "docs/TROUBLESHOOTING.md"
+    },
+    {
+      "source": "docs/branding/README.md",
+      "path": "docs/branding/README.md"
+    },
+    {
+      "source": "docs/branding/download.svg",
+      "path": "docs/branding/download.svg"
+    },
+    {
+      "source": "docs/branding/hd.svg",
+      "path": "docs/branding/hd.svg"
+    },
+    {
+      "source": "docs/branding/issues.svg",
+      "path": "docs/branding/issues.svg"
+    },
+    {
+      "source": "docs/branding/logo-display.svg",
+      "path": "docs/branding/logo-display.svg"
+    },
+    {
+      "source": "docs/branding/logo.png",
+      "path": "docs/branding/logo.png"
+    },
+    {
+      "source": "docs/branding/setup.svg",
+      "path": "docs/branding/setup.svg"
+    },
+    {
+      "source": "docs/branding/status.svg",
+      "path": "docs/branding/status.svg"
     },
     {
       "source": "patches/xboxrecomp/0001-screen-w-infinity.patch",

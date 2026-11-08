@@ -44,7 +44,7 @@ def main():
         if source.count(original) != 1:
             raise SystemExit('Pinned template differs at ' + original)
         source = source.replace(original, replacement)
-    source = source.replace('YOUR_GAME_NAME', 'Buffy macOS (experimental)')
+    source = source.replace('YOUR_GAME_NAME', 'btvs-recomp (alpha)')
     # The optional graphics layer defaults to sleep. Keep this port's timing
     # even with RECOMP_CONFIG=none, before recomp_env_init caches environment.
     # An explicitly supplied environment value remains available to diagnostics.

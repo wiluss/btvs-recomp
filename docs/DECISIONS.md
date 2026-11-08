@@ -14,3 +14,5 @@
 12. Export a reviewed source-only file list. Keep private development history, generated game data, logs and binaries out of the public package.
 13. Use MIT for original project code, as chosen by the owner on 8 November 2026. Third-party file licenses retain precedence.
 14. Describe the actual validation stage. One Mac, real menu/save/load evidence and existing user gameplay are not proof of full campaign, audio stability or cross-machine support.
+
+13. Name the project and repository btvs-recomp. Keep save identifiers, the source-folder location and internal runtime filenames compatible. Include only the explicitly requested title-inspired wordmark and original README navigation graphics in source; their narrow allowlist does not admit gameplay assets. The HD v1 bytes are unchanged, with a renamed attachment and updated checksum filename entry.

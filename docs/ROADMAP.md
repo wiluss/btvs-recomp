@@ -30,3 +30,7 @@
 - A standalone installation location, updates and uninstall flow.
 
 Windows, Linux and Android game ports, quicksave, presence integration and a mod browser are not features of this alpha. Source-only CI on Linux does not establish a Linux game port.
+
+## Project identity
+
+The project and repository are named btvs-recomp. The English README uses a user-requested monochrome Buffy-style lettering adaptation and violet/red navigation graphics. The launcher displays the new name and wordmark. The optional HD v1 payload retains its original bytes under the new filename.

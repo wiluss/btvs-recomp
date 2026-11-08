@@ -1,74 +1,90 @@
-# Buffy macOS
+<div align="center">
 
-An independent Apple Silicon port of **Buffy the Vampire Slayer (2002, original Xbox)**, built with a pinned generic XboxRecomp runtime and Metal rendering.
+<img src="docs/branding/logo-display.svg" alt="btvs-recomp" width="520">
 
-**Source alpha — `0.1.0-alpha.2`.** Build the game locally from your own compatible Xbox disc image. This project does not provide or download the game.
+**Buffy the Vampire Slayer · Original Xbox, 2002 · Apple Silicon**
 
-## What you need
+An independent recompilation that brings Buffy to macOS with native ARM64 and Metal rendering.
+Bring your own supported USA ISO. The game is built locally on your Mac.
 
-- An Apple Silicon Mac. The launcher targets macOS 13 or later; the current build has been tested on one Mac running macOS 27.2. Earlier supported OS versions and other Mac models still need testing.
-- Apple's Command Line Tools, Homebrew in `/opt/homebrew`, and the packages below.
-- Your own compatible USA ISO, including `Default.xbe` and `final.map`. Setup checks their exact hashes before importing anything. Other editions and modified executables are not currently supported.
-- At least 35 GiB free before setup. Keep free space available for compilation and the Xbox disk images used while playing.
+<img src="docs/branding/status.svg" alt="Source alpha · ARM64 + Metal · Optional HD" width="596">
 
-No AI model, LM Studio installation, private save, or previously generated game code is required.
+<p>
+<a href="https://github.com/wiluss/btvs-recomp/releases"><img src="docs/branding/download.svg" alt="Download alpha" width="190"></a>
+<a href="docs/SETUP.md"><img src="docs/branding/setup.svg" alt="Installation" width="190"></a>
+<a href="docs/HD-PACK.md"><img src="docs/branding/hd.svg" alt="HD add-on" width="190"></a>
+<a href="https://github.com/wiluss/btvs-recomp/issues/new/choose"><img src="docs/branding/issues.svg" alt="Report a bug" width="190"></a>
+</p>
 
-## Install
+**Source alpha `0.1.0-alpha.3`** · Unofficial fan project · No game download
 
-Download and extract the **source ZIP attached to the alpha release**. Keep its folder intact: the launcher runs from that source folder.
+</div>
 
-From a terminal in the extracted folder:
+## Sunnydale, on your Mac
+
+| Native rendering | Optional HD | Your controls |
+| :--- | :--- | :--- |
+| ARM64 + Metal, resolution scaling, 4K output and experimental 16:9. | Prepared campaign textures, HUD and reconstructed text, including manual refinements. | Keyboard and controller support, remapping, AZERTY/QWERTY presets. |
+
+A five-language launcher follows a supported system language until you choose one. Persistent saves, fullscreen, VSync, an FPS overlay and optional arena access are included.
+
+## Start playing
+
+**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.3-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
+
+**2. Build the launcher.** You need an Apple Silicon Mac, Apple's Command Line Tools and the listed Homebrew packages. Follow the [installation guide](docs/SETUP.md), or expand the commands below.
+
+<details>
+<summary><strong>Build commands</strong></summary>
+
+From a terminal in the extracted source folder:
 
 ```sh
-# Install Apple's Command Line Tools if they are missing:
+# Skip this if Apple's Command Line Tools are already installed:
 xcode-select --install
 
-# With Homebrew already installed:
+# With Homebrew already installed in /opt/homebrew:
 HOMEBREW_NO_AUTO_UPDATE=1 brew install python@3.12 cmake ninja pkgconf sdl3 libepoxy openssl@3
 
-# Fetch the exact public generic toolkit, then build our launcher:
 python3 tools/bootstrap_runtime.py
 make launcher
-open "build/Buffy Launcher.app"
+open "build/btvs-recomp.app"
 ```
 
-Skip `xcode-select --install` if the tools are already installed. The full [installation guide](docs/SETUP.md) covers prerequisites, verification and troubleshooting.
+Keep the source folder intact: this alpha's launcher runs from it. No AI model or LM Studio installation is required.
 
-In the launcher, choose **Set up from an ISO…**, select your image, then **Set up game**. Setup imports the files, creates a local Python environment, applies the shipped runtime patches, and builds the game. It may download development dependencies; it never downloads game content.
+</details>
 
-When setup finishes, choose **Play**. A new player starts at the main menu with an empty save profile. After saving, use **Load Game** to continue.
+**3. Supply your ISO.** Choose **Set up from an ISO…** in the launcher and select your own compatible USA image. Setup verifies `Default.xbe` and `final.map`, imports the files and compiles the game locally. It downloads development dependencies when needed, never the original game.
 
-## Features
+**4. Play.** Start from the main menu. After saving, choose **Load Game** to continue your adventure.
 
-- Native ARM64 runtime and Metal rendering.
-- Resolution scaling, 4K output, experimental 16:9, fullscreen, VSync and an FPS overlay.
-- Keyboard and controller support, with remapping and AZERTY/QWERTY keyboard presets.
-- A launcher in English, French, Spanish, German and Italian. It follows a supported system language until you choose a language yourself.
-- Persistent saves and lossless compression of dormant Xbox partition images.
-- Local XRTP texture packs and optional arena access.
+### Add the HD treatment
 
-**A clean source installation uses original game textures and text.** An [optional HD add-on](docs/HD-PACK.md), downloaded separately from the release, contains the prepared textures, HUD, reconstructed text and launcher artwork, including manual refinements. Install its ZIP through **Packs & skins → Install the HD pack…** after setting up the game. The corresponding switches remain disabled until packs are present. The source kit and launcher bundle contain no game-derived graphics; the launcher has an original fallback design and icon.
+Download the optional **`btvs-recomp-HD-v1.zip`** (about 676 MB), then choose **Packs & skins → Install the HD pack…**. The prepared add-on preserves our manual refinements; it needs no AI tools on your Mac. Textures and text can be switched off independently. [HD installation and scope →](docs/HD-PACK.md)
 
-## Alpha limitations
+The source kit contains the project logo and README graphics, with gameplay graphics supplied separately by your ISO and the optional HD add-on.
 
-Audio can stutter, an intermittent audio crash remains unresolved, and performance varies considerably with resolution and effects. The full campaign and long sessions have not been validated. The original controller mapping was tested physically; custom controller mappings still need physical testing.
+## Before you enter the Hellmouth
 
-The setup was tested from the user's USA ISO in an isolated source installation on the same Mac: extraction, generation, ARM64 compilation, a blank-disk menu, creation of the first save, and loading that save into the first level's opening cutscene. Those setup checks used dummy audio and the runtime's scripted controller API. They do not replace gameplay, audio or cross-machine testing.
+- **Mac:** Apple Silicon, macOS 13 or later targeted. Tested on one Mac running macOS 27.2; other models and earlier OS versions still need validation.
+- **Game:** your own supported USA ISO with the exact XBE/MAP hashes checked by setup. Other editions and modified executables are unsupported.
+- **Space:** at least **35 GiB free** before game setup; keep space available for builds and Xbox disk images. The optional HD add-on needs additional space.
 
-See the [user guide](docs/GRAPHICS.md), [known issues](docs/TROUBLESHOOTING.md) and [release notes](release/NOTES.md).
+**This is an alpha.** Audio can stutter, an intermittent audio crash remains unresolved, and performance varies with effects and resolution. The full campaign and long sessions have not been validated. Stock controller mapping was tested physically; custom mappings still need physical testing. See [known issues](docs/TROUBLESHOOTING.md).
 
-## Saves and updates
+The isolated ISO setup reached the menu, created the first save and loaded it into the first level's opening cutscene. Those checks used dummy audio and scripted controller input on the same Mac; they do not establish audio or cross-machine stability. Read the [validation summary](docs/BRINGUP.md).
 
-Your save profile lives in `private/profile/`. Keep a backup of the **whole profile**, including its title metadata and disk files. Do not delete it when updating. Setup does not overwrite an existing installation, and this first alpha has no automatic upgrade or uninstall flow.
+## Keep your progress
 
-Never upload your ISO, extracted game files, saves, disk images or complete development folder in a bug report. The [reporting guide](docs/TROUBLESHOOTING.md#reporting-a-problem) lists the useful details.
+Back up the **whole `private/profile/` folder**, including title metadata and disk files. Do not delete it when updating. Setup preserves an existing installation; this alpha has no automatic upgrade or uninstall flow.
 
-## Development and provenance
+For help, read the [user guide](docs/GRAPHICS.md) and [reporting instructions](docs/TROUBLESHOOTING.md#reporting-a-problem). Never upload your ISO, game files, saves, disk images or complete development folder.
 
-Start with [development instructions](docs/DEVELOPMENT.md) and [provenance](docs/PROVENANCE.md). The pinned dependency is the [apexJCL macOS/Metal fork of XboxRecomp](https://github.com/apexJCL/xboxrecomp), based on work by sp00nz and contributors.
+## Built independently
 
-Prior research consulted BuffyNX. This project does not import its title-specific code, symbols, seeds or overrides. Game-specific adaptations come from the user's identified XBE and concordant MAP.
+Based on the pinned generic [XboxRecomp macOS/Metal fork](https://github.com/apexJCL/xboxrecomp), with work by sp00nz and contributors. Prior research consulted BuffyNX; this project imports none of its title-specific code, symbols, seeds or overrides. Game-specific adaptations come from the identified user-supplied XBE and concordant MAP.
 
-## License
+[Development](docs/DEVELOPMENT.md) · [Provenance](docs/PROVENANCE.md) · [Roadmap](docs/ROADMAP.md) · [Release notes](release/NOTES.md)
 
-Original project code is [MIT licensed](LICENSE). Third-party files retain their own licenses, including the runtime's xemu-derived LGPL components. See [third-party notices](THIRD_PARTY_NOTICES.md). The game's code, data, trademarks and artwork are not licensed by this project. This is an unofficial project and is not affiliated with the original rights holders.
+Original project code is [MIT licensed](LICENSE); third-party components keep their own licenses. The game-derived HD add-on and title-inspired branding are not relicensed under MIT. Read the [notices](THIRD_PARTY_NOTICES.md). This project is not affiliated with the original rights holders.

@@ -76,14 +76,14 @@ struct LauncherView: View {
         VStack(spacing: 0) {
             Spacer(minLength: 0)
             if let logo = model.logo {
-                Image(nsImage: logo).resizable().interpolation(.high).scaledToFit()
-                    .frame(width: 340, height: 310)
+                Image(nsImage: logo).resizable().interpolation(.high).scaledToFit().colorInvert()
+                    .frame(maxWidth: 560).frame(height: 310)
                     .shadow(color: Theme.violet.opacity(0.2), radius: 25)
-                    .accessibilityLabel("Buffy the Vampire Slayer")
+                    .accessibilityLabel("btvs-recomp")
             } else {
                 VStack(spacing: 10) {
-                    Text("Buffy").font(.system(size: 90, design: .serif))
-                    Text("the vampire slayer").font(gameFont(23))
+                    Text("btvs-recomp").font(.system(size: 60, design: .serif))
+                    Text("Buffy · Xbox · 2002").font(gameFont(23))
                 }.frame(height: 310).accessibilityElement(children: .combine)
             }
             Spacer(minLength: 10).frame(maxHeight: 28)
