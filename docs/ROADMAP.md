@@ -9,7 +9,8 @@
 - ISO import with XBE/MAP checks and generation/compilation in a clean local source installation.
 - Blank-disk startup, first-save creation, restart/Load Game and the first level's opening cutscene.
 - Lossless idle partition compression and restoration.
-- Source-only alpha packaging, English public guides and an original launcher icon.
+- Source-only packaging, English public guides and an original launcher icon.
+- A separate prebuilt HD add-on preserving manual refinements, with a pinned catalog and launcher import.
 
 ## Before publishing this candidate
 

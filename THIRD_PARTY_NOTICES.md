@@ -16,7 +16,7 @@ The player installs Python, Apple's tools, Homebrew libraries and Python package
 
 ## Optional local content
 
-Private development HD fonts, textures, outline masters and model weights are not included. Their presence on the development machine does not make them release assets. Optional local preparation tools do not grant redistribution rights to their inputs or outputs.
+The source kit contains no game-derived graphics. The separately attached optional HD add-on contains prebuilt campaign textures, HUD, reconstructed font/text outputs and launcher artwork. It preserves manual work from this project and is not automatically recreated from the ISO. Editable outline masters, model weights, third-party font files and upscaler executables are not included. General-purpose Real-ESRGAN tools were used during preparation; no claim is made that their software license grants rights over the game-derived outputs. The original game's artwork and trademarks retain their respective rights; the project's MIT license does not cover those rights or establish permission to distribute them. This unofficial add-on is not represented as endorsed by the rights holders.
 
 The launcher icon is an original code-drawn monogram, moon and stake. Its source is `tools/launcher_icon.swift`. It contains no extracted logo, game image, reconstructed game font or generated game asset.
 

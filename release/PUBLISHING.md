@@ -6,7 +6,7 @@ This file is for maintainers. Building the kit does not stage Git changes, creat
 
 ```sh
 python3 tools/source_release.py
-python3 tools/source_release.py --audit artifacts/release-alpha/dist/Buffy-macOS-v0.1.0-alpha.1-source.zip
+python3 tools/source_release.py --audit artifacts/release-alpha/dist/Buffy-macOS-v0.1.0-alpha.2-source.zip
 ```
 
 The output directory contains the source ZIP and `SHA256SUMS`. Inside the ZIP, `RELEASE_MANIFEST.json` lists every member and its digest. The explicit input list is `release/files.json`. It includes selected original source and English public documentation, not the development folder.
@@ -21,21 +21,35 @@ The audit rejects forbidden directories, asset/binary/save extensions, symbolic 
 
 Extract into a fresh directory outside the development inputs. Confirm no game/private/generated/build outputs are present. Fetch the dependency with the bootstrap helper, apply the shipped patches, run the asset-free tests, build the launcher and use the supported local ISO setup. Keep all resulting game content and traces local. Verify first save and Load Game without importing a development profile.
 
-Read the known issues and scope in `docs/ALPHA.md`. The archive must contain LICENSE and third-party notices. Never attach a built game, private HD content, a save profile or the isolated test installation.
+Read the known issues and scope in `docs/ALPHA.md`. The archive must contain LICENSE and third-party notices. Never attach a built game, editable HD masters, a save profile or the isolated test installation. The approved HD add-on is a separate audited attachment, never part of the source tree or source ZIP.
 
 ## Prepare GitHub
 
 The current development checkout has unrelated existing changes and private ignored data. Export and review the source kit as the public tree; do not blindly add or archive the entire checkout. No Git remote is assumed.
 
-Once the intended repository and public source commit/tag are reviewed, create a **draft prerelease** with the source ZIP and checksum only. For example, from a reviewed public checkout with the tag already pushed:
+Once the intended repository and public source commit/tag are reviewed, create a **draft prerelease** with the source ZIP/checksum and, when selected, the approved HD ZIP/checksum. For example, from a reviewed public checkout with the tag already pushed:
 
 ```sh
-gh release create v0.1.0-alpha.1 \
+gh release create v0.1.0-alpha.2 \
   --repo OWNER/REPOSITORY --verify-tag --draft --prerelease \
-  --title 'Buffy macOS 0.1.0-alpha.1' \
+  --title 'Buffy macOS 0.1.0-alpha.2' \
   --notes-file release/NOTES.md \
-  artifacts/release-alpha/dist/Buffy-macOS-v0.1.0-alpha.1-source.zip \
-  artifacts/release-alpha/dist/SHA256SUMS
+  artifacts/release-alpha/dist/Buffy-macOS-v0.1.0-alpha.2-source.zip \
+  artifacts/release-alpha/dist/SHA256SUMS \
+  artifacts/hd-release/dist/Buffy-macOS-HD-v1.zip \
+  artifacts/hd-release/dist/HD-SHA256SUMS
 ```
 
 Replace the repository explicitly. Do not run this example against an inferred account. Review the draft and its attachments before making it public. This preparation does not itself authorize publishing a release.
+
+## Optional prebuilt HD attachment
+
+The user explicitly selected this separate add-on. Keep all game-derived bytes out of Git and the source ZIP. `tools/hd_pack.py build` reads only the nine approved prebuilt outputs, validates the campaign/text profiles and writes the HD ZIP plus `HD-SHA256SUMS` under artifacts/hd-release/dist. It also writes the source-controlled `config/hd-pack.json` with archive/member hashes and recipe identities. Build the HD attachment before the source ZIP so the catalog is included.
+
+```sh
+python3 tools/hd_pack.py build
+python3 tools/hd_pack.py audit artifacts/hd-release/dist/Buffy-macOS-HD-v1.zip
+python3 tools/source_release.py
+```
+
+Any change to the approved outputs requires a new add-on ID and matching source catalog; do not silently replace a released archive. The ZIP includes notices and no game executable, disc image, editable master, model, save or third-party font file. Its game-derived graphics are not relicensed under MIT. Test installation into an isolated supported game setup, verify every installed file and launch with the installed profiles. Keep the repository/release private and in draft until publication is explicitly requested.

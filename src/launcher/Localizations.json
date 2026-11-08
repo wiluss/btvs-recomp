@@ -116,7 +116,17 @@
     "Préparer Buffy": "Préparer Buffy",
     "Préparer depuis une ISO…": "Préparer depuis une ISO…",
     "Préparer le jeu": "Préparer le jeu",
-    "Vérification de l’ISO…": "Vérification de l’ISO…"
+    "Vérification de l’ISO…": "Vérification de l’ISO…",
+    "Pack HD": "Pack HD",
+    "Textures, HUD et textes HD, avec les retouches manuelles.": "Textures, HUD et textes HD, avec les retouches manuelles.",
+    "Télécharger le pack HD…": "Télécharger le pack HD…",
+    "Installer le pack HD…": "Installer le pack HD…",
+    "Pack HD disponible": "Pack HD disponible",
+    "Installe le jeu, puis sélectionne le ZIP HD téléchargé.": "Installe le jeu, puis sélectionne le ZIP HD téléchargé.",
+    "Choisir le pack HD ZIP…": "Choisir le pack HD ZIP…",
+    "Installation du pack HD…": "Installation du pack HD…",
+    "Pack HD installé": "Pack HD installé",
+    "Installation HD interrompue. Consulte le journal.": "Installation HD interrompue. Consulte le journal."
   },
   "en": {
     "Jouer": "Play",
@@ -235,7 +245,17 @@
     "Préparer Buffy": "Set up Buffy",
     "Préparer depuis une ISO…": "Set up from an ISO…",
     "Préparer le jeu": "Set up game",
-    "Vérification de l’ISO…": "Verifying ISO…"
+    "Vérification de l’ISO…": "Verifying ISO…",
+    "Pack HD": "HD Pack",
+    "Textures, HUD et textes HD, avec les retouches manuelles.": "HD textures, HUD and text, with manual tweaks.",
+    "Télécharger le pack HD…": "Download the HD pack…",
+    "Installer le pack HD…": "Install the HD pack…",
+    "Pack HD disponible": "HD Pack available",
+    "Installe le jeu, puis sélectionne le ZIP HD téléchargé.": "Install the game, then select the downloaded HD ZIP.",
+    "Choisir le pack HD ZIP…": "Choose the HD ZIP pack…",
+    "Installation du pack HD…": "Installing the HD pack…",
+    "Pack HD installé": "HD Pack installed",
+    "Installation HD interrompue. Consulte le journal.": "HD installation interrupted. Check the log."
   },
   "es": {
     "Jouer": "Jugar",
@@ -354,7 +374,17 @@
     "Préparer Buffy": "Preparar Buffy",
     "Préparer depuis une ISO…": "Preparar desde una ISO…",
     "Préparer le jeu": "Preparar el juego",
-    "Vérification de l’ISO…": "Verificando la ISO…"
+    "Vérification de l’ISO…": "Verificando la ISO…",
+    "Pack HD": "Pack HD",
+    "Textures, HUD et textes HD, avec les retouches manuelles.": "Texturas, HUD y textos en alta definición, con ajustes manuales.",
+    "Télécharger le pack HD…": "Descargar el pack HD…",
+    "Installer le pack HD…": "Instalar el pack HD…",
+    "Pack HD disponible": "Pack HD disponible",
+    "Installe le jeu, puis sélectionne le ZIP HD téléchargé.": "Instala el juego y luego selecciona el ZIP del pack HD descargado.",
+    "Choisir le pack HD ZIP…": "Seleccionar el pack ZIP HD…",
+    "Installation du pack HD…": "Instalando el pack HD…",
+    "Pack HD installé": "Pack HD instalado",
+    "Installation HD interrompue. Consulte le journal.": "Instalación de HD interrumpida. Consulta el registro."
   },
   "de": {
     "Jouer": "Spielen",
@@ -473,7 +503,17 @@
     "Préparer Buffy": "Buffy vorbereiten",
     "Préparer depuis une ISO…": "Von einer ISO vorbereiten…",
     "Préparer le jeu": "Spiel vorbereiten",
-    "Vérification de l’ISO…": "ISO wird überprüft…"
+    "Vérification de l’ISO…": "ISO wird überprüft…",
+    "Pack HD": "HD-Paket",
+    "Textures, HUD et textes HD, avec les retouches manuelles.": "HD-Texturen, HUD und Texte mit manuellen Anpassungen.",
+    "Télécharger le pack HD…": "HD-Paket herunterladen…",
+    "Installer le pack HD…": "HD-Paket installieren…",
+    "Pack HD disponible": "HD-Paket verfügbar",
+    "Installe le jeu, puis sélectionne le ZIP HD téléchargé.": "Installiere das Spiel und wähle dann das heruntergeladene HD-ZIP-Paket aus.",
+    "Choisir le pack HD ZIP…": "Wähle das HD-ZIP-Paket…",
+    "Installation du pack HD…": "HD-Paket wird installiert…",
+    "Pack HD installé": "HD-Paket installiert",
+    "Installation HD interrompue. Consulte le journal.": "HD-Installation unterbrochen. Siehe Protokoll."
   },
   "it": {
     "Jouer": "Gioca",
@@ -592,6 +632,16 @@
     "Préparer Buffy": "Prepara Buffy",
     "Préparer depuis une ISO…": "Prepara da una ISO…",
     "Préparer le jeu": "Prepara il gioco",
-    "Vérification de l’ISO…": "Verifica dell'ISO…"
+    "Vérification de l’ISO…": "Verifica dell'ISO…",
+    "Pack HD": "Pack HD",
+    "Textures, HUD et textes HD, avec les retouches manuelles.": "Texture, HUD e testi in alta definizione, con modifiche manuali.",
+    "Télécharger le pack HD…": "Scarica il pack HD…",
+    "Installer le pack HD…": "Installa il pack HD…",
+    "Pack HD disponible": "Pack HD disponibile",
+    "Installe le jeu, puis sélectionne le ZIP HD téléchargé.": "Installa il gioco, quindi seleziona lo ZIP del pack HD scaricato.",
+    "Choisir le pack HD ZIP…": "Scegli il pack ZIP HD…",
+    "Installation du pack HD…": "Installazione del pack HD in corso…",
+    "Pack HD installé": "Pack HD installato",
+    "Installation HD interrompue. Consulte le journal.": "Installazione HD interrotta. Consulta il registro."
   }
 }

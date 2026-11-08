@@ -7,7 +7,7 @@
 5. Start the player launcher at the menu, indefinitely, with a title-bound persistent profile. Direct mission boot remains a private-state diagnostic outside the release setup.
 6. Generate a blank disk from generic retail geometry for first-time players. Never use the developer save as the installation seed.
 7. Compress dormant partitions losslessly, restore them before execution, and retain raw data on failure. Do not shrink the geometry seen by the guest.
-8. Keep original assets as the clean-install default. Private HD masters, game-derived launcher art and model weights are not included.
+8. Keep original assets as the clean-install default. Offer the explicitly approved prebuilt HD add-on separately, with pinned hashes and an immutable local installation. Keep assets out of Git and the source ZIP; editable masters and model weights remain private. The MIT code license does not cover game-art rights.
 9. Use a five-language launcher with persistent keyboard/controller remapping loaded before input threads; no live remapping in a game session.
 10. Validate all ISO paths/extents and resources before extraction. Use staging and macOS exclusive rename; never overwrite an existing installation.
 11. Install Python packages only in the local venv. Native build prerequisites remain explicit. No game download or development AI requirement.

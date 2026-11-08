@@ -1,10 +1,10 @@
-# Buffy macOS 0.1.0-alpha.1
+# Buffy macOS 0.1.0-alpha.2
 
 First source alpha for **Buffy the Vampire Slayer (2002, original Xbox)** on Apple Silicon.
 
 ## Installation
 
-Download the attached `Buffy-macOS-v0.1.0-alpha.1-source.zip` and `SHA256SUMS`. Verify the checksum, extract the source folder and follow `README.md` or `docs/SETUP.md`.
+Download the attached `Buffy-macOS-v0.1.0-alpha.2-source.zip` and `SHA256SUMS`. Verify the checksum, extract the source folder and follow `README.md` or `docs/SETUP.md`.
 
 You need your own supported USA ISO, Apple build tools and the listed Homebrew packages. Run `python3 tools/bootstrap_runtime.py`, build the launcher with `make launcher`, then choose **Set up from an ISO…**. The game is generated and compiled locally. No game download is provided.
 
@@ -16,7 +16,13 @@ You need your own supported USA ISO, Apple build tools and the listed Homebrew p
 - Keyboard/controller remapping and a five-language launcher.
 - Original project source under MIT, separate runtime patches and third-party notices.
 
-No ISO, game executable, MAP, generated game source, game-derived asset, save, model weight or private HD pack is attached. Clean installs use original game graphics; the development HD masters are not part of this alpha.
+No ISO, game executable, MAP, generated game source, save, disk image, model weight or editable development master is attached. The source ZIP contains no game-derived graphics.
+
+## Optional HD add-on
+
+Download `Buffy-macOS-HD-v1.zip` (about 676 MB) and `HD-SHA256SUMS` separately if you want the prepared campaign textures, HUD, reconstructed text and launcher artwork. After game setup, open **Packs & skins → Install the HD pack…** and select the ZIP. Installation verifies the pinned checksums and game edition, preserves existing local assets and enables the HD switches. Manual refinements are already included; no AI model is required. Read `docs/HD-PACK.md` for scope and troubleshooting.
+
+The HD add-on contains game-derived graphics. The project's MIT code license does not grant rights over the original artwork or trademarks, and this unofficial add-on is not presented as authorized or endorsed by the original rights holders.
 
 ## Known limitations
 

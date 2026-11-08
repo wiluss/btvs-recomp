@@ -1,0 +1,60 @@
+{
+  "archive": {
+    "bytes": 675730209,
+    "name": "Buffy-macOS-HD-v1.zip",
+    "sha256": "df859506587e6f5bed9d8a0eb74ffbee44abd0d9c5cedfd2735639764c324203"
+  },
+  "files": {
+    "README.txt": {
+      "bytes": 886,
+      "sha256": "80bff5b32c3aa313ec6bbf6ac8640ce78352e90934cdd8c6365a1b4d77d3031f"
+    },
+    "fonts/buffy-decorative/BuffyDecorative.ttf": {
+      "bytes": 15164,
+      "sha256": "dbd1036af69a664bfe48e663ceeaf97c02470942b7eae39e35f3d6e1d864910b"
+    },
+    "launcher/logo.png": {
+      "bytes": 50242,
+      "sha256": "9db6c6ca89202a8c27d200e88dcfc15333d1f33b854e8b84b128fca1fb111560"
+    },
+    "launcher/mist-1.png": {
+      "bytes": 99460,
+      "sha256": "0c0ba1d3352cd94ba4563efecfdb3f17b56126680f6c34485fed80aa0c2d6691"
+    },
+    "launcher/mist-2.png": {
+      "bytes": 111575,
+      "sha256": "b6657b2514b7d3d651bbdf9cb7053488a26ff156a03db9949f3983961fd6e6dc"
+    },
+    "textures/campaign-ui-hd.json": {
+      "bytes": 8668,
+      "sha256": "1ccfb13d2b36bc9ebbefed2f4f188def4710b83b61405afdda71e00a018a2464"
+    },
+    "textures/campaign-ui-hd.xrtp": {
+      "bytes": 1253501032,
+      "sha256": "ce9d6857614cecbff6b62de2614e6781ad12c7f9edd2f5c68ec2df6ec8384b63"
+    },
+    "textures/font-hd.xrtp": {
+      "bytes": 31719872,
+      "sha256": "f3ef133b036bf9e895aefd3ec0ad9477a76252bbe9e706a1a1fe61c3542d7f20"
+    },
+    "textures/original-text-hd.json": {
+      "bytes": 462,
+      "sha256": "c88e4de6f3fb581badd136262c96f1517a055ff61e77dd589697d1ef7c563e2d"
+    },
+    "textures/original-text-hd.xrtp": {
+      "bytes": 31719872,
+      "sha256": "f3ef133b036bf9e895aefd3ec0ad9477a76252bbe9e706a1a1fe61c3542d7f20"
+    }
+  },
+  "id": "1",
+  "recipes": {
+    "font-decorative-hd.json": "d7fdd372dd3c1217aea7fbedf07a63a1fb5e30ac145bf0aba540e46d53071383",
+    "font-hd.json": "166cb8c0be2fc255ca8c8a772a3cdb3acf8712785cf59b14eddb95aabd7f034d",
+    "hud-hd.json": "64dc1f583e57cb4bae6e00200a9c7bd6cf5fbdfcecb6029d0720d4423123c863",
+    "menu-words-hd.json": "bdc0bddb65b934ff7275534639a59590e9c3a7d5d2f05b91679c3a5fbf6c26b5",
+    "texture-pilot.json": "4d92595f0ec61f407bb3d986462dd1588b0a9c501c66069b50ffdfb3fd5a23ed",
+    "texture-upscaler.json": "929a05d7acf45549702c56181f9af73de783746e126d3d95766417ea5c10d63c"
+  },
+  "schema": 1,
+  "xbe_sha256": "cd49da614d92b6ec94f3bd66d503eb4e214f8809e9c7b42f465ee25c709ad35f"
+}

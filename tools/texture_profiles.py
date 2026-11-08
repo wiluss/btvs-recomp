@@ -6,9 +6,17 @@ import struct
 from text_pack import additional_recipes, word_recipe
 
 from texture_snapshot_lldb import XBE_SHA256
+from hd_pack import PACK_ID
 
 ROOT = Path(__file__).resolve().parents[1]
 PROFILES = {'original':0, 'pilot2x':2, 'pilot4x':4, 'campaign2x':2}
+
+
+def local_asset(root, name):
+    """Keep existing developer/user packs; otherwise use the immutable add-on."""
+    legacy = Path(root) / 'private' / name
+    addon = Path(root) / 'private/hd' / PACK_ID / name
+    return addon if not legacy.exists() and addon.exists() else legacy
 
 
 def texture_extent(w, h, levels, flags):
@@ -65,10 +73,10 @@ def pack_path(name, root=ROOT, text='auto'):
         raise ValueError('Unknown texture preset')
     if text not in ('auto','original','hd'):raise ValueError('Unknown text preset')
     if name == 'campaign2x':
-        return Path(root)/'private/textures/campaign-ui-hd.xrtp'
-    if text=='hd':return Path(root)/'private/textures'/(name+'-text-hd.xrtp')
+        return local_asset(root, 'textures/campaign-ui-hd.xrtp')
+    if text=='hd':return local_asset(root, 'textures/'+name+'-text-hd.xrtp')
     scale = PROFILES[name]
-    return Path(root)/'private/textures'/('pilot-%dx.xrtp'%scale) if scale else None
+    return local_asset(root, 'textures/pilot-%dx.xrtp'%scale) if scale else None
 
 
 def verify_profile(name, root=ROOT, text='auto'):
@@ -89,7 +97,7 @@ def verify_profile(name, root=ROOT, text='auto'):
         verify_profile(name,root)
         root=Path(root);path=pack_path(name,root,text);proof=json.loads(path.with_suffix('.json').read_text())
         base=pack_path(name,root);sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-        recipe=root/'config/font-hd.json';font_pack=root/'private/textures/font-hd.xrtp'
+        recipe=root/'config/font-hd.json';font_pack=local_asset(root, 'textures/font-hd.xrtp')
         recipe_data = json.loads(recipe.read_text())
         extra = additional_recipes(root, recipe_data)
         words = word_recipe(root, recipe_data)

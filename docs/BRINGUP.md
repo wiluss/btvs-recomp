@@ -29,3 +29,7 @@ The asset-free suite compiles selected real generic runtime functions and adapte
 For `0.1.0-alpha.1`, 145 tests passed in both the development checkout and the exported source installation. The exported kit fetched the pinned toolkit, imported the supported ISO, generated the same 173 C files, compiled the game and built the launcher. The host probe passed on Apple Silicon. Menu/save/load observations above come from the earlier isolated setup checks; the exported-kit build is not a new gameplay session.
 
 A host probe, a passing test suite or a compiled binary alone does not establish menu or gameplay success. Report these separately when changing the code.
+
+## Optional HD add-on candidate
+
+For `0.1.0-alpha.2`, 150 asset-free tests passed, including five synthetic HD-installer tests. The Apple Silicon host probe and launcher build passed. The real ZIP was imported through the native launcher into the isolated supported game setup; it showed HD Pack installed. All installed file hashes and the four original/HD texture/text combinations validated, followed by menu --check. A 25-second native run loaded all 1,973 entries from the installed add-on, using dummy audio and a separate test profile. Watchdog exit 3 was expected (the play CLI reports 1); this is not new menu, gameplay, audio or long-session validation. Subsequent UI automation timed out; a process sample showed the launcher's main thread idle, so the other post-import views were not visually revalidated.

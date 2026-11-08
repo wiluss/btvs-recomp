@@ -75,7 +75,7 @@ Choose **Play**. The launcher starts at the main menu with no time limit. A firs
 
 Keep the whole source folder: the launcher currently depends on it. Do not move just the `.app` to Applications. Your save profile is `private/profile/`; back up the whole directory while the game is closed.
 
-A fresh installation uses original game textures and text. Private development HD assets and reconstructed font masters are not in the release. Read the [user guide](GRAPHICS.md) before changing resolutions, controls or local packs.
+A fresh installation uses original game textures and text. To add the prepared textures, HUD and manually refined text, download the separate HD ZIP and follow the [HD add-on guide](HD-PACK.md). Editable font masters are not distributed. Read the [user guide](GRAPHICS.md) before changing resolutions, controls or local packs.
 
 ## Command-line equivalents
 

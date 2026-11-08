@@ -20,4 +20,4 @@ jobs:
       - name: Build and audit the source kit
         run: |
           python3 tools/source_release.py
-          python3 tools/source_release.py --audit artifacts/release-alpha/dist/Buffy-macOS-v0.1.0-alpha.1-source.zip
+          python3 tools/source_release.py --audit "artifacts/release-alpha/dist/Buffy-macOS-v$(cat VERSION)-source.zip"

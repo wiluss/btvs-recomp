@@ -60,10 +60,10 @@ struct LaunchSettings {
 @MainActor
 final class LauncherModel: ObservableObject {
     let root: URL
-    let logo: NSImage?
-    let mist: NSImage?
-    let veil: NSImage?
-    let decorativeFontAvailable: Bool
+    @Published private(set) var logo: NSImage?
+    @Published private(set) var mist: NSImage?
+    @Published private(set) var veil: NSImage?
+    @Published private(set) var decorativeFontAvailable = false
     @Published var showJournal = false
     @Published var showControls = false
     @Published var showSetup = false
@@ -73,7 +73,9 @@ final class LauncherModel: ObservableObject {
     @Published private(set) var setupFailed = false
     @Published private(set) var setupStage = "Vérification de l’ISO…"
     @Published private(set) var setupFraction: Double?
-    var busy: Bool { running || setupRunning }
+    @Published private(set) var hdRunning = false
+    @Published private(set) var hdStatus = ""
+    var busy: Bool { running || setupRunning || hdRunning }
     @Published var language: LauncherLanguage { didSet { if language != oldValue { saveLanguage() } } }
     @Published private(set) var controls = ControlProfile()
     @Published private(set) var controlsLoadFailed = false
@@ -91,14 +93,6 @@ final class LauncherModel: ObservableObject {
 
     init() {
         root = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
-        logo = NSImage(contentsOf: root.appendingPathComponent("private/launcher/logo.png"))
-        mist = NSImage(contentsOf: root.appendingPathComponent("private/launcher/mist-1.png"))
-        veil = NSImage(contentsOf: root.appendingPathComponent("private/launcher/mist-2.png"))
-        let font = root.appendingPathComponent("private/fonts/buffy-decorative/BuffyDecorative.ttf")
-        if FileManager.default.isReadableFile(atPath: font.path) {
-            CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil)
-        }
-        decorativeFontAvailable = NSFont(name: "BuffyDecorative-Regular", size: 20) != nil
         let languageURL = root.appendingPathComponent("private/config/launcher.json")
         let prefs = (try? Data(contentsOf: languageURL)).flatMap { try? JSONSerialization.jsonObject(with: $0) as? [String: String] }
         language = prefs?["language"].flatMap(LauncherLanguage.init(rawValue:)) ?? .system
@@ -113,6 +107,7 @@ final class LauncherModel: ObservableObject {
         }
         if !textAvailable { settings.textHD = false }
         if !localInstallationDetected { statusKey = "Installation locale à préparer" }
+        reloadArtwork()
     }
 
     func tr(_ key: String) -> String { LauncherText.text(key, language: language) }
@@ -142,7 +137,7 @@ final class LauncherModel: ObservableObject {
     }
 
     var campaignPack: URL {
-        root.appendingPathComponent("private/textures/campaign-ui-hd.xrtp")
+        assetURL("textures/campaign-ui-hd.xrtp")
     }
 
     var campaignAvailable: Bool {
@@ -150,7 +145,79 @@ final class LauncherModel: ObservableObject {
     }
 
     var textAvailable: Bool {
-        FileManager.default.isReadableFile(atPath: root.appendingPathComponent("private/textures/original-text-hd.xrtp").path)
+        FileManager.default.isReadableFile(atPath: assetURL("textures/original-text-hd.xrtp").path)
+    }
+
+    private func assetURL(_ name: String) -> URL {
+        let legacy = root.appendingPathComponent("private/" + name)
+        return FileManager.default.fileExists(atPath: legacy.path)
+            ? legacy : root.appendingPathComponent("private/hd/1/" + name)
+    }
+
+    private func reloadArtwork() {
+        logo = NSImage(contentsOf: assetURL("launcher/logo.png"))
+        mist = NSImage(contentsOf: assetURL("launcher/mist-1.png"))
+        veil = NSImage(contentsOf: assetURL("launcher/mist-2.png"))
+        let font = assetURL("fonts/buffy-decorative/BuffyDecorative.ttf")
+        if FileManager.default.isReadableFile(atPath: font.path) {
+            CTFontManagerRegisterFontsForURL(font as CFURL, .process, nil)
+        }
+        decorativeFontAvailable = NSFont(name: "BuffyDecorative-Regular", size: 20) != nil
+    }
+
+    func openHDDownload() {
+        NSWorkspace.shared.open(URL(string: "https://github.com/wiluss/Buffy-macOS/releases")!)
+    }
+
+    func chooseHDArchive() {
+        guard !busy, localInstallationDetected else { return }
+        let panel = NSOpenPanel()
+        panel.message = tr("Choisir le pack HD ZIP…")
+        panel.canChooseDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.allowedContentTypes = [.zip]
+        if panel.runModal() == .OK, let archive = panel.url { installHDArchive(archive) }
+    }
+
+    private func installHDArchive(_ archive: URL) {
+        guard process == nil else { return }
+        let task = Process()
+        task.executableURL = URL(fileURLWithPath: "/usr/bin/python3")
+        task.currentDirectoryURL = root
+        task.arguments = [root.appendingPathComponent("tools/hd_pack.py").path, "install", archive.path]
+        task.standardInput = FileHandle.nullDevice
+        let pipe = Pipe(); task.standardOutput = pipe; task.standardError = pipe
+        let reader = pipe.fileHandleForReading
+        transcript = ""; hdStatus = "Installation du pack HD…"
+        reader.readabilityHandler = { [weak self] handle in
+            let data = handle.availableData
+            guard !data.isEmpty else { handle.readabilityHandler = nil; return }
+            let text = String(decoding: data, as: UTF8.self)
+            Task { @MainActor in
+                guard let self, self.process === task || self.process == nil else { return }
+                self.transcript = String((self.transcript + text).suffix(18_000))
+            }
+        }
+        task.terminationHandler = { [weak self] finished in
+            Task { @MainActor in
+                guard let self, self.process === finished else { return }
+                self.hdRunning = false
+                self.hdStatus = finished.terminationStatus == 0 ? "Pack HD installé" : "Installation HD interrompue. Consulte le journal."
+                if finished.terminationStatus == 0 {
+                    self.settings.texturesHD = self.campaignAvailable
+                    self.settings.textHD = self.textAvailable
+                    self.reloadArtwork()
+                }
+                self.process = nil; self.output = nil
+            }
+        }
+        process = task; output = reader
+        do { try task.run(); hdRunning = true }
+        catch {
+            reader.readabilityHandler = nil; process = nil; output = nil
+            transcript = error.localizedDescription
+            hdStatus = "Installation HD interrompue. Consulte le journal."
+        }
     }
 
     func chooseISO() {

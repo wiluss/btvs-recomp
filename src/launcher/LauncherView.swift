@@ -187,6 +187,22 @@ struct LauncherView: View {
 
     private var packs: some View {
         VStack(spacing: 24) {
+            section(tr("Pack HD")) {
+                Text(tr("Textures, HUD et textes HD, avec les retouches manuelles."))
+                    .font(.system(size: 12)).foregroundStyle(Theme.muted)
+                HStack {
+                    Button(tr("Télécharger le pack HD…"), action: model.openHDDownload)
+                    Button(tr("Installer le pack HD…"), action: model.chooseHDArchive)
+                        .disabled(!model.localInstallationDetected)
+                    if model.hdRunning { ProgressView().controlSize(.small) }
+                }
+                if !model.hdStatus.isEmpty {
+                    Text(tr(model.hdStatus)).font(.system(size: 11)).foregroundStyle(Theme.muted)
+                } else {
+                    Text(model.campaignAvailable ? tr("Pack HD disponible") : tr("Installe le jeu, puis sélectionne le ZIP HD téléchargé."))
+                        .font(.system(size: 11)).foregroundStyle(Theme.muted)
+                }
+            }
             section(tr("Pack personnel")) {
                 HStack(spacing: 20) {
                     Image(systemName: "square.stack.3d.up").font(.system(size: 26)).foregroundStyle(Theme.violet)

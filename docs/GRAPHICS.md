@@ -14,7 +14,7 @@ Fullscreen, VSync and the FPS overlay are optional. The overlay reports engine/p
 
 ## Textures, text and skins
 
-A clean alpha installation uses original game assets. Private development HD packs, reconstructed font masters and game-derived launcher artwork are not included or downloaded. HD switches are disabled when the required local packs are absent.
+A clean alpha installation uses original game assets. The separate [HD add-on](HD-PACK.md) contains prepared textures, HUD, text and launcher artwork. Download its ZIP from the release page and import it with **Packs & skins → Install the HD pack…**. The launcher enables the HD switches after a successful installation. Editable reconstruction masters are not included.
 
 Select a local `.xrtp` file through Packs & skins, or drop one onto its panel. A pack must match this game/build and pass validation at launch. Selecting a file is not a claim that its contents have been verified. Do not upload game-derived packs to this project's issue tracker.
 

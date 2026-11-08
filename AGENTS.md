@@ -7,7 +7,7 @@
 - Permanent fixes belong in a versioned generator adapter or reviewed override, not in generated C. Document the calling convention, evidence and regression.
 - Define a reproducible case before optimizing. Preserve guest registers, flags, stack, memory effects and relevant floating-point semantics.
 - Keep generic runtime changes in separate reviewed patches. Do not silently change the dependency revision or reset existing work.
-- Never publish an ISO, XBE, MAP, save, disk image, asset, model weight, generated game source, recompiled game binary or secret. Keep long traces local under artifacts/.
+- Never publish an ISO, XBE, MAP, save, disk image, model weight, generated game source, recompiled game binary or secret. Keep assets out of Git and the source ZIP. The user explicitly authorized the selected prebuilt HD add-on as a separate release attachment; use only tools/hd_pack.py's reviewed allowlist. Keep editable masters private. Keep long traces local under artifacts/.
 - Distinguish host checks, compilation, menu, gameplay and long-session validation. Do not use a mock game screen as launch evidence.
 - After relevant changes run make test; for native code also run make host-probe. Update the roadmap with the actual validation scope.
 - Optional local-AI developer proposals need review. An AI model is not required for setup, tests or gameplay. Do not execute a model's suggested commands automatically.

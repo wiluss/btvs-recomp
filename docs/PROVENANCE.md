@@ -24,7 +24,7 @@ Controller remapping uses public generic input APIs, preserving keyboard merge, 
 
 The launcher icon is an original code-drawn B monogram, moon and stake. It is not an extracted or traced game logo. The release bundles no game-derived launcher art or reconstructed game font.
 
-Development experiments used local game textures, privately reconstructed font outlines and separately downloaded general-purpose upscaling tools/models. Their assets, masters, weights and resulting packs are not in this source release. Optional metadata and preparation tools do not make those private results distributable or reproducible through the public alpha setup.
+HD preparation used local game textures, manually reconstructed font outlines and separately downloaded general-purpose upscaling tools/models. The optional HD attachment contains selected prebuilt campaign/HUD/text packs, the reconstructed decorative font output and prepared launcher images. It does not contain editable masters, third-party font files, upscaler executables or model weights. This preserves manual refinements rather than claiming they can be regenerated from the ISO alone. Game-derived outputs retain their underlying rights; the MIT code license does not grant those rights or establish rights-holder authorization. The source ZIP and launcher bundle remain free of game-derived graphics.
 
 ## AI assistance and validation
 

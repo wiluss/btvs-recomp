@@ -22,7 +22,7 @@ Try a lower internal resolution before interpreting a heavy scene as a new perfo
 
 ## HD options are unavailable
 
-The source alpha includes no private HD packs, reconstructed font masters or game-derived launcher artwork. Original game graphics are the supported clean-install default. Do not copy private development assets into a release package. Compatible local XRTP packs can be selected separately.
+HD content is a separate optional download. Finish game setup, then import the matching HD ZIP through **Packs & skins → Install the HD pack…**. Read the [HD guide](HD-PACK.md). A checksum, game-edition or recipe mismatch is refused; a modified existing add-on is preserved. Existing local assets take precedence over the installed add-on. Compatible custom XRTP packs can still be selected separately.
 
 ## Save or disk problems
 

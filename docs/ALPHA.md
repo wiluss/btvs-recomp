@@ -1,8 +1,8 @@
 # Alpha release status
 
-Version: `0.1.0-alpha.1`, source-only prerelease candidate.
+Version: `0.1.0-alpha.2`, source-build prerelease candidate with an optional HD add-on.
 
-Players build locally from their own supported ISO. The release contains original project source, public build recipes, metadata, English documentation, runtime patches and license notices. No ISO, XBE, MAP, assets, save, private HD master, model, generated game source or recompiled game executable is included.
+Players build locally from their own supported ISO. The source kit contains original project source, public build recipes, metadata, English documentation, runtime patches and license notices. A separate optional HD ZIP contains prepared game-derived textures, HUD, text and launcher artwork; see [HD-PACK.md](HD-PACK.md). No ISO, XBE, MAP, save, editable HD master, model, generated game source or recompiled game executable is included in either attachment.
 
 ## Verified on the development Mac
 
@@ -17,7 +17,7 @@ Only one Mac is available for testing. Other hardware and macOS versions need ex
 
 ## Public setup scope
 
-The current installer runs inside the extracted source folder and requires native build prerequisites. It is not an independently installed app in Applications. A clean install uses original game graphics; private development HD masters are not shipped. The direct mission diagnostic and its captured bootstrap page are outside the player setup path.
+The current installer runs inside the extracted source folder and requires native build prerequisites. It is not an independently installed app in Applications. A clean install uses original game graphics until the optional HD add-on is imported. Editable development masters are not shipped. The direct mission diagnostic and its captured bootstrap page are outside the player setup path.
 
 Known issues include audio stutter, an intermittent audio crash, resolution/effect-dependent frame-rate swings and unconfirmed long sessions. See [troubleshooting](TROUBLESHOOTING.md).
 

@@ -2,7 +2,7 @@
 
 An independent Apple Silicon port of **Buffy the Vampire Slayer (2002, original Xbox)**, built with a pinned generic XboxRecomp runtime and Metal rendering.
 
-**Source alpha — `0.1.0-alpha.1`.** Build the game locally from your own compatible Xbox disc image. This project does not provide or download the game.
+**Source alpha — `0.1.0-alpha.2`.** Build the game locally from your own compatible Xbox disc image. This project does not provide or download the game.
 
 ## What you need
 
@@ -47,7 +47,7 @@ When setup finishes, choose **Play**. A new player starts at the main menu with 
 - Persistent saves and lossless compression of dormant Xbox partition images.
 - Local XRTP texture packs and optional arena access.
 
-**A clean source installation uses original game textures and text.** The development machine's reconstructed fonts, HD packs, logo and background images are not distributed. Their private masters are not yet reproducible through the public setup; the corresponding options remain disabled when packs are absent. The launcher has an original, code-drawn fallback design and icon.
+**A clean source installation uses original game textures and text.** An [optional HD add-on](docs/HD-PACK.md), downloaded separately from the release, contains the prepared textures, HUD, reconstructed text and launcher artwork, including manual refinements. Install its ZIP through **Packs & skins → Install the HD pack…** after setting up the game. The corresponding switches remain disabled until packs are present. The source kit and launcher bundle contain no game-derived graphics; the launcher has an original fallback design and icon.
 
 ## Alpha limitations
 
