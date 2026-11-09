@@ -1,10 +1,14 @@
-# btvs-recomp 0.1.0-alpha.5
+# btvs-recomp 0.1.0-alpha.6
 
 First source alpha for **Buffy the Vampire Slayer (2002, original Xbox)** on Apple Silicon.
 
+## README update
+
+This candidate adds four owner-supplied screenshots and a prominent disclosure of substantial AI assistance. Game runtime and HD v1 content are unchanged.
+
 ## Installation
 
-Download the attached `btvs-recomp-v0.1.0-alpha.5-source.zip` and `SHA256SUMS`. Verify the checksum, extract the source folder and follow `README.md` or `docs/SETUP.md`.
+Download the attached `btvs-recomp-v0.1.0-alpha.6-source.zip` and `SHA256SUMS`. Verify the checksum, extract the source folder and follow `README.md` or `docs/SETUP.md`.
 
 You need your own supported USA ISO, Apple build tools and the listed Homebrew packages. Run `python3 tools/bootstrap_runtime.py`, build the launcher with `make launcher`, then choose **Set up from an ISO…**. The game is generated and compiled locally. No game download is provided.
 
@@ -16,7 +20,7 @@ You need your own supported USA ISO, Apple build tools and the listed Homebrew p
 - Keyboard/controller remapping and a five-language launcher.
 - Original project source under MIT, separate runtime patches and third-party notices.
 
-No ISO, game executable, MAP, generated game source, save, disk image, model weight or editable development master is attached. The source ZIP includes only the approved project wordmark and README graphics; gameplay HD data is separate.
+No ISO, game executable, MAP, generated game source, save, disk image, model weight or editable development master is attached. The source ZIP includes only the approved project branding and four documentation screenshots; gameplay HD data is separate.
 
 ## Optional HD add-on
 

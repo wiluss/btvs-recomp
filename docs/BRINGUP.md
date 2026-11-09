@@ -47,3 +47,7 @@ For `0.1.0-alpha.4`, 151 tests, the ARM64 host probe and launcher build passed. 
 The alpha.5 logo uses matching neutral-grey gradients, light bevel edges and darker offset shadows in SVG and SwiftUI. Both approved PNGs remain byte-identical. Browser and native visual checks confirmed the final effect after fixing a native mask-transparency defect. This presentation-only change does not establish new gameplay, audio or runtime validation.
 
 The final alpha.5 palette was lightened following user feedback while retaining bevel highlights and shadows. The final native/browser render, 151 tests and ARM64 host probe passed. No new game launch or gameplay validation is claimed.
+
+## README screenshots and AI disclosure
+
+For alpha.6, 152 tests passed with the existing macOS Python environment, including a new source-kit regression for the exact approved screenshot paths and size limits. The Homebrew Python and .venv lacked Pillow; those initial runs are not counted as successful. The GitHub-rendered README was inspected locally in a browser. All four captures are byte-identical to the supplied originals. No native code changed, so no new host probe or launcher build was required. This documentation update does not establish new gameplay, audio or performance validation.

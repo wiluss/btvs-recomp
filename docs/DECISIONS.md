@@ -20,3 +20,7 @@
 14. Include the explicitly requested original-style moon as a separate branding layer behind the unchanged wordmark. Permit only docs/branding/moon.png in addition to the existing graphics allowlist. The self-contained presentation SVG has a 6 MiB limit to accommodate its two embedded PNGs; other source/member limits remain unchanged.
 
 15. Present the existing wordmark with neutral silver-grey gradients, edge highlights and darker offset shadows, as requested by the user. Keep the wordmark and moon PNGs unchanged; apply matching SVG/SwiftUI presentation effects. No new bitmap or runtime change.
+
+## README screenshots and AI disclosure — November 9, 2026
+
+The user requested a visual English README, a prominent AI-assistance disclosure and four supplied screenshots. Permit only the four documented docs/screenshots PNGs, unchanged, in Git and the source kit. Each has an 8 MiB ceiling; the 64 MiB archive limit and all other asset exclusions remain. Screenshot game imagery retains its underlying rights and is not covered by the MIT code license. FPS overlays are not benchmarks. Keep the repository private and the release in draft for the user to publish.

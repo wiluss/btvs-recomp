@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.5",
+  "version": "0.1.0-alpha.6",
   "files": [
     {
       "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -168,6 +168,26 @@
     {
       "source": "docs/branding/status.svg",
       "path": "docs/branding/status.svg"
+    },
+    {
+      "source": "docs/screenshots/README.md",
+      "path": "docs/screenshots/README.md"
+    },
+    {
+      "source": "docs/screenshots/combat-courtyard.png",
+      "path": "docs/screenshots/combat-courtyard.png"
+    },
+    {
+      "source": "docs/screenshots/combat-magic.png",
+      "path": "docs/screenshots/combat-magic.png"
+    },
+    {
+      "source": "docs/screenshots/forest.png",
+      "path": "docs/screenshots/forest.png"
+    },
+    {
+      "source": "docs/screenshots/launcher.png",
+      "path": "docs/screenshots/launcher.png"
     },
     {
       "source": "patches/xboxrecomp/0001-screen-w-infinity.patch",

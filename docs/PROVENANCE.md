@@ -35,3 +35,5 @@ Detailed private development histories, captures, generated snippets and long tr
 The user subsequently requested the original game's violet moon behind the selected wordmark. The built-in image editor isolated the moon and reconstructed its obscured portions. The approved moon layer is included under docs/branding, while the wordmark PNG remains unchanged. SVG and SwiftUI compose the two without redrawing the lettering.
 
 The silver-grey raised-letter treatment is an original SVG/SwiftUI presentation effect applied to the existing lettering mask. It does not regenerate either approved PNG or alter the game renderer.
+
+The four README screenshots were supplied by the project owner and explicitly selected on November 9, 2026. They are copied unchanged under docs/screenshots; see that folder's README for scope and rights. They show actual gameplay with optional HD content, not generated scenes or benchmark evidence. Codex and local Qwen assisted development and documentation; AI tools also assisted branding and HD preparation, alongside manual refinements. AI is not required by the player.

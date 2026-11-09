@@ -21,6 +21,9 @@ BRANDING_PNGS={BRANDING_LOGO,'docs/branding/moon.png'}
 BRANDING_DISPLAY='docs/branding/logo-display.svg'
 BRANDING_SVGS={f'docs/branding/{name}.svg' for name in ('download','setup','hd','issues','status')}|{BRANDING_DISPLAY}
 BRANDING_FILES=BRANDING_SVGS|BRANDING_PNGS
+SCREENSHOT_PNGS={f'docs/screenshots/{name}.png' for name in
+                 ('launcher','forest','combat-magic','combat-courtyard')}
+APPROVED_IMAGES=BRANDING_FILES|SCREENSHOT_PNGS
 BLOCKED_DIRS={'.git','.venv','private','generated','build','artifacts','logs','__pycache__','vendor'}
 BLOCKED_SUFFIXES={'.iso','.xiso','.xbe','.map','.ses','.img','.xrtp','.png','.jpg','.jpeg','.bmp',
                   '.ttf','.otf','.icns','.gguf','.safetensors','.mlmodel','.log','.dylib','.a','.o','.pyc','.zip'}
@@ -30,8 +33,8 @@ SECRET=re.compile(r'(?:gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{32,})')
 
 
 def check_text(data,name):
-    if name in BRANDING_PNGS:
-        # Approved wordmark/moon only. Other game PNGs remain forbidden.
+    if name in BRANDING_PNGS|SCREENSHOT_PNGS:
+        # Exact approved branding and user-supplied README captures only.
         if len(data)<33 or data[:8]!=b'\x89PNG\r\n\x1a\n' or data[12:16]!=b'IHDR':
             raise ValueError('Invalid branding PNG')
         w,h=struct.unpack('>II',data[16:24])
@@ -76,11 +79,16 @@ def checked_path(value):
     p=PurePosixPath(value)
     if (p.is_absolute() or any(s in ('','.','..') for s in value.split('/'))
             or any(s.casefold() in BLOCKED_DIRS for s in p.parts)
-            or (p.suffix.casefold() in BLOCKED_SUFFIXES and value not in BRANDING_FILES)):
+            or (p.suffix.casefold() in BLOCKED_SUFFIXES and value not in APPROVED_IMAGES)):
         raise ValueError('Forbidden release path: '+value)
-    if p.suffix.casefold() not in ALLOWED_SUFFIXES and value not in BRANDING_FILES|{'LICENSE','VERSION','Makefile','.gitignore','.gitmodules'}:
+    if p.suffix.casefold() not in ALLOWED_SUFFIXES and value not in APPROVED_IMAGES|{'LICENSE','VERSION','Makefile','.gitignore','.gitmodules'}:
         raise ValueError('Unexpected release file type: '+value)
     return p
+
+
+def file_limit(name):
+    if name in SCREENSHOT_PNGS:return 8*1024**2
+    return 6*1024**2 if name==BRANDING_DISPLAY else 2*1024**2
 
 
 def source_bytes(root,name):
@@ -88,7 +96,7 @@ def source_bytes(root,name):
     for part in relative.parts:
         path=path/part
         if path.is_symlink():raise ValueError('Symbolic release source refused: '+name)
-    limit=6*1024**2 if name==BRANDING_DISPLAY else 2*1024**2
+    limit=file_limit(name)
     if not stat.S_ISREG(path.stat().st_mode) or path.stat().st_size>limit:
         raise ValueError('Unexpected release source: '+name)
     data=path.read_bytes()
@@ -158,7 +166,7 @@ def audit(archive):
         for info in z.infolist():
             if info.filename==MANIFEST:continue
             checked_path(info.filename)
-            limit=6*1024**2 if info.filename==BRANDING_DISPLAY else 2*1024**2
+            limit=file_limit(info.filename)
             if info.file_size>limit or not stat.S_ISREG(info.external_attr>>16):raise ValueError('Unexpected ZIP entry')
             data=z.read(info)
             if len(data)!=files[info.filename]['bytes'] or hashlib.sha256(data).hexdigest()!=files[info.filename]['sha256']:

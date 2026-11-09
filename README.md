@@ -16,9 +16,16 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 <a href="https://github.com/wiluss/btvs-recomp/issues/new/choose"><img src="docs/branding/issues.svg" alt="Report a bug" width="190"></a>
 </p>
 
-**Source alpha `0.1.0-alpha.5`** · Unofficial fan project · No game download
+**Source alpha `0.1.0-alpha.6`** · Unofficial fan project · No game download
 
 </div>
+
+> [!IMPORTANT]
+> **Made with substantial AI assistance**
+>
+> This experimental fan project uses **Codex and local Qwen** for analysis, code proposals, debugging and documentation. AI tools also helped prepare the branding and optional HD artwork, alongside manual refinements.
+>
+> Changes are reviewed and tested, with gameplay feedback from the project owner. These checks do not establish complete campaign compatibility or long-session stability. **No AI model or AI service is required to install or play.**
 
 ## Sunnydale, on your Mac
 
@@ -28,9 +35,28 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 
 A five-language launcher follows a supported system language until you choose one. Persistent saves, fullscreen, VSync, an FPS overlay and optional arena access are included.
 
+## A glimpse of Sunnydale
+
+<p align="center">
+<img src="docs/screenshots/launcher.png" alt="btvs-recomp launcher with its violet moon, silver logo and Play, Options, and Packs & skins menus" width="820">
+<br><sub>The launcher — display options, controls, saves and optional packs in one place.</sub>
+</p>
+
+| Explore Sunnydale | Fight back |
+| :---: | :---: |
+| <img src="docs/screenshots/forest.png" alt="Buffy exploring a wooded path with the HUD and camera tutorial visible" width="460"> | <img src="docs/screenshots/combat-magic.png" alt="Buffy using a glowing purple combat move against a vampire inside the school" width="460"> |
+| A quiet moment on the trail. | A less quiet moment at school. |
+
+<p align="center">
+<img src="docs/screenshots/combat-courtyard.png" alt="Buffy fighting a vampire outdoors, with both characters' health bars visible" width="960">
+<br><sub>One more night in Sunnydale.</sub>
+</p>
+
+These are unedited captures supplied by the project owner, showing the launcher and actual gameplay with optional HD content. The FPS overlay records individual scenes, not a benchmark or a guaranteed frame rate. [Screenshot provenance →](docs/screenshots/README.md)
+
 ## Start playing
 
-**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.5-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
+**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.6-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
 
 **2. Build the launcher.** You need an Apple Silicon Mac, Apple's Command Line Tools and the listed Homebrew packages. Follow the [installation guide](docs/SETUP.md), or expand the commands below.
 
@@ -63,7 +89,7 @@ Keep the source folder intact: this alpha's launcher runs from it. No AI model o
 
 Download the optional **`btvs-recomp-HD-v1.zip`** (about 676 MB), then choose **Packs & skins → Install the HD pack…**. The prepared add-on preserves our manual refinements; it needs no AI tools on your Mac. Textures and text can be switched off independently. [HD installation and scope →](docs/HD-PACK.md)
 
-The source kit contains the project logo and README graphics, with gameplay graphics supplied separately by your ISO and the optional HD add-on.
+The source kit includes project branding and the four documentation screenshots above. Playable game content comes from your own ISO; the optional HD add-on is a separate download.
 
 ## Before you enter the Hellmouth
 
@@ -87,4 +113,4 @@ Based on the pinned generic [XboxRecomp macOS/Metal fork](https://github.com/ape
 
 [Development](docs/DEVELOPMENT.md) · [Provenance](docs/PROVENANCE.md) · [Roadmap](docs/ROADMAP.md) · [Release notes](release/NOTES.md)
 
-Original project code is [MIT licensed](LICENSE); third-party components keep their own licenses. The game-derived HD add-on and title-inspired branding are not relicensed under MIT. Read the [notices](THIRD_PARTY_NOTICES.md). This project is not affiliated with the original rights holders.
+Original project code is [MIT licensed](LICENSE); third-party components keep their own licenses. The game-derived HD add-on, title-inspired branding and game imagery shown in the screenshots are not relicensed under MIT. Read the [notices](THIRD_PARTY_NOTICES.md). This project is not affiliated with the original rights holders.

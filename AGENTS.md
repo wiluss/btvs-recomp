@@ -15,3 +15,5 @@
 - The user explicitly requested the title-inspired btvs-recomp wordmark and visual README. Only the selected logo and passive SVG buttons/status strip under docs/branding are allowed in Git and the source kit. This does not authorize other game images or HD data in source.
 
 - The user also explicitly requested the original-style moon behind that wordmark. docs/branding/moon.png is the only additional approved bitmap; keep the wordmark unchanged and compose the layers in the presentation/launcher.
+
+- README screenshots: the user explicitly selected docs/screenshots/launcher.png, forest.png, combat-magic.png and combat-courtyard.png for documentation. Only those exact PNG paths may ship in Git and the source kit, unchanged from the supplied captures. This does not permit other game assets or installable HD data.

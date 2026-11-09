@@ -66,3 +66,18 @@ class SourceReleaseTests(unittest.TestCase):
         for svg in ['<svg><script/></svg>','<svg><image href="https://example.com"/></svg>',
                     '<svg onload="alert(1)"/>']:
             with self.assertRaises(ValueError):release.check_text(svg.encode(),'docs/branding/setup.svg')
+
+    def test_selected_readme_captures_do_not_open_the_asset_allowlist(self):
+        for name in release.SCREENSHOT_PNGS:
+            self.assertEqual(str(release.checked_path(name)),name)
+            png=release.source_bytes(ROOT,name)
+            self.assertGreater(len(png),2*1024**2)
+            with self.assertRaises(ValueError):release.check_text(png+b'XBEH',name)
+        for name in ['docs/screenshots/other.png','docs/screenshots/forest.PNG',
+                     'docs/screenshots/forest.jpg','docs/textures/forest.png']:
+            with self.subTest(name=name),self.assertRaises(ValueError):release.checked_path(name)
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);name='docs/screenshots/forest.png'
+            path=root/name;path.parent.mkdir(parents=True)
+            with path.open('wb') as stream:stream.truncate(8*1024**2+1)
+            with self.assertRaises(ValueError):release.source_bytes(root,name)

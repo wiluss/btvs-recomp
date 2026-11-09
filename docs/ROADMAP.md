@@ -34,3 +34,7 @@ Windows, Linux and Android game ports, quicksave, presence integration and a mod
 ## Project identity
 
 The project and repository are named btvs-recomp. The English README uses a user-requested monochrome Buffy-style lettering adaptation and violet/red navigation graphics. The launcher displays the new name and wordmark. The optional HD v1 payload retains its original bytes under the new filename.
+
+## README presentation
+
+The alpha.6 candidate adds an English AI-assistance disclosure and four unedited owner-supplied launcher/gameplay captures. The exact screenshot paths are audited as a narrow documentation exception; other game assets remain excluded from source. The source packaging regression and the full 152-test suite passed using the existing macOS Python environment, and the GitHub-rendered markup was inspected in a browser. No runtime, HD payload, gameplay or audio change is claimed. Publication remains a separate user action.
