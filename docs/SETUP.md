@@ -95,3 +95,27 @@ The direct `mission` diagnostic is not the installation path. It still needs pri
 ## What was tested
 
 An isolated source installation without prior private data, generated files, build products, logs or Python environment was built from the user's ISO. Menu, new-save creation and Load Game into the first level's cutscene were confirmed. Setup testing used dummy audio and scripted runtime input. A second Mac, older macOS versions, the full campaign and long-session stability remain unverified.
+
+## Update an existing installation
+
+For the 4K widescreen fix and other launcher-only updates, **do not set up the ISO again and do not rebuild the game**.
+
+1. Download the newest attached source ZIP, verify its checksum and extract it into a **separate folder**.
+2. Close the game and the old launcher.
+3. Double-click **Update btvs-recomp.command** inside the new folder. A small Terminal window opens automatically; you do not need to type commands.
+4. In the folder picker, select your **existing project folder** containing `private`, `build` and `tools` — not the `.app` or the new download folder.
+5. Wait for “Update installed”, then reopen `build/btvs-recomp.app` in the existing folder.
+
+Only the launcher is compiled. The imported ISO files, game binary, generated code, runtime, saves, HD packs and settings are retained. An earlier installation's Apple build tools are still required. The update is designed for the attached official source kits, which include `RELEASE_MANIFEST.json`; Git clones and GitHub's automatic source archives require manual updates.
+
+Once this launcher is installed, use the circular-arrow button at the bottom of its window, or **Help → Check for updates**. Review the release notes and choose **Install update**. The launcher downloads the official source ZIP, checks its GitHub SHA-256 digest and archive manifest, builds in a staging folder and installs the update. Quit and reopen the launcher after success.
+
+This first updater supports **launcher-only releases**. It refuses changed game/runtime build inputs and locally modified source files; those need a manual update. It does not silently start a game recompilation. It checks only when you request it and includes newer alpha releases.
+
+Build logs, previous source files and the previous launcher are retained under `artifacts/launcher-update-*/`. Failed builds leave the installed version intact; installation errors trigger rollback. If macOS or the updater is forcibly stopped during installation, do not remove the update lock or backups. After the updater process has stopped, recover the interrupted transaction from the project folder with:
+
+```sh
+/usr/bin/python3 tools/update_launcher.py --target "$PWD" --recover
+```
+
+If that helper is unavailable after an interruption, run the helper in the newly downloaded kit with `--target` pointing to the existing folder. Keep backups until the new launcher has been tested. Normal updates do not copy or compress your save disks.

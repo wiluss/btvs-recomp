@@ -73,6 +73,8 @@ final class LauncherModel: ObservableObject {
     @Published var showJournal = false
     @Published var showControls = false
     @Published var showSetup = false
+    @Published var showUpdates = false
+    @Published var updateRunning = false
     @Published var setupISO: URL?
     @Published private(set) var setupRunning = false
     @Published private(set) var setupComplete = false
@@ -81,7 +83,7 @@ final class LauncherModel: ObservableObject {
     @Published private(set) var setupFraction: Double?
     @Published private(set) var hdRunning = false
     @Published private(set) var hdStatus = ""
-    var busy: Bool { running || setupRunning || hdRunning }
+    var busy: Bool { running || setupRunning || hdRunning || updateRunning }
     @Published var language: LauncherLanguage { didSet { if language != oldValue { saveLanguage() } } }
     @Published private(set) var controls = ControlProfile()
     @Published private(set) var controlsLoadFailed = false
@@ -351,7 +353,7 @@ final class LauncherModel: ObservableObject {
     }
 
     func launch() {
-        guard process == nil, !showControls, !showJournal, !showSetup else { return }
+        guard process == nil, !showControls, !showJournal, !showSetup, !showUpdates else { return }
         launchFailed = false
         exitCode = nil
         let script = root.appendingPathComponent("tools/play.py")
@@ -435,6 +437,8 @@ struct BuffyLauncher: App {
             CommandGroup(after: .help) {
                 Button(model.tr("Journal de session")) { model.showJournal = true }.disabled(model.showControls || model.showSetup)
                     .keyboardShortcut("j", modifiers: [.command, .option])
+                Button(model.tr("Rechercher une mise à jour")) { model.showUpdates = true }
+                    .disabled(model.busy || model.showControls || model.showSetup || model.showJournal)
                 Button(model.tr("Guide d’installation")) { model.openPreparationGuide() }
                 Button(model.tr("Préparer depuis une ISO…")) { model.showSetup = true }
                     .disabled(model.busy || model.showControls || model.showJournal)

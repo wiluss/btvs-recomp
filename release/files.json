@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.7",
+  "version": "0.1.0-alpha.8",
   "files": [
     {
       "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -40,6 +40,10 @@
     {
       "source": "THIRD_PARTY_NOTICES.md",
       "path": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "source": "Update btvs-recomp.command",
+      "path": "Update btvs-recomp.command"
     },
     {
       "source": "VERSION",
@@ -350,6 +354,10 @@
       "path": "src/launcher/SetupView.swift"
     },
     {
+      "source": "src/launcher/UpdatesView.swift",
+      "path": "src/launcher/UpdatesView.swift"
+    },
+    {
       "source": "tests/apu_image.c",
       "path": "tests/apu_image.c"
     },
@@ -436,6 +444,10 @@
     {
       "source": "tests/test_launcher_localization.py",
       "path": "tests/test_launcher_localization.py"
+    },
+    {
+      "source": "tests/test_launcher_update.py",
+      "path": "tests/test_launcher_update.py"
     },
     {
       "source": "tests/test_letterbox_fix.py",
@@ -676,6 +688,10 @@
     {
       "source": "tools/ui_hd.py",
       "path": "tools/ui_hd.py"
+    },
+    {
+      "source": "tools/update_launcher.py",
+      "path": "tools/update_launcher.py"
     },
     {
       "source": "tools/widescreen_fix.py",

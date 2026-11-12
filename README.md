@@ -16,7 +16,7 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 <a href="https://github.com/wiluss/btvs-recomp/issues/new/choose"><img src="docs/branding/issues.svg" alt="Report a bug" width="190"></a>
 </p>
 
-**Source alpha `0.1.0-alpha.7`** · Unofficial fan project · No game download
+**Source alpha `0.1.0-alpha.8`** · Unofficial fan project · No game download
 
 </div>
 
@@ -54,9 +54,15 @@ A five-language launcher follows a supported system language until you choose on
 
 These are unedited captures supplied by the project owner, showing the launcher and actual gameplay with optional HD content. The FPS overlay records individual scenes, not a benchmark or a guaranteed frame rate. [Screenshot provenance →](docs/screenshots/README.md)
 
+## Already playing? Update the launcher
+
+Download and extract the latest source ZIP into a separate folder, close the game, then double-click **Update btvs-recomp.command**. Select your existing project folder and let it rebuild **only the launcher**. Your game, saves and HD pack are retained; no ISO reimport is needed. [Update instructions →](docs/SETUP.md#update-an-existing-installation)
+
+After this update, use the launcher's circular-arrow button to check for future launcher updates and install them from the app.
+
 ## Start playing
 
-**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.7-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
+**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.8-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
 
 **2. Build the launcher.** You need an Apple Silicon Mac, Apple's Command Line Tools and the listed Homebrew packages. Follow the [installation guide](docs/SETUP.md), or expand the commands below.
 
@@ -105,7 +111,7 @@ The isolated ISO setup reached the menu, created the first save and loaded it in
 
 ## Keep your progress
 
-Back up the **whole `private/profile/` folder**, including title metadata and disk files. Do not delete it when updating. Setup preserves an existing installation; this alpha has no automatic upgrade or uninstall flow.
+Back up the **whole `private/profile/` folder**, including title metadata and disk files. Do not delete it when updating. Setup preserves an existing installation. The new updater supports launcher-only updates; game/runtime upgrades and uninstall still require manual steps.
 
 For help, read the [user guide](docs/GRAPHICS.md) and [reporting instructions](docs/TROUBLESHOOTING.md#reporting-a-problem). Never upload your ISO, game files, saves, disk images or complete development folder.
 

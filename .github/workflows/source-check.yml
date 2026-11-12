@@ -17,6 +17,7 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p test_source_release.py -v
           python3 -m unittest discover -s tests -p test_bootstrap_runtime.py -v
+          python3 -m unittest discover -s tests -p test_launcher_update.py -v
       - name: Build and audit the source kit
         run: |
           python3 tools/source_release.py

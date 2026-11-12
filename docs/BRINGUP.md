@@ -51,3 +51,7 @@ The final alpha.5 palette was lightened following user feedback while retaining 
 ## README screenshots and AI disclosure
 
 For alpha.6, 152 tests passed with the existing macOS Python environment, including a new source-kit regression for the exact approved screenshot paths and size limits. The Homebrew Python and .venv lacked Pillow; those initial runs are not counted as successful. The GitHub-rendered README was inspected locally in a browser. All four captures are byte-identical to the supplied originals. No native code changed, so no new host probe or launcher build was required. This documentation update does not establish new gameplay, audio or performance validation.
+
+## Launcher-only updater
+
+Alpha.8: 163 tests and ARM64 host probe passed. A real launcher build and migration from an isolated official alpha.6 kit succeeded, preserving sentinel game, profile, HD, preferences, generated-source and runtime files. The native update screen and current-version check were inspected. The ten updater tests include injected failures and recovery. No real player save was used in the migration test, and no new gameplay or cross-machine stability claim is made.

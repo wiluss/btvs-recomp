@@ -48,6 +48,7 @@ struct LauncherView: View {
         .environment(\.locale, Locale(identifier: model.language.rawValue))
         .sheet(isPresented: $model.showJournal) { journal }
         .sheet(isPresented: $model.showControls) { ControlsView(model: model) }
+        .sheet(isPresented: $model.showUpdates) { UpdatesView(model: model) }
         .sheet(isPresented: $model.showSetup) { SetupView(model: model) }
         .alert(tr("Erreur"), isPresented: Binding(get: { model.preferencesError != nil }, set: { if !$0 { model.preferencesError = nil } })) {
             Button("OK") { model.preferencesError = nil }
@@ -244,6 +245,11 @@ struct LauncherView: View {
             } label: {
                 Label(model.language.rawValue.uppercased(), systemImage: "globe")
             }.menuStyle(.borderlessButton).frame(width: 66).help(tr("Langue"))
+            Button { model.showUpdates = true } label: {
+                Image(systemName: "arrow.triangle.2.circlepath")
+            }.buttonStyle(.plain).disabled(model.busy)
+                .help(tr("Rechercher une mise à jour"))
+                .accessibilityLabel(tr("Rechercher une mise à jour"))
             Spacer()
             if model.running || model.launchFailed || !model.transcript.isEmpty {
                 Button { model.showJournal = true } label: {

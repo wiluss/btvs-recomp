@@ -126,7 +126,15 @@
     "Choisir le pack HD ZIP…": "Choisir le pack HD ZIP…",
     "Installation du pack HD…": "Installation du pack HD…",
     "Pack HD installé": "Pack HD installé",
-    "Installation HD interrompue. Consulte le journal.": "Installation HD interrompue. Consulte le journal."
+    "Installation HD interrompue. Consulte le journal.": "Installation HD interrompue. Consulte le journal.",
+    "Mises à jour": "Mises à jour",
+    "Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés.": "Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés.",
+    "Installation du lanceur… Gardez cette fenêtre ouverte.": "Installation du lanceur… Gardez cette fenêtre ouverte.",
+    "Recherche d’une mise à jour…": "Recherche d’une mise à jour…",
+    "Votre version est à jour.": "Votre version est à jour.",
+    "Mise à jour installée. Quittez puis rouvrez le lanceur.": "Mise à jour installée. Quittez puis rouvrez le lanceur.",
+    "Installer la mise à jour": "Installer la mise à jour",
+    "Rechercher une mise à jour": "Rechercher une mise à jour"
   },
   "en": {
     "Jouer": "Play",
@@ -255,7 +263,15 @@
     "Choisir le pack HD ZIP…": "Choose the HD ZIP pack…",
     "Installation du pack HD…": "Installing the HD pack…",
     "Pack HD installé": "HD Pack installed",
-    "Installation HD interrompue. Consulte le journal.": "HD installation interrupted. Check the log."
+    "Installation HD interrompue. Consulte le journal.": "HD installation interrupted. Check the log.",
+    "Mises à jour": "Updates",
+    "Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés.": "The launcher is updated without rebuilding the game. Your saves and packs are preserved.",
+    "Installation du lanceur… Gardez cette fenêtre ouverte.": "Installing the launcher… Keep this window open.",
+    "Recherche d’une mise à jour…": "Checking for an update…",
+    "Votre version est à jour.": "You are up to date.",
+    "Mise à jour installée. Quittez puis rouvrez le lanceur.": "Update installed. Quit and reopen the launcher.",
+    "Installer la mise à jour": "Install update",
+    "Rechercher une mise à jour": "Check for updates"
   },
   "es": {
     "Jouer": "Jugar",
@@ -384,7 +400,15 @@
     "Choisir le pack HD ZIP…": "Seleccionar el pack ZIP HD…",
     "Installation du pack HD…": "Instalando el pack HD…",
     "Pack HD installé": "Pack HD instalado",
-    "Installation HD interrompue. Consulte le journal.": "Instalación de HD interrumpida. Consulta el registro."
+    "Installation HD interrompue. Consulte le journal.": "Instalación de HD interrumpida. Consulta el registro.",
+    "Mises à jour": "Actualizaciones",
+    "Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés.": "El lanzador se actualiza sin recompilar el juego. Se conservan tus partidas y paquetes.",
+    "Installation du lanceur… Gardez cette fenêtre ouverte.": "Instalando el lanzador… Mantén esta ventana abierta.",
+    "Recherche d’une mise à jour…": "Buscando una actualización…",
+    "Votre version est à jour.": "Tienes la última versión.",
+    "Mise à jour installée. Quittez puis rouvrez le lanceur.": "Actualización instalada. Cierra y vuelve a abrir el lanzador.",
+    "Installer la mise à jour": "Instalar actualización",
+    "Rechercher une mise à jour": "Buscar actualizaciones"
   },
   "de": {
     "Jouer": "Spielen",
@@ -513,7 +537,15 @@
     "Choisir le pack HD ZIP…": "Wähle das HD-ZIP-Paket…",
     "Installation du pack HD…": "HD-Paket wird installiert…",
     "Pack HD installé": "HD-Paket installiert",
-    "Installation HD interrompue. Consulte le journal.": "HD-Installation unterbrochen. Siehe Protokoll."
+    "Installation HD interrompue. Consulte le journal.": "HD-Installation unterbrochen. Siehe Protokoll.",
+    "Mises à jour": "Updates",
+    "Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés.": "Der Launcher wird aktualisiert, ohne das Spiel neu zu kompilieren. Spielstände und Pakete bleiben erhalten.",
+    "Installation du lanceur… Gardez cette fenêtre ouverte.": "Launcher wird installiert… Dieses Fenster geöffnet lassen.",
+    "Recherche d’une mise à jour…": "Suche nach einem Update…",
+    "Votre version est à jour.": "Deine Version ist aktuell.",
+    "Mise à jour installée. Quittez puis rouvrez le lanceur.": "Update installiert. Launcher beenden und erneut öffnen.",
+    "Installer la mise à jour": "Update installieren",
+    "Rechercher une mise à jour": "Nach Updates suchen"
   },
   "it": {
     "Jouer": "Gioca",
@@ -642,6 +674,14 @@
     "Choisir le pack HD ZIP…": "Scegli il pack ZIP HD…",
     "Installation du pack HD…": "Installazione del pack HD in corso…",
     "Pack HD installé": "Pack HD installato",
-    "Installation HD interrompue. Consulte le journal.": "Installazione HD interrotta. Consulta il registro."
+    "Installation HD interrompue. Consulte le journal.": "Installazione HD interrotta. Consulta il registro.",
+    "Mises à jour": "Aggiornamenti",
+    "Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés.": "Il launcher viene aggiornato senza ricompilare il gioco. Salvataggi e pacchetti vengono conservati.",
+    "Installation du lanceur… Gardez cette fenêtre ouverte.": "Installazione del launcher… Tieni aperta questa finestra.",
+    "Recherche d’une mise à jour…": "Ricerca di un aggiornamento…",
+    "Votre version est à jour.": "La tua versione è aggiornata.",
+    "Mise à jour installée. Quittez puis rouvrez le lanceur.": "Aggiornamento installato. Chiudi e riapri il launcher.",
+    "Installer la mise à jour": "Installa aggiornamento",
+    "Rechercher une mise à jour": "Cerca aggiornamenti"
   }
 }

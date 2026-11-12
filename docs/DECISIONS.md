@@ -24,3 +24,7 @@
 ## README screenshots and AI disclosure — November 9, 2026
 
 The user requested a visual English README, a prominent AI-assistance disclosure and four supplied screenshots. Permit only the four documented docs/screenshots PNGs, unchanged, in Git and the source kit. Each has an 8 MiB ceiling; the 64 MiB archive limit and all other asset exclusions remain. Screenshot game imagery retains its underlying rights and is not covered by the MIT code license. FPS overlays are not benchmarks. Keep the repository private and the release in draft for the user to publish.
+
+## Launcher-only updates — November 12, 2026
+
+Alpha.8 adds a double-click source-kit updater for existing alpha.6/.7 installations and a five-language update view in the launcher. Official GitHub source downloads are checked against the API SHA-256 digest and archive manifest. Existing tracked sources must match their installed manifest. Changed game/runtime inputs, local edits, symlink destinations and downgrades are refused. The new launcher is built in isolation before replacing allowed source files and the launcher bundle; prior versions and a recovery journal are retained. Saves, game files, HD packs, generated code and runtime are not installed or rebuilt by this helper. Interrupted transactions can be recovered after the updater process stops. Git checkouts without the official kit manifest need manual updating.

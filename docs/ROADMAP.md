@@ -27,7 +27,7 @@
 - Other Apple Silicon models and older macOS versions.
 - Publicly reproducible optional HD asset/font preparation from the player's files.
 - Setup recovery if runtime patch application is interrupted mid-sequence.
-- A standalone installation location, updates and uninstall flow.
+- A standalone installation location, automatic game/runtime upgrades and uninstall flow.
 
 Windows, Linux and Android game ports, quicksave, presence integration and a mod browser are not features of this alpha. Source-only CI on Linux does not establish a Linux game port.
 
@@ -46,3 +46,9 @@ A user report identified a mismatch: the 4K badge showed 16:9 while launcher arg
 Validation: 153 tests passed (39.970 seconds), including the compiled Swift-to-Python launch regression; the ARM64 host probe passed. The native launcher rebuilt successfully with the installed macOS 26.5 SDK selected for that command only. The default 27.2 SDK failed because its SwiftUIMacros plugin was missing; no global toolchain setting was changed. No new gameplay or visual validation on the reporting player's Mac is claimed. The published release has not been replaced.
 
 Alpha.7 packages the 4K launcher fix. HD v1 remains byte-identical and is linked from its existing alpha.6 release; no previous tag or attachment is replaced.
+
+## Launcher-only updates — November 12, 2026
+
+Alpha.8 adds a double-click source-kit updater for existing alpha.6/.7 installations and a five-language update view in the launcher. Official GitHub source downloads are checked against the API SHA-256 digest and archive manifest. Existing tracked sources must match their installed manifest. Changed game/runtime inputs, local edits, symlink destinations and downgrades are refused. The new launcher is built in isolation before replacing allowed source files and the launcher bundle; prior versions and a recovery journal are retained. Saves, game files, HD packs, generated code and runtime are not installed or rebuilt by this helper. Interrupted transactions can be recovered after the updater process stops. Git checkouts without the official kit manifest need manual updating.
+
+Validation: 163 tests passed in 37.946 seconds. Ten updater regressions cover successful installation, failed builds, mid-install rollback, interrupted-transaction recovery, concurrent local edits, symlinks, protected game changes, downgrade refusal and HTTPS/checksum checks. Real compilation and alpha.6-to-alpha.8 migration passed in an isolated kit; private/game/HD/configuration/runtime/generated sentinels stayed byte-identical. The native five-language launcher built, its update screen and current-version check were inspected, and the ARM64 host probe passed. No new gameplay or audio validation.

@@ -16,6 +16,7 @@ import base64
 ROOT=Path(__file__).resolve().parents[1]
 CONFIG='release/files.json'
 MANIFEST='RELEASE_MANIFEST.json'
+UPDATE_COMMAND='Update btvs-recomp.command'
 BRANDING_LOGO='docs/branding/logo.png'
 BRANDING_PNGS={BRANDING_LOGO,'docs/branding/moon.png'}
 BRANDING_DISPLAY='docs/branding/logo-display.svg'
@@ -81,7 +82,7 @@ def checked_path(value):
             or any(s.casefold() in BLOCKED_DIRS for s in p.parts)
             or (p.suffix.casefold() in BLOCKED_SUFFIXES and value not in APPROVED_IMAGES)):
         raise ValueError('Forbidden release path: '+value)
-    if p.suffix.casefold() not in ALLOWED_SUFFIXES and value not in APPROVED_IMAGES|{'LICENSE','VERSION','Makefile','.gitignore','.gitmodules'}:
+    if p.suffix.casefold() not in ALLOWED_SUFFIXES and value not in APPROVED_IMAGES|{UPDATE_COMMAND,'LICENSE','VERSION','Makefile','.gitignore','.gitmodules'}:
         raise ValueError('Unexpected release file type: '+value)
     return p
 
@@ -143,7 +144,7 @@ def build(root,output):
         with zipfile.ZipFile(temp,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
             for path,data in sorted(files.items()):
                 info=zipfile.ZipInfo(path,date_time=(1980,1,1,0,0,0));info.create_system=3
-                mode=0o755 if path.endswith('.sh') else 0o644
+                mode=0o755 if (path.endswith('.sh') or path==UPDATE_COMMAND) else 0o644
                 info.external_attr=(stat.S_IFREG|mode)<<16;info.compress_type=zipfile.ZIP_DEFLATED
                 z.writestr(info,data,compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
         audit(temp)
