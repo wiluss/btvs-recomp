@@ -1,37 +1,42 @@
-# btvs-recomp 0.1.0-alpha.6
+# btvs-recomp 0.1.0-alpha.7
 
-First source alpha for **Buffy the Vampire Slayer (2002, original Xbox)** on Apple Silicon.
+Fixes **4K UHD gameplay staying in 4:3** when selected in the launcher. Thanks to Jestifiable for reporting the issue and identifying the workaround.
 
-## README update
+## Fixed
 
-This candidate adds four owner-supplied screenshots and a prominent disclosure of substantial AI assistance. Game runtime and HD v1 content are unchanged.
+- Selecting **4K UHD** now enables 16:9 gameplay, including with old saved 4K/4:3 preferences.
+- The 16:9 switch and format badge now agree with the actual launch settings. The switch is shown on and locked in 4K.
+- Returning to scaled rendering restores the previous scaled-mode aspect choice during the launcher session.
 
-## Installation
+Menus intentionally retain their original 4:3 framing. Gameplay is 16:9; displays with a different aspect ratio can still show bars. This update does not stretch the picture.
 
-Download the attached `btvs-recomp-v0.1.0-alpha.6-source.zip` and `SHA256SUMS`. Verify the checksum, extract the source folder and follow `README.md` or `docs/SETUP.md`.
+## Install or update
 
-You need your own supported USA ISO, Apple build tools and the listed Homebrew packages. Run `python3 tools/bootstrap_runtime.py`, build the launcher with `make launcher`, then choose **Set up from an ISO…**. The game is generated and compiled locally. No game download is provided.
+Download **btvs-recomp-v0.1.0-alpha.7-source.zip** and **SHA256SUMS** below. Verify the checksum and follow the [installation guide](https://github.com/wiluss/btvs-recomp/blob/v0.1.0-alpha.7/docs/SETUP.md).
 
-## Included
+For an existing installation, back up the entire `private/profile/` folder, apply the updated source files to your existing project folder without deleting `private/`, and run `make launcher`. Quit the previous launcher and open `build/btvs-recomp.app` again. No ISO reimport or HD reinstallation is needed for this launcher fix.
 
-- ARM64/Metal runtime integration and a local ISO setup flow.
-- Persistent saves with first-time blank profiles and lossless idle disk compression.
-- Resolution scaling, optional 4K/16:9, fullscreen, VSync and FPS overlay.
-- Keyboard/controller remapping and a five-language launcher.
-- Original project source under MIT, separate runtime patches and third-party notices.
+New players must supply their own supported USA ISO and build locally. No ISO, game executable, generated game source, MAP, save or model is distributed in this source kit.
 
-No ISO, game executable, MAP, generated game source, save, disk image, model weight or editable development master is attached. The source ZIP includes only the approved project branding and four documentation screenshots; gameplay HD data is separate.
+## HD pack
 
-## Optional HD add-on
+The **HD v1 pack is unchanged** and remains hosted with the previous release:
 
-Download `btvs-recomp-HD-v1.zip` (about 676 MB) and `HD-SHA256SUMS` separately if you want the prepared campaign textures, HUD, reconstructed text and launcher artwork. After game setup, open **Packs & skins → Install the HD pack…** and select the ZIP. Installation verifies the pinned checksums and game edition, preserves existing local assets and enables the HD switches. Manual refinements are already included; no AI model is required. Read `docs/HD-PACK.md` for scope and troubleshooting.
+- [btvs-recomp-HD-v1.zip](https://github.com/wiluss/btvs-recomp/releases/download/v0.1.0-alpha.6/btvs-recomp-HD-v1.zip)
+- [HD-SHA256SUMS](https://github.com/wiluss/btvs-recomp/releases/download/v0.1.0-alpha.6/HD-SHA256SUMS)
 
-The HD add-on contains game-derived graphics. The project's MIT code license does not grant rights over the original artwork or trademarks, and this unofficial add-on is not presented as authorized or endorsed by the original rights holders.
+If already installed, keep it. Otherwise use **Packs & skins → Install the HD pack…** after game setup. No AI model is required to install or play.
 
-## Known limitations
+## Validation and limitations
 
-Audio can stutter and an intermittent audio crash remains open. Performance varies with effects and resolution. The complete campaign, long-session stability, custom physical controller mappings, older macOS versions and other Mac models still need validation. The setup path has been tested on one Mac; scripted setup checks used dummy audio and confirmed menu, first-save creation and loading into the first level's cutscene.
+153 tests passed, including a regression compiling the real Swift settings and checking the arguments through the Python launch path. The ARM64 host probe passed and the native launcher rebuilt. The reporting player's Mac has not yet been retested; no new gameplay or performance result is claimed.
 
-Please read `docs/TROUBLESHOOTING.md` before reporting a problem. Do not upload game files, saves, disk images, full memory-bearing logs or complete project folders.
+On the maintainer's Mac, the default macOS 27.2 SDK lacked the `SwiftUIMacros` plugin. Building succeeded with the already-installed 26.5 SDK, selected for that command only. If you encounter that exact error and have the same SDK installed, use:
 
-This is an unofficial project, not affiliated with the original rights holders.
+```sh
+SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk make launcher
+```
+
+Audio stutter, an intermittent audio crash, full-campaign coverage and long-session stability remain open. See [known issues](https://github.com/wiluss/btvs-recomp/blob/v0.1.0-alpha.7/docs/TROUBLESHOOTING.md).
+
+This is an experimental, unofficial fan project developed with substantial AI assistance. The MIT license covers original project code, not underlying game artwork or third-party components. Existing notices and license scopes continue to apply.

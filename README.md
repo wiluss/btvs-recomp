@@ -16,7 +16,7 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 <a href="https://github.com/wiluss/btvs-recomp/issues/new/choose"><img src="docs/branding/issues.svg" alt="Report a bug" width="190"></a>
 </p>
 
-**Source alpha `0.1.0-alpha.6`** · Unofficial fan project · No game download
+**Source alpha `0.1.0-alpha.7`** · Unofficial fan project · No game download
 
 </div>
 
@@ -56,7 +56,7 @@ These are unedited captures supplied by the project owner, showing the launcher 
 
 ## Start playing
 
-**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.6-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
+**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.7-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
 
 **2. Build the launcher.** You need an Apple Silicon Mac, Apple's Command Line Tools and the listed Homebrew packages. Follow the [installation guide](docs/SETUP.md), or expand the commands below.
 
@@ -88,6 +88,8 @@ Keep the source folder intact: this alpha's launcher runs from it. No AI model o
 ### Add the HD treatment
 
 Download the optional **`btvs-recomp-HD-v1.zip`** (about 676 MB), then choose **Packs & skins → Install the HD pack…**. The prepared add-on preserves our manual refinements; it needs no AI tools on your Mac. Textures and text can be switched off independently. [HD installation and scope →](docs/HD-PACK.md)
+
+The unchanged HD v1 add-on is available from [its original release](https://github.com/wiluss/btvs-recomp/releases/tag/v0.1.0-alpha.6). If it is already installed, keep it.
 
 The source kit includes project branding and the four documentation screenshots above. Playable game content comes from your own ISO; the optional HD add-on is a separate download.
 

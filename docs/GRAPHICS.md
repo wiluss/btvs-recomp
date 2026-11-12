@@ -8,7 +8,7 @@ The launcher follows a supported system language on first use: English, French, 
 
 ## Display
 
-Start with the default 2× internal resolution, then adjust for your Mac. Higher scales and effects can substantially reduce frame rate. The original 4:3 base is 640×480. Experimental 16:9 expands the horizontal view in gameplay; the menu keeps its original framing. The dedicated 4K option renders at 3840×2160. A high internal resolution does not by itself replace low-resolution textures or HUD images.
+Start with the default 2× internal resolution, then adjust for your Mac. Higher scales and effects can substantially reduce frame rate. The original 4:3 base is 640×480. Experimental 16:9 expands the horizontal view in gameplay; the menu keeps its original framing. The dedicated 4K option renders at 3840×2160 and automatically enables 16:9 gameplay. Its 16:9 switch is shown on and locked while 4K is selected. Switching back to scaled rendering restores the previous scaled-mode aspect choice. Menus retain 4:3 framing; screens wider or taller than 16:9 can still have bars around gameplay. A high internal resolution does not by itself replace low-resolution textures or HUD images.
 
 Fullscreen, VSync and the FPS overlay are optional. The overlay reports engine/presentation timing; it is not a guarantee of your display's physical refresh rate. Display preferences are saved in `private/config/graphics.json`.
 

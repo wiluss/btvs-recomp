@@ -162,11 +162,11 @@ struct LauncherView: View {
                 HStack {
                     Text(model.gameResolution).font(.system(size: 12, weight: .medium, design: .monospaced))
                     Spacer()
-                    Text(model.settings.uhd || model.settings.widescreen ? "16:9" : "4:3")
+                    Text(model.settings.effectiveWidescreen ? "16:9" : "4:3")
                         .font(.system(size: 10, weight: .medium)).padding(.horizontal, 8).padding(.vertical, 4)
                         .background(Theme.violet.opacity(0.12), in: Capsule())
                 }.foregroundStyle(Theme.muted)
-                Toggle(tr("Format 16:9"), isOn: $model.settings.widescreen).disabled(model.settings.uhd)
+                Toggle(tr("Format 16:9"), isOn: $model.settings.effectiveWidescreen).disabled(model.settings.uhd)
                 Toggle(tr("Plein écran"), isOn: $model.settings.fullscreen)
             }
             section(tr("Confort")) {

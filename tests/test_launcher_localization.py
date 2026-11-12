@@ -57,3 +57,54 @@ class LauncherLocalizationTests(unittest.TestCase):
             self.assertEqual(result.returncode,0,result.stderr)
             result=subprocess.run([str(exe),str(root/'profile.json')],capture_output=True,text=True,timeout=10)
             self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+
+    def test_uhd_launcher_arguments_reach_widescreen_gameplay(self):
+        # Compile the real settings type, then feed its output to the Python
+        # launch path. No game, user preferences or save files are accessed.
+        import sys
+        sys.path.insert(0, str(ROOT/'tools'))
+        import play
+        import graphics_settings as graphics
+        source=(ROOT/'src/launcher/BuffyLauncher.swift').read_text()
+        settings=source[source.index('struct LaunchSettings {'):source.index('@MainActor')]
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            config=root/'private/config/graphics.json';config.parent.mkdir(parents=True)
+            harness=root/'Probe.swift'
+            harness.write_text('import Foundation\n'+settings+'''
+@main struct Probe {
+ static func main() throws {
+  let root=URL(fileURLWithPath:CommandLine.arguments[1])
+  var s=LaunchSettings(root:root)
+  var rows=[[String]]()
+  rows.append(s.arguments())
+  s.uhd=true;rows.append(s.arguments())
+  s.uhd=false;rows.append(s.arguments())
+  s.widescreen=true;s.uhd=true;rows.append(s.arguments())
+  s.uhd=false;rows.append(s.arguments())
+  print(String(data:try JSONSerialization.data(withJSONObject:rows),encoding:.utf8)!)
+ }
+}
+''')
+            exe=root/'Probe'
+            result=subprocess.run(['xcrun','swiftc','-module-cache-path',str(root/'cache'),
+                '-parse-as-library',str(harness),'-o',str(exe)],capture_output=True,text=True,timeout=60)
+            self.assertEqual(result.returncode,0,result.stderr)
+            for saved_uhd in (False,True):
+                config.write_text(json.dumps({'resolution':'4k' if saved_uhd else 'scale','aspect':'4:3'}))
+                result=subprocess.run([str(exe),str(root)],capture_output=True,text=True,timeout=10)
+                self.assertEqual(result.returncode,0,result.stderr)
+                rows=json.loads(result.stdout)
+                expected=['16:9' if saved_uhd else '4:3','16:9','4:3','16:9','16:9']
+                for args,aspect in zip(rows,expected):
+                    selected=play.selected_settings(play.parse_args(args),config)
+                    self.assertEqual(selected['aspect'],aspect,(saved_uhd,args))
+                    mission=play.build_environment(selected,root/'hdd',0,{})
+                    menu=play.build_environment(selected,root/'hdd',0,{},mode='menu')
+                    self.assertEqual(mission['RECOMP_DISPLAY_ASPECT'],aspect)
+                    self.assertEqual(mission['BUFFY_WIDESCREEN'],str(int(aspect=='16:9')))
+                    self.assertEqual(menu['RECOMP_DISPLAY_ASPECT'],'4:3')
+                    self.assertEqual(menu['BUFFY_WIDESCREEN'],'0')
+                    if '--resolution' in args:
+                        self.assertEqual(graphics.render_dimensions(selected),(3840,2160))
+                        self.assertEqual(mission['RECOMP_PRESENT_SURFACE'],'uhd')

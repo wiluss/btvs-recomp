@@ -7,6 +7,11 @@ struct LaunchSettings {
     var scale = 2
     var uhd = false
     var widescreen = false
+    // UHD always uses widescreen gameplay; retain the scaled-mode preference.
+    var effectiveWidescreen: Bool {
+        get { uhd || widescreen }
+        set { widescreen = newValue }
+    }
     var edges = true
     var fps = true
     var fullscreen = false
@@ -39,7 +44,7 @@ struct LaunchSettings {
 
     func arguments() -> [String] {
         var args = ["menu", "--seconds", "0"]
-        args += ["--aspect", widescreen ? "16:9" : "4:3"]
+        args += ["--aspect", effectiveWidescreen ? "16:9" : "4:3"]
         args += ["--hud", edges ? "edges" : "safe"]
         args += fps ? ["--fps"] : ["--no-fps"]
         args += fullscreen ? ["--fullscreen"] : ["--windowed"]

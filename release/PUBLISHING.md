@@ -6,7 +6,7 @@ This file is for maintainers. Building the kit does not stage Git changes, creat
 
 ```sh
 python3 tools/source_release.py
-python3 tools/source_release.py --audit artifacts/release-alpha/dist/btvs-recomp-v0.1.0-alpha.6-source.zip
+python3 tools/source_release.py --audit artifacts/release-alpha/dist/btvs-recomp-v0.1.0-alpha.7-source.zip
 ```
 
 The output directory contains the source ZIP and `SHA256SUMS`. Inside the ZIP, `RELEASE_MANIFEST.json` lists every member and its digest. The explicit input list is `release/files.json`. It includes selected original source and English public documentation, not the development folder.
@@ -30,11 +30,11 @@ The current development checkout has unrelated existing changes and private igno
 Once the intended repository and public source commit/tag are reviewed, create a **draft prerelease** with the source ZIP/checksum and, when selected, the approved HD ZIP/checksum. For example, from a reviewed public checkout with the tag already pushed:
 
 ```sh
-gh release create v0.1.0-alpha.6 \
+gh release create v0.1.0-alpha.7 \
   --repo OWNER/REPOSITORY --verify-tag --draft --prerelease \
-  --title 'btvs-recomp 0.1.0-alpha.6' \
+  --title 'btvs-recomp 0.1.0-alpha.7' \
   --notes-file release/NOTES.md \
-  artifacts/release-alpha/dist/btvs-recomp-v0.1.0-alpha.6-source.zip \
+  artifacts/release-alpha/dist/btvs-recomp-v0.1.0-alpha.7-source.zip \
   artifacts/release-alpha/dist/SHA256SUMS \
   artifacts/hd-release/dist/btvs-recomp-HD-v1.zip \
   artifacts/hd-release/dist/HD-SHA256SUMS

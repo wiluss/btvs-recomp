@@ -45,3 +45,9 @@ Include:
 - A short relevant error excerpt, with personal paths removed.
 
 Do **not** attach the ISO, XBE, MAP, generated game source, recompiled game executable, saves, disk images, game-derived packs, model weights, or the complete project folder. Full runtime logs can contain guest memory and private paths; review them locally before sharing an excerpt. There is no automatic diagnostic uploader.
+
+## Sidebars during 4K gameplay in the first alpha
+
+The initial launcher could display a 16:9 badge in 4K while passing an older 4:3 preference to the game. Until you install a launcher containing the fix, select scaled rendering, enable **16:9 Aspect Ratio**, then select **4K UHD** again before starting the game.
+
+The corrected launcher automatically uses 16:9 gameplay in 4K, including when loading old preferences. The menu intentionally stays 4:3. Bars above/below a 16:9 picture on a taller screen are expected; the picture is not stretched to fill a different aspect ratio.
