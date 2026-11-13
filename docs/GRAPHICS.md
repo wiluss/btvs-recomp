@@ -37,6 +37,12 @@ Bindings are saved in `private/config/controls.json`. The game continues to disp
 
 The persistent profile is `private/profile/`. Use Load Game after restarting. The first profile is generated empty; no developer save is imported.
 
+The launcher creates a verified copy of the whole profile before starting a session. It keeps the three latest automatic copies and skips duplicate copies when nothing has changed. This applies to launches through the app, not direct CLI runs. A first launch without a profile continues normally. Copies contain existing saved progress, not the current in-memory game state: this is not quicksave.
+
+Open **Saves** to create a manual copy, select a dated copy to restore, or open the current profile folder. Close the game first. Manual copies are not rotated. Archives live in `private/backups/`. A restore verifies the game identity and every file checksum before replacing the profile; the previous profile is kept verbatim in `private/backups/replaced-*`. Keep those folders until you are satisfied with the restored progress. Interrupted restores are checked before the next launcher backup/launch.
+
+A backup can fail if space is low, the profile is in use, partitions are still expanded, or the profile exceeds the 768 MiB safety limit. The launcher shows the error and lets you cancel or explicitly continue without a new backup. Existing copies are preserved. An interrupted restore must be recovered before launch. Complete a normal game session or use the maintenance procedure below to compact expanded partitions. Keep external backups as well: these local copies do not protect against disk failure.
+
 Back up the whole profile while the game is closed. Keep `title.json`, `hdd/`, saves and partition files together. The title metadata binds the profile to the supported XBE. An incompatible profile is refused.
 
 Partition images 1–5 are compressed into standard `.img.gz` files while idle, restored before play, and compacted after the game stops. Their contents and Xbox geometry stay unchanged. Partition0, UDATA, TDATA, caches and ordinary files remain in place. Space for the restored images is still required while playing. A force-quit can leave raw images, which are preserved for a later normal close or maintenance.

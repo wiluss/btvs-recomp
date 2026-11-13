@@ -74,6 +74,11 @@ final class LauncherModel: ObservableObject {
     @Published var showControls = false
     @Published var showSetup = false
     @Published var showUpdates = false
+    @Published var showSupport = false
+    @Published var supportReport = false
+    @Published var supportRunning = false
+    @Published var backupFailure = false
+    @Published var backupFailureMessage = ""
     @Published var updateRunning = false
     @Published var setupISO: URL?
     @Published private(set) var setupRunning = false
@@ -83,7 +88,7 @@ final class LauncherModel: ObservableObject {
     @Published private(set) var setupFraction: Double?
     @Published private(set) var hdRunning = false
     @Published private(set) var hdStatus = ""
-    var busy: Bool { running || setupRunning || hdRunning || updateRunning }
+    var busy: Bool { running || setupRunning || hdRunning || updateRunning || supportRunning }
     @Published var language: LauncherLanguage { didSet { if language != oldValue { saveLanguage() } } }
     @Published private(set) var controls = ControlProfile()
     @Published private(set) var controlsLoadFailed = false
@@ -353,7 +358,24 @@ final class LauncherModel: ObservableObject {
     }
 
     func launch() {
-        guard process == nil, !showControls, !showJournal, !showSetup, !showUpdates else { return }
+        guard !busy, process == nil, !showControls, !showJournal, !showSetup, !showUpdates, !showSupport else { return }
+        supportRunning = true
+        statusKey = "Copie de secours du profil…"
+        PlayerSupportService.run(root: root, arguments: ["backup", "--auto"]) { _, error in
+            self.supportRunning = false
+            if let error {
+                self.backupFailureMessage = error
+                self.backupFailure = true
+            } else { self.launchPrepared() }
+        }
+    }
+
+    func launchPrepared() {
+        guard !busy, process == nil, !showControls, !showJournal, !showSetup, !showUpdates, !showSupport else { return }
+        if FileManager.default.fileExists(atPath: root.appendingPathComponent("private/profile-restore.json").path) {
+            preferencesError = tr("Une restauration interrompue doit être récupérée avant de jouer.")
+            return
+        }
         launchFailed = false
         exitCode = nil
         let script = root.appendingPathComponent("tools/play.py")
@@ -435,6 +457,8 @@ struct BuffyLauncher: App {
         .defaultSize(width: 1000, height: 740)
         .commands {
             CommandGroup(after: .help) {
+                Button(model.tr("Rapport de problème")) { model.supportReport = true; model.showSupport = true }
+                    .disabled(model.busy || model.showControls || model.showSetup || model.showUpdates)
                 Button(model.tr("Journal de session")) { model.showJournal = true }.disabled(model.showControls || model.showSetup)
                     .keyboardShortcut("j", modifiers: [.command, .option])
                 Button(model.tr("Rechercher une mise à jour")) { model.showUpdates = true }

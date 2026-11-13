@@ -26,6 +26,8 @@ HD content is a separate optional download. Finish game setup, then import the m
 
 ## Save or disk problems
 
+Use **Saves** to create or restore a verified profile copy. The launcher keeps three automatic copies before sessions; manual copies and profiles displaced by restoration are retained separately. See [backup details and limits](GRAPHICS.md#saves-and-disk-storage).
+
 Close the game before backing up or moving the whole `private/profile/` directory. Do not remove `title.json`, partition images or their gzip archives individually. A profile from a different executable is refused.
 
 Partition images are restored while playing and compacted afterward. A force-quit can leave raw images. If both a raw image and its archive exist, keep both and ask for help rather than overwriting either. See [disk maintenance](GRAPHICS.md#saves-and-disk-storage).
@@ -35,6 +37,10 @@ Partition images are restored while playing and compacted afterward. A force-qui
 Save remapping changes while the game is closed, then relaunch. The same profile applies to all controllers, and in-game prompts keep their Xbox meanings. The stock controller mapping was physically tested; custom mappings need more physical testing. Restore defaults if a custom layout makes navigation difficult.
 
 ## Reporting a problem
+
+Use the **ladybug button** at the bottom of the launcher or **Help → Problem report**. Preview the report, then copy it or show its local file in `private/reports/`. Add what happened, the last checkpoint and reproduction steps before sharing it in an issue. Nothing is uploaded automatically.
+
+The report includes the app version, Mac chip/RAM, macOS version, free space, validated graphics preferences and a limited summary of the last recorded session. It excludes raw logs, personal file paths, save contents, game files and serial numbers. A missing exit code does not prove a clean exit, and the last recorded session can predate the current session.
 
 Include:
 

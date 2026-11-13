@@ -28,3 +28,8 @@ The user requested a visual English README, a prominent AI-assistance disclosure
 ## Launcher-only updates — November 12, 2026
 
 Alpha.8 adds a double-click source-kit updater for existing alpha.6/.7 installations and a five-language update view in the launcher. Official GitHub source downloads are checked against the API SHA-256 digest and archive manifest. Existing tracked sources must match their installed manifest. Changed game/runtime inputs, local edits, symlink destinations and downgrades are refused. The new launcher is built in isolation before replacing allowed source files and the launcher bundle; prior versions and a recovery journal are retained. Saves, game files, HD packs, generated code and runtime are not installed or rebuilt by this helper. Interrupted transactions can be recovered after the updater process stops. Git checkouts without the official kit manifest need manual updating.
+
+
+## Player support scope — November 13, 2026
+
+Use launcher-side copies of the complete persistent profile, with verification and retained previous profiles on restore. Do not claim quicksave or capture live CPU/GPU/audio state. Keep support reports local, previewable and limited to explicit metadata; never auto-upload logs or saves. Preserve normal game save/load semantics and avoid a speculative audio patch without reproduction. The user approved making local Qwen assistance optional and targeted after repeated failures; hosted review and required validation remain mandatory. No Qwen mission was launched for this change.

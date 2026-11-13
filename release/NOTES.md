@@ -1,44 +1,32 @@
-# btvs-recomp 0.1.0-alpha.8
+# btvs-recomp 0.1.0-alpha.9
 
-**An easier way to install the 4K widescreen fix and future launcher updates.**
+**Save backups and easier problem reports.**
 
-## Already have alpha.6 or alpha.7?
+## Protect your saved progress
 
-You do **not** need to rebuild the game, reimport your ISO or reinstall the HD pack.
+The launcher keeps the three latest automatic copies of your complete save profile before sessions. Unchanged profiles do not create duplicate copies. Open **Saves** to create a manual copy or restore a dated copy while the game is closed. Restoration verifies the archive and keeps your previous profile separately so it remains available.
 
-1. Download **btvs-recomp-v0.1.0-alpha.8-source.zip** and **SHA256SUMS** below, verify the checksum, and extract the ZIP into a separate folder.
-2. Close the game and the old launcher.
-3. Double-click **Update btvs-recomp.command** in the extracted folder.
-4. Select your **existing project folder** — the folder containing `private`, `build` and `tools`.
-5. Wait for **Update installed**, then reopen `build/btvs-recomp.app` in your existing folder.
+These are backups of existing saved progress, not in-game quicksaves. Manual copies and displaced profiles are not rotated automatically. Keep external backups too. Low space, an expanded disk, a busy or oversized profile can prevent a new backup; the launcher explains the error and lets you cancel or explicitly continue without a new copy. [Details and limits](https://github.com/wiluss/btvs-recomp/blob/v0.1.0-alpha.9/docs/GRAPHICS.md#saves-and-disk-storage).
 
-A small Terminal window opens automatically to show progress; you do not need to type build commands. Only the launcher is compiled with your existing Apple build tools. The updater preserves your imported game, game binary, saves, settings and HD pack, and retains previous files for rollback.
+## Report a problem
 
-This path requires the attached official source kits with `RELEASE_MANIFEST.json`. Modified sources and Git checkouts need a manual update. [Full update and recovery instructions](https://github.com/wiluss/btvs-recomp/blob/v0.1.0-alpha.8/docs/SETUP.md#update-an-existing-installation).
+Use the **ladybug button** or **Help → Problem report**. Preview and copy a local summary of the app version, Mac hardware, macOS, graphics settings and last recorded session. Add your checkpoint and reproduction steps before sharing. No automatic upload, raw logs, personal paths, game files, saves or serial numbers.
 
-## Updates inside the launcher
+The new interface is available in English, French, Spanish, German and Italian.
 
-After installing this version, use the **circular-arrow button** at the bottom of the launcher or **Help → Check for updates**. Review the release notes, choose **Install update**, then quit and reopen the launcher after success.
+## Update without rebuilding the game
 
-The first updater supports **launcher-only updates**. It checks official source downloads against their GitHub SHA-256 digest and file manifest, refuses changes requiring a game/runtime rebuild, and preserves locally edited sources rather than overwriting them. Failed installation steps are rolled back; an interrupted update retains recovery information. It checks for releases only when requested and includes newer alpha versions.
+From alpha.8, use **Check for updates → Install update** then quit and reopen the launcher after success. Only the launcher is compiled; your imported ISO data, game binary, saves, settings and HD pack stay in place.
 
-## 4K widescreen
+From alpha.6/.7, extract the new source ZIP into a separate folder, close the old launcher/game and double-click **Update btvs-recomp.command**. Select your existing project folder. Official unmodified source kits are required; Git checkouts and edited sources need a manual update. [Update instructions](https://github.com/wiluss/btvs-recomp/blob/v0.1.0-alpha.9/docs/SETUP.md#update-an-existing-installation).
 
-Includes the alpha.7 fix: selecting **4K UHD** enables 16:9 gameplay even with old 4K/4:3 preferences. The displayed switch and actual launch settings agree. Menus intentionally keep 4:3 framing; differently shaped displays can still show bars around 16:9 gameplay.
+New players still provide their own supported USA ISO and build locally. No ISO, XBE, MAP, save, generated game source or game executable is distributed. The game/runtime and optional HD v1 pack are unchanged:
 
-## New players and HD pack
-
-New players still supply their own supported USA ISO and build locally. See the [installation guide](https://github.com/wiluss/btvs-recomp/blob/v0.1.0-alpha.8/docs/SETUP.md). No ISO, game executable, generated game source, MAP, save or AI model is distributed.
-
-HD v1 is unchanged. Keep it if already installed, or download it from its existing location:
-
-- [btvs-recomp-HD-v1.zip](https://github.com/wiluss/btvs-recomp/releases/download/v0.1.0-alpha.6/btvs-recomp-HD-v1.zip)
-- [HD-SHA256SUMS](https://github.com/wiluss/btvs-recomp/releases/download/v0.1.0-alpha.6/HD-SHA256SUMS)
+- [HD v1 download](https://github.com/wiluss/btvs-recomp/releases/download/v0.1.0-alpha.6/btvs-recomp-HD-v1.zip)
+- [HD checksums](https://github.com/wiluss/btvs-recomp/releases/download/v0.1.0-alpha.6/HD-SHA256SUMS)
 
 ## Validation and limits
 
-163 tests passed, including injected build/install failures, rollback, interrupted-update recovery, local-edit preservation and download checks. A real launcher build and alpha.6-to-alpha.8 update succeeded in an isolated installation with preservation sentinels. The ARM64 host probe passed, and the native update screen and release check were inspected. No new game or progression test is claimed.
+175 automated tests passed, including backup integrity, rotation, locks, path traversal, failed-restore rollback, interrupted recovery and report privacy. The ARM64 host probe and launcher build passed. Native backup/restore and report views were tested with a synthetic profile on the development Mac. The personal save profile was not modified; no new gameplay, physical-controller or cross-Mac validation is claimed.
 
-On the maintainer's Mac, the default macOS 27.2 SDK lacked `SwiftUIMacros`. The updater retries with the installed 26.5 SDK for that build only when this exact error occurs; it does not change system toolchain settings or install another SDK. Other Macs and OS versions still need testing.
-
-Audio stutter, an intermittent audio crash, full-campaign coverage and long-session stability remain open. This is an experimental, unofficial fan project developed with substantial AI assistance. MIT covers original project code, not underlying game artwork or third-party components.
+The previously reported intermittent crash has not recurred in the user's latest sessions. It remains unresolved: this release contains no speculative audio or runtime fix. Audio stutter, full-campaign coverage and long-session stability remain open. MIT covers original project code, not underlying game artwork or third-party components.

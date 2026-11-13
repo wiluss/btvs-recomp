@@ -16,7 +16,7 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 <a href="https://github.com/wiluss/btvs-recomp/issues/new/choose"><img src="docs/branding/issues.svg" alt="Report a bug" width="190"></a>
 </p>
 
-**Source alpha `0.1.0-alpha.8`** · Unofficial fan project · No game download
+**Source alpha `0.1.0-alpha.9`** · Unofficial fan project · No game download
 
 </div>
 
@@ -33,7 +33,7 @@ Bring your own supported USA ISO. The game is built locally on your Mac.
 | :--- | :--- | :--- |
 | ARM64 + Metal, resolution scaling, 4K output and experimental 16:9. | Prepared campaign textures, HUD and reconstructed text, including manual refinements. | Keyboard and controller support, remapping, AZERTY/QWERTY presets. |
 
-A five-language launcher follows a supported system language until you choose one. Persistent saves, fullscreen, VSync, an FPS overlay and optional arena access are included.
+A five-language launcher follows a supported system language until you choose one. Persistent saves, automatic profile backups, a previewable problem report, fullscreen, VSync, an FPS overlay and optional arena access are included.
 
 ## A glimpse of Sunnydale
 
@@ -62,7 +62,7 @@ After this update, use the launcher's circular-arrow button to check for future 
 
 ## Start playing
 
-**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.8-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
+**1. Get the source kit.** Download the attached `btvs-recomp-v0.1.0-alpha.9-source.zip` and `SHA256SUMS` from [Releases](https://github.com/wiluss/btvs-recomp/releases). Verify the checksum and extract the folder.
 
 **2. Build the launcher.** You need an Apple Silicon Mac, Apple's Command Line Tools and the listed Homebrew packages. Follow the [installation guide](docs/SETUP.md), or expand the commands below.
 
@@ -111,7 +111,7 @@ The isolated ISO setup reached the menu, created the first save and loaded it in
 
 ## Keep your progress
 
-Back up the **whole `private/profile/` folder**, including title metadata and disk files. Do not delete it when updating. Setup preserves an existing installation. The new updater supports launcher-only updates; game/runtime upgrades and uninstall still require manual steps.
+The launcher keeps the three latest automatic copies of the **whole save profile** before play. Open **Saves** to create a manual copy or restore one while the game is closed. These protect saved progress; they are not in-game quicksaves. Keep an external copy of **`private/profile/`**, including title metadata and disk files, too. Do not delete it when updating. Setup preserves an existing installation. The new updater supports launcher-only updates; game/runtime upgrades and uninstall still require manual steps.
 
 For help, read the [user guide](docs/GRAPHICS.md) and [reporting instructions](docs/TROUBLESHOOTING.md#reporting-a-problem). Never upload your ISO, game files, saves, disk images or complete development folder.
 

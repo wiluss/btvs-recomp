@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.8",
+  "version": "0.1.0-alpha.9",
   "files": [
     {
       "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -350,12 +350,20 @@
       "path": "src/launcher/LogoArtwork.swift"
     },
     {
+      "source": "src/launcher/PlayerSupport.swift",
+      "path": "src/launcher/PlayerSupport.swift"
+    },
+    {
       "source": "src/launcher/SetupView.swift",
       "path": "src/launcher/SetupView.swift"
     },
     {
       "source": "src/launcher/UpdatesView.swift",
       "path": "src/launcher/UpdatesView.swift"
+    },
+    {
+      "source": "src/launcher/player_support.py",
+      "path": "src/launcher/player_support.py"
     },
     {
       "source": "tests/apu_image.c",
@@ -468,6 +476,10 @@
     {
       "source": "tests/test_menu_words_hd.py",
       "path": "tests/test_menu_words_hd.py"
+    },
+    {
+      "source": "tests/test_player_support.py",
+      "path": "tests/test_player_support.py"
     },
     {
       "source": "tests/test_recomp_driver.py",

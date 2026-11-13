@@ -20,7 +20,7 @@ class LauncherLocalizationTests(unittest.TestCase):
             self.assertTrue(all(isinstance(v,str) and v and '<think>' not in v and '```' not in v for v in values.values()))
             for name in ['Start','Back','AZERTY','QWERTY']:
                 self.assertEqual(values[name],name)
-        for source in ['LauncherView.swift','ControlsView.swift','SetupView.swift','UpdatesView.swift','BuffyLauncher.swift']:
+        for source in ['LauncherView.swift','ControlsView.swift','SetupView.swift','UpdatesView.swift','PlayerSupport.swift','BuffyLauncher.swift']:
             calls=set(re.findall(r'tr\("([^"\\]+)"\)',(ROOT/'src/launcher'/source).read_text()))
             self.assertFalse(calls-keys,(source,calls-keys))
 

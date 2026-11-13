@@ -1,6 +1,6 @@
 # Alpha release status
 
-Version: `0.1.0-alpha.8`, source-build prerelease candidate with an optional HD add-on.
+Version: `0.1.0-alpha.9`, source-build prerelease candidate with an optional HD add-on.
 
 Players build locally from their own supported ISO. The source kit contains original project source, public build recipes, metadata, English documentation, runtime patches, license notices and the selected project-branding graphics and four documentation screenshots. A separate optional HD ZIP contains prepared game-derived textures, HUD, text and launcher artwork; see [HD-PACK.md](HD-PACK.md). No ISO, XBE, MAP, save, editable HD master, model, generated game source or recompiled game executable is included in either attachment.
 
@@ -28,3 +28,7 @@ The root MIT license covers original project code. Third-party file licenses tak
 The source archive is built from `release/files.json`, audited and accompanied by `SHA256SUMS` and an internal `RELEASE_MANIFEST.json`. Generated archives and all validation data remain under artifacts. Long private development histories are excluded; the public kit contains English summaries and user instructions.
 
 A prepared local archive or GitHub draft is not a published release. Follow the [release process](../release/PUBLISHING.md) and verify the exact package before publishing.
+
+## Alpha.9 candidate additions
+
+Local automatic/manual profile backups, restore with retention of the previous profile, and a previewable problem report. These are launcher-only changes; the game/runtime and HD pack are unchanged. 175 automated tests, the ARM64 host probe, launcher compilation and native UI checks on a synthetic profile passed. Gameplay, the personal save profile and other Macs were not exercised for this change. No audio fix is claimed.

@@ -48,11 +48,16 @@ struct LauncherView: View {
         .environment(\.locale, Locale(identifier: model.language.rawValue))
         .sheet(isPresented: $model.showJournal) { journal }
         .sheet(isPresented: $model.showControls) { ControlsView(model: model) }
+        .sheet(isPresented: $model.showSupport) { PlayerSupportView(model: model) }
         .sheet(isPresented: $model.showUpdates) { UpdatesView(model: model) }
         .sheet(isPresented: $model.showSetup) { SetupView(model: model) }
         .alert(tr("Erreur"), isPresented: Binding(get: { model.preferencesError != nil }, set: { if !$0 { model.preferencesError = nil } })) {
             Button("OK") { model.preferencesError = nil }
         } message: { Text(model.preferencesError ?? "") }
+        .alert(tr("La copie de secours n’a pas pu être créée."), isPresented: $model.backupFailure) {
+            Button(tr("Annuler"), role: .cancel) {}
+            Button(tr("Continuer sans nouvelle copie")) { model.launchPrepared() }
+        } message: { Text(model.backupFailureMessage) }
         .onExitCommand { if page != .home { navigate(.home) } }
     }
 
@@ -235,9 +240,9 @@ struct LauncherView: View {
             Button { model.showControls = true } label: {
                 Label(tr("Commandes"), systemImage: "gamecontroller")
             }.buttonStyle(.plain).disabled(model.busy)
-            Button(action: model.openSavedGames) {
+            Button { model.supportReport = false; model.showSupport = true } label: {
                 Label(tr("Sauvegardes"), systemImage: "folder")
-            }.buttonStyle(.plain)
+            }.buttonStyle(.plain).disabled(model.busy)
             Menu {
                 Picker(tr("Langue"), selection: $model.language) {
                     ForEach(LauncherLanguage.allCases) { language in Text(language.name).tag(language) }
@@ -250,6 +255,10 @@ struct LauncherView: View {
             }.buttonStyle(.plain).disabled(model.busy)
                 .help(tr("Rechercher une mise à jour"))
                 .accessibilityLabel(tr("Rechercher une mise à jour"))
+            Button { model.supportReport = true; model.showSupport = true } label: {
+                Image(systemName: "ladybug")
+            }.buttonStyle(.plain).disabled(model.busy)
+                .help(tr("Rapport de problème")).accessibilityLabel(tr("Rapport de problème"))
             Spacer()
             if model.running || model.launchFailed || !model.transcript.isEmpty {
                 Button { model.showJournal = true } label: {
