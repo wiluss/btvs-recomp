@@ -42,9 +42,9 @@ Replace the repository explicitly. Do not run this example against an inferred a
 
 ## Compatibility bridge for existing alphas
 
-Prepare and publish **0.1.1 — Updater bridge** as a separate source prerelease
+Prepare and publish **0.1.2 — Updater bridge** as a separate source prerelease
 before 0.2.0-beta.1. Old alpha updaters only recognize alpha/plain version numbers;
-they will select 0.1.1, then the updated helper can select the beta on the next
+they will select 0.1.2, then the updated helper can select the beta on the next
 check. The beta also supports direct upgrading through its update command.
 
 The bridge must start from the **actual verified published alpha.9 source kit**,
@@ -52,7 +52,7 @@ not a renamed beta tree. Keep all game/runtime build inputs byte-identical to
 alpha.9. Replace only the launcher-compatible files: `tools/update_launcher.py`,
 `tools/source_release.py`, `src/launcher/UpdatesView.swift`,
 `src/launcher/Localizations.json`, `tests/test_launcher_update.py` and
-`Update btvs-recomp.command`. Update VERSION/release file-list version to 0.1.1,
+`Update btvs-recomp.command`. Update VERSION/release file-list version to 0.1.2,
 and give the bridge its own README and release notes explaining the second step.
 Build/audit its ZIP with its own manifest. Validate it using the original alpha
 helper, then verify game/saves/HD were retained before the beta upgrade.
@@ -65,10 +65,10 @@ tree or attach the beta kit as the bridge. For example, after reviewing and
 pushing the matching bridge tag, create its draft:
 
 ```sh
-gh release create v0.1.1 --repo OWNER/REPOSITORY --verify-tag --draft --prerelease \
-  --title 'btvs-recomp 0.1.1 — Updater bridge' \
+gh release create v0.1.2 --repo OWNER/REPOSITORY --verify-tag --draft --prerelease \
+  --title 'btvs-recomp 0.1.2 — Updater bridge' \
   --notes-file artifacts/release-beta1/bridge-kit-final/release/NOTES.md \
-  artifacts/release-beta1/bridge-dist/btvs-recomp-v0.1.1-source.zip \
+  artifacts/release-beta1/bridge-dist/btvs-recomp-v0.1.2-source.zip \
   artifacts/release-beta1/bridge-dist/SHA256SUMS
 ```
 

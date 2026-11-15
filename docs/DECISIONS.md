@@ -67,3 +67,8 @@ Do not copy pointer-bearing facial channels or borrow other models' owned parts.
 Full cosmetic facial transfer requires separate compatibility and ownership work.
 An intermittent charged-attack/audio crash remains unresolved despite a successful
 manual retest; do not classify it as fixed or suppress invalid callbacks.
+
+
+Updater bridge 0.1.2 supersedes 0.1.1: it accepts the three approved new beta
+README captures. The withdrawn 0.1.1 assets had no downloads. Game/runtime inputs
+are unchanged. Beta 0.2.0-beta.1 archives and tags remain unchanged.

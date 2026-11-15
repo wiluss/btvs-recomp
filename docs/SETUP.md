@@ -119,7 +119,7 @@ automatic source archives still need a manual developer update.
 Older alphas cannot recognize beta versions or build game updates themselves.
 Choose either route:
 
-- **Existing update button (alpha.8/.9):** install **0.1.1 — Updater bridge**,
+- **Existing update button (alpha.8/.9):** install **0.1.2 — Updater bridge**,
   quit and reopen the launcher, then check again and install **0.2.0-beta.1**.
   Both installations are automatic. The bridge is a launcher-only compatibility
   update; the game gains the new features in the beta update.

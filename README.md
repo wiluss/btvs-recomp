@@ -123,7 +123,7 @@ Download **[btvs-recomp-HD-v1.zip](https://github.com/wiluss/btvs-recomp/release
 
 | Your route | What to do |
 | :--- | :--- |
-| **Alpha.8/.9 update button** | Install **0.1.1 — Updater bridge**, quit and reopen the launcher, then check again to install **0.2.0-beta.1**. |
+| **Alpha.8/.9 update button** | Install **0.1.2 — Updater bridge**, quit and reopen the launcher, then check again to install **0.2.0-beta.1**. |
 | **Direct upgrade from the beta ZIP** | Extract into a **separate folder**, close the old game/launcher, double-click **Update btvs-recomp.command**, and choose your **existing project folder**. No Terminal commands are needed. |
 
 The bridge updates the updater; the beta adds the game features. Game builds run separately before installation, and failures retain or restore the previous version. Allow **30 GiB free** and several minutes when a rebuild is needed. Compatible launcher-only updates keep the fast path. [Update and recovery guide →](docs/SETUP.md#upgrade-to-02-from-an-alpha)

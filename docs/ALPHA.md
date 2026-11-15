@@ -48,7 +48,7 @@ physical controller navigation of the new selector remain outside those checks.
 This is a version milestone, not proof of 1.0 readiness or an audio crash fix.
 
 The updater now handles game regeneration/rebuild automatically, reusing the
-supported import and existing data. Older alphas need the 0.1.1 launcher-only
+supported import and existing data. Older alphas need the 0.1.2 launcher-only
 updater bridge first, or the beta kit’s update command. See
 [SETUP.md](SETUP.md#upgrade-to-02-from-an-alpha).
 

@@ -47,7 +47,7 @@ during installation roll the game, launcher, sources, runtime and generated data
 back together. Saves, settings and the HD pack are retained. No ISO reimport or
 HD redownload is required. Allow 30 GiB free and several minutes for compilation.
 
-From alpha.8/.9, install **0.1.1 — Updater bridge** with the existing update button,
+From alpha.8/.9, install **0.1.2 — Updater bridge** with the existing update button,
 quit/reopen, then check again for this beta. Old alphas do not recognize betas;
 the bridge is a compatible launcher-only update that enables the new process.
 Alternatively, extract this beta's source ZIP into a separate folder and run
@@ -67,7 +67,7 @@ continue to reuse the existing native game.
 The source ZIP was audited against its manifest and reproduced byte-for-byte
 from the extracted kit on the development toolchain.
 
-This version marks a feature milestone, **not 1.0 readiness**. An isolated alpha.9 → 0.1.1 → 0.2 upgrade rebuilt and installed the game,
+This version marks a feature milestone, **not 1.0 readiness**. An isolated alpha.9 → 0.1.2 → 0.2 upgrade rebuilt and installed the game,
 retained save/HD/preferences sentinels and reached the native main menu. The final
 bridge was accepted by the original alpha updater; its own suite ran 185 tests
 with 6 skips. No live download of these unreleased versions was possible yet.

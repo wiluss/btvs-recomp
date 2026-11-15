@@ -77,3 +77,8 @@ and the chosen outfit returns afterward. No gameplay/runtime change.
 Validation: all three supplied PNGs are byte-identical after copying; 33 local
 README links/images resolve. The full suite passed: 246 tests (20.962 s), including
 the exact image allowlist, archive integrity and export reproducibility checks.
+
+
+Updater bridge 0.1.2 supersedes 0.1.1: it accepts the three approved new beta
+README captures. The withdrawn 0.1.1 assets had no downloads. Game/runtime inputs
+are unchanged. Beta 0.2.0-beta.1 archives and tags remain unchanged.
