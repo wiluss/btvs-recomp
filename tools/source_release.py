@@ -23,7 +23,8 @@ BRANDING_DISPLAY='docs/branding/logo-display.svg'
 BRANDING_SVGS={f'docs/branding/{name}.svg' for name in ('download','setup','hd','issues','status')}|{BRANDING_DISPLAY}
 BRANDING_FILES=BRANDING_SVGS|BRANDING_PNGS
 SCREENSHOT_PNGS={f'docs/screenshots/{name}.png' for name in
-                 ('launcher','forest','combat-magic','combat-courtyard')}
+                 ('launcher','forest','combat-magic','combat-courtyard',
+                  'outfit-selector','outfit-gameplay','discord-presence')}
 APPROVED_IMAGES=BRANDING_FILES|SCREENSHOT_PNGS
 BLOCKED_DIRS={'.git','.venv','private','generated','build','artifacts','logs','__pycache__','vendor'}
 BLOCKED_SUFFIXES={'.iso','.xiso','.xbe','.map','.ses','.img','.xrtp','.png','.jpg','.jpeg','.bmp',

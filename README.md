@@ -1,4 +1,4 @@
-# btvs-recomp — Updater bridge 0.1.1
+# btvs-recomp — Updater bridge 0.1.2
 
 This is a launcher-only compatibility update for existing alphas. It enables
 automatic game rebuilds and recognizes beta versions. No game or HD content is
@@ -15,3 +15,5 @@ Game prerequisites and existing data are retained. Please keep an external save
 backup. The project is experimental; full campaign and long-session stability
 remain unverified. Development used substantial AI assistance. No AI service is
 required to install or play. [Project](https://github.com/wiluss/btvs-recomp)
+
+This bridge accepts the three newly approved wardrobe/gameplay/Discord documentation captures in the beta source kit. It changes no game or runtime build inputs.
