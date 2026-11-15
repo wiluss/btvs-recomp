@@ -13,7 +13,8 @@
       "patches/xboxrecomp/0003-metal-compact-vertices.patch",
       "patches/xboxrecomp/0004-metal-hud-anchor.patch",
       "patches/xboxrecomp/0005-metal-uhd.patch",
-      "patches/xboxrecomp/0006-launch-page-handoff.patch"
+      "patches/xboxrecomp/0006-launch-page-handoff.patch",
+      "patches/xboxrecomp/0007-live-texture-overlay.patch"
     ]
   },
   "local_model_candidate": {

@@ -240,7 +240,7 @@ def bounded_settings(data):
 def report(root):
     root=Path(root).resolve()
     raw=path_at(root,'VERSION').read_text().strip()
-    current=raw if re.fullmatch(r'\d+\.\d+\.\d+(?:-alpha\.\d+)?',raw) else 'unknown'
+    current=raw if re.fullmatch(r'\d+\.\d+\.\d+(?:-(?:alpha|beta|rc)\.\d+)?',raw) else 'unknown'
     def sysctl(key):
         try:return subprocess.check_output(['/usr/sbin/sysctl','-n',key],text=True).strip()
         except (OSError,subprocess.CalledProcessError):return ''

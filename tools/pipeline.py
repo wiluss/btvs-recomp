@@ -73,6 +73,7 @@ def main():
             record['generator_driver_sha256'] = hashlib.sha256((ROOT/'tools/recomp_driver.py').read_bytes()).hexdigest()
             record['loadvars_fix_sha256'] = hashlib.sha256((ROOT/'tools/loadvars_fix.py').read_bytes()).hexdigest()
             record['arenas_fix_sha256'] = hashlib.sha256((ROOT/'tools/arenas_fix.py').read_bytes()).hexdigest()
+            record['native_outfits_fix_sha256'] = hashlib.sha256((ROOT/'tools/native_outfits_fix.py').read_bytes()).hexdigest()
             record['widescreen_fix_sha256'] = hashlib.sha256((ROOT/'tools/widescreen_fix.py').read_bytes()).hexdigest()
             record['letterbox_fix_sha256'] = hashlib.sha256((ROOT/'tools/letterbox_fix.py').read_bytes()).hexdigest()
             record['factory_switch_fix_sha256'] = hashlib.sha256((ROOT/'tools/factory_switch_fix.py').read_bytes()).hexdigest()

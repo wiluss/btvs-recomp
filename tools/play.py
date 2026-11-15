@@ -18,6 +18,7 @@ import tempfile
 import time
 
 from control_settings import control_environment
+from discord_presence import SessionPresence
 from hdd_storage import storage_lock, prepared_hdd
 from fresh_hdd import create_hdd
 from graphics_settings import load_settings, save_settings, settings_environment, validate_settings, render_dimensions
@@ -47,6 +48,10 @@ def parse_args(argv=None):
     arena.add_argument('--unlock-arenas', dest='arenas', action='store_true', help='afficher les quatre arènes dès l’ouverture d’Extras')
     arena.add_argument('--no-unlock-arenas', dest='arenas', action='store_false', help='garder le déblocage d’origine')
     p.set_defaults(arenas=None)
+    outfits = p.add_mutually_exclusive_group()
+    outfits.add_argument('--outfits', dest='outfits', action='store_true')
+    outfits.add_argument('--no-outfits', dest='outfits', action='store_false')
+    p.set_defaults(outfits=None)
     for key, opposite in [('fps','no-fps'), ('fullscreen','windowed'), ('vsync','no-vsync')]:
         group = p.add_mutually_exclusive_group()
         group.add_argument('--'+key, dest=key, action='store_true')
@@ -111,6 +116,9 @@ def hdd_source(mode, selected, title_id):
 def build_environment(settings, hdd, seconds, inherited=None, *, mode='mission'):
     inherited = os.environ if inherited is None else inherited
     env = {k:v for k,v in inherited.items() if not k.startswith('RECOMP_') and k != 'BUFFY_INPUT_PROFILE'}
+    # Keep stale inherited wardrobe flags from enabling a disabled/stale build.
+    env['BUFFY_NATIVE_OUTFITS'] = '0'
+    env['BUFFY_NATIVE_OUTFITS_PAUSE'] = '0'
     env.update(settings_environment(presentation_settings(settings, mode)))
     env.update(control_environment(ROOT))
     env.update(RECOMP_HDD_DIR=str(hdd), RECOMP_KEYBOARD='1', RECOMP_GUEST_LOCK='1',
@@ -160,7 +168,7 @@ def relaunch_mode(path, title_id):
 
 def run_session(binary, hdd, settings, seconds, mode, page, title_id, log, pack=None):
     deadline = time.monotonic() + seconds if seconds else None
-    with tempfile.TemporaryDirectory(prefix='buffy-launch-', dir=ROOT/'artifacts') as work, log.open('w') as stream:
+    with SessionPresence(ROOT) as presence, tempfile.TemporaryDirectory(prefix='buffy-launch-', dir=ROOT/'artifacts') as work, log.open('w') as stream:
         incoming = Path(work)/'incoming.bin'
         outgoing = Path(work)/'outgoing.bin'
         for restart in count():
@@ -168,11 +176,16 @@ def run_session(binary, hdd, settings, seconds, mode, page, title_id, log, pack=
             if remaining is not None and remaining <= 0:
                 raise TimeoutError('Limite de durée atteinte avant la relance')
             env = build_environment(settings, hdd, math.ceil(remaining) if remaining is not None else 0, mode=mode)
+            from outfit_install import environment as outfit_environment
+            env.update(outfit_environment(binary, ROOT/'private/game', ROOT/'config/title.json',
+                                          ROOT/'private/native-outfits',
+                                          enabled=settings.get('outfits', True) and os.environ.get('BUFFY_NATIVE_OUTFITS') != '0'))
             env['RECOMP_LAUNCH_PAGE_OUT'] = str(outgoing)
             if page is not None:
                 env['RECOMP_LAUNCH_PAGE_IN'] = str(page)
             if pack is not None:
                 env['RECOMP_TEXTURES_PACK'] = str(pack)
+            presence.update(mode,log_path=log)
             child = subprocess.Popen([str(binary)], cwd=ROOT, env=env, stdout=stream,
                                      stderr=subprocess.STDOUT, start_new_session=True)
             try:

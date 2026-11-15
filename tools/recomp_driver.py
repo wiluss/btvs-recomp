@@ -31,11 +31,13 @@ def install(*, loadvars=False):
         lines = original(self, instruction)
         if loadvars:
             from arenas_fix import prefix as arenas_prefix
+            from native_outfits_fix import prefix as outfits_prefix
             from widescreen_fix import prefix as widescreen_prefix
             from letterbox_fix import prefix as letterbox_prefix
             from loadvars_fix import prefix
             lines = (prefix(self.func_start, instruction)
                      + arenas_prefix(self.func_start, instruction)
+                     + outfits_prefix(self.func_start, instruction)
                      + widescreen_prefix(self.func_start, instruction)
                      + letterbox_prefix(self.func_start, instruction) + lines)
         return lines

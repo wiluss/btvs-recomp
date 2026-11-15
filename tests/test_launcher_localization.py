@@ -20,7 +20,7 @@ class LauncherLocalizationTests(unittest.TestCase):
             self.assertTrue(all(isinstance(v,str) and v and '<think>' not in v and '```' not in v for v in values.values()))
             for name in ['Start','Back','AZERTY','QWERTY']:
                 self.assertEqual(values[name],name)
-        for source in ['LauncherView.swift','ControlsView.swift','SetupView.swift','UpdatesView.swift','PlayerSupport.swift','BuffyLauncher.swift']:
+        for source in ['LauncherView.swift','ControlsView.swift','SetupView.swift','UpdatesView.swift','PlayerSupport.swift','ModsView.swift','BuffyLauncher.swift','DiscordSettingsView.swift']:
             calls=set(re.findall(r'tr\("([^"\\]+)"\)',(ROOT/'src/launcher'/source).read_text()))
             self.assertFalse(calls-keys,(source,calls-keys))
 
@@ -90,8 +90,8 @@ class LauncherLocalizationTests(unittest.TestCase):
             result=subprocess.run(['xcrun','swiftc','-module-cache-path',str(root/'cache'),
                 '-parse-as-library',str(harness),'-o',str(exe)],capture_output=True,text=True,timeout=60)
             self.assertEqual(result.returncode,0,result.stderr)
-            for saved_uhd in (False,True):
-                config.write_text(json.dumps({'resolution':'4k' if saved_uhd else 'scale','aspect':'4:3'}))
+            for saved_uhd,outfits in [(False,False),(False,True),(True,False),(True,True)]:
+                config.write_text(json.dumps({'resolution':'4k' if saved_uhd else 'scale','aspect':'4:3','outfits':outfits}))
                 result=subprocess.run([str(exe),str(root)],capture_output=True,text=True,timeout=10)
                 self.assertEqual(result.returncode,0,result.stderr)
                 rows=json.loads(result.stdout)
@@ -99,6 +99,8 @@ class LauncherLocalizationTests(unittest.TestCase):
                 for args,aspect in zip(rows,expected):
                     selected=play.selected_settings(play.parse_args(args),config)
                     self.assertEqual(selected['aspect'],aspect,(saved_uhd,args))
+                    self.assertEqual(selected['outfits'],outfits)
+                    self.assertIn('--outfits' if outfits else '--no-outfits',args)
                     mission=play.build_environment(selected,root/'hdd',0,{})
                     menu=play.build_environment(selected,root/'hdd',0,{},mode='menu')
                     self.assertEqual(mission['RECOMP_DISPLAY_ASPECT'],aspect)

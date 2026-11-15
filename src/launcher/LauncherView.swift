@@ -187,6 +187,12 @@ struct LauncherView: View {
                     Text(tr("Le pack HD n’est pas installé sur ce Mac."))
                         .font(.system(size: 11)).foregroundStyle(Theme.muted)
                 }
+                Divider().overlay(Theme.violet.opacity(0.15))
+                Toggle(tr("Sélecteur de tenues"), isOn: $model.settings.outfits)
+                Text(tr("Change la tenue de Buffy depuis le menu principal ou Pause. Appliqué au prochain lancement."))
+                    .font(.system(size: 11)).foregroundStyle(Theme.muted)
+                Divider().overlay(Theme.violet.opacity(0.15))
+                DiscordSettingsView(model: model)
             }
         }.disabled(model.busy)
     }
@@ -209,21 +215,7 @@ struct LauncherView: View {
                         .font(.system(size: 11)).foregroundStyle(Theme.muted)
                 }
             }
-            section(tr("Pack personnel")) {
-                HStack(spacing: 20) {
-                    Image(systemName: "square.stack.3d.up").font(.system(size: 26)).foregroundStyle(Theme.violet)
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(model.settings.customPack?.lastPathComponent ?? tr("Aucun pack sélectionné"))
-                            .font(.system(size: 13, weight: .medium)).lineLimit(1).truncationMode(.middle)
-                        Text(model.settings.customPack == nil ? tr("Glisse un pack .xrtp ici, ou choisis un fichier.")
-                             : tr("Sélectionné pour le prochain lancement."))
-                            .font(.system(size: 12)).foregroundStyle(Theme.muted)
-                    }
-                    Spacer()
-                    Button(tr("Choisir…"), action: model.choosePack)
-                    if model.settings.customPack != nil { Button(tr("Retirer")) { model.settings.customPack = nil } }
-                }
-            }
+            section(tr("Garde-robe de Buffy")) { ModsView(model: model) }
             .overlay(RoundedRectangle(cornerRadius: 9).strokeBorder(Theme.violet.opacity(droppingPack ? 0.85 : 0), lineWidth: 2))
             .dropDestination(for: URL.self) { urls, _ in model.selectPack(urls) }
                 isTargeted: { droppingPack = $0 && !model.running }

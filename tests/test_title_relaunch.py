@@ -21,6 +21,25 @@ def launch_page(title_id=TITLE_ID, kind=0, path=b'\\Device\\CdRom0;default.xbe',
 
 
 class TitleRelaunchTests(unittest.TestCase):
+    def test_presence_lifetime_spans_relaunch_and_closes_on_child_failure(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/'artifacts').mkdir()
+            calls=[]
+            def spawn(*args,**kwargs):
+                calls.append(kwargs['env'])
+                if len(calls)==1:
+                    Path(kwargs['env']['RECOMP_LAUNCH_PAGE_OUT']).write_bytes(launch_page(payload=b'map:NextChapter title:0'))
+                child=Mock(returncode=0 if len(calls)==1 else 7)
+                child.poll.return_value=child.returncode
+                return child
+            with patch.object(play,'ROOT',root),patch.object(play,'SessionPresence') as context,patch.object(play.subprocess,'Popen',side_effect=spawn):
+                result=play.run_session(root/'game',root/'hdd',{},0,'menu',None,TITLE_ID,root/'session.log')
+                context.assert_called_once_with(root)
+                presence=context.return_value.__enter__.return_value
+                self.assertEqual([call.args[0] for call in presence.update.call_args_list],['menu','mission'])
+                context.return_value.__exit__.assert_called_once_with(None,None,None)
+            self.assertEqual(result,(7,1))
+
     def test_duration_defaults_to_unlimited_and_explicit_limits_remain_available(self):
         self.assertEqual(play.parse_args(['menu']).seconds, 0)
         self.assertEqual(play.parse_args(['--seconds', '0']).seconds, 0)

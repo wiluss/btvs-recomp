@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.2.0-beta.1",
   "files": [
     {
       "source": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -58,6 +58,10 @@
       "path": "ai/tasks/review-xbe-parser.md"
     },
     {
+      "source": "config/discord.json",
+      "path": "config/discord.json"
+    },
+    {
       "source": "config/font-decorative-hd.json",
       "path": "config/font-decorative-hd.json"
     },
@@ -102,6 +106,10 @@
       "path": "docs/ALPHA.md"
     },
     {
+      "source": "docs/ASSET-AUDIT.md",
+      "path": "docs/ASSET-AUDIT.md"
+    },
+    {
       "source": "docs/BRINGUP.md",
       "path": "docs/BRINGUP.md"
     },
@@ -114,12 +122,20 @@
       "path": "docs/DEVELOPMENT.md"
     },
     {
+      "source": "docs/DISCORD.md",
+      "path": "docs/DISCORD.md"
+    },
+    {
       "source": "docs/GRAPHICS.md",
       "path": "docs/GRAPHICS.md"
     },
     {
       "source": "docs/HD-PACK.md",
       "path": "docs/HD-PACK.md"
+    },
+    {
+      "source": "docs/MODS.md",
+      "path": "docs/MODS.md"
     },
     {
       "source": "docs/PROVENANCE.md",
@@ -186,12 +202,24 @@
       "path": "docs/screenshots/combat-magic.png"
     },
     {
+      "source": "docs/screenshots/discord-presence.png",
+      "path": "docs/screenshots/discord-presence.png"
+    },
+    {
       "source": "docs/screenshots/forest.png",
       "path": "docs/screenshots/forest.png"
     },
     {
       "source": "docs/screenshots/launcher.png",
       "path": "docs/screenshots/launcher.png"
+    },
+    {
+      "source": "docs/screenshots/outfit-gameplay.png",
+      "path": "docs/screenshots/outfit-gameplay.png"
+    },
+    {
+      "source": "docs/screenshots/outfit-selector.png",
+      "path": "docs/screenshots/outfit-selector.png"
     },
     {
       "source": "patches/xboxrecomp/0001-screen-w-infinity.patch",
@@ -216,6 +244,10 @@
     {
       "source": "patches/xboxrecomp/0006-launch-page-handoff.patch",
       "path": "patches/xboxrecomp/0006-launch-page-handoff.patch"
+    },
+    {
+      "source": "patches/xboxrecomp/0007-live-texture-overlay.patch",
+      "path": "patches/xboxrecomp/0007-live-texture-overlay.patch"
     },
     {
       "source": "patches/xboxrecomp/README.md",
@@ -298,6 +330,10 @@
       "path": "src/game/README.md"
     },
     {
+      "source": "src/game/outfits.c",
+      "path": "src/game/outfits.c"
+    },
+    {
       "source": "src/host/arenas.c",
       "path": "src/host/arenas.c"
     },
@@ -312,6 +348,18 @@
     {
       "source": "src/host/probe.c",
       "path": "src/host/probe.c"
+    },
+    {
+      "source": "src/host/wardrobe.c",
+      "path": "src/host/wardrobe.c"
+    },
+    {
+      "source": "src/host/wardrobe.h",
+      "path": "src/host/wardrobe.h"
+    },
+    {
+      "source": "src/host/wardrobe_preview.m",
+      "path": "src/host/wardrobe_preview.m"
     },
     {
       "source": "src/host/widescreen.c",
@@ -334,6 +382,14 @@
       "path": "src/launcher/ControlsView.swift"
     },
     {
+      "source": "src/launcher/DiscordPreferences.swift",
+      "path": "src/launcher/DiscordPreferences.swift"
+    },
+    {
+      "source": "src/launcher/DiscordSettingsView.swift",
+      "path": "src/launcher/DiscordSettingsView.swift"
+    },
+    {
       "source": "src/launcher/LauncherView.swift",
       "path": "src/launcher/LauncherView.swift"
     },
@@ -350,6 +406,10 @@
       "path": "src/launcher/LogoArtwork.swift"
     },
     {
+      "source": "src/launcher/ModsView.swift",
+      "path": "src/launcher/ModsView.swift"
+    },
+    {
       "source": "src/launcher/PlayerSupport.swift",
       "path": "src/launcher/PlayerSupport.swift"
     },
@@ -360,6 +420,10 @@
     {
       "source": "src/launcher/UpdatesView.swift",
       "path": "src/launcher/UpdatesView.swift"
+    },
+    {
+      "source": "src/launcher/mod_library.py",
+      "path": "src/launcher/mod_library.py"
     },
     {
       "source": "src/launcher/player_support.py",
@@ -380,6 +444,14 @@
     {
       "source": "tests/hud_selector.c",
       "path": "tests/hud_selector.c"
+    },
+    {
+      "source": "tests/live_texture_overlay.c",
+      "path": "tests/live_texture_overlay.c"
+    },
+    {
+      "source": "tests/native_outfit_pause.c",
+      "path": "tests/native_outfit_pause.c"
     },
     {
       "source": "tests/screen_w.c",
@@ -410,6 +482,14 @@
       "path": "tests/test_disc_import.py"
     },
     {
+      "source": "tests/test_discord_levels.py",
+      "path": "tests/test_discord_levels.py"
+    },
+    {
+      "source": "tests/test_discord_presence.py",
+      "path": "tests/test_discord_presence.py"
+    },
+    {
       "source": "tests/test_factory_switch.py",
       "path": "tests/test_factory_switch.py"
     },
@@ -424,6 +504,10 @@
     {
       "source": "tests/test_font_outline.py",
       "path": "tests/test_font_outline.py"
+    },
+    {
+      "source": "tests/test_game_resources.py",
+      "path": "tests/test_game_resources.py"
     },
     {
       "source": "tests/test_graphics_settings.py",
@@ -462,6 +546,10 @@
       "path": "tests/test_letterbox_fix.py"
     },
     {
+      "source": "tests/test_live_texture_overlay.py",
+      "path": "tests/test_live_texture_overlay.py"
+    },
+    {
       "source": "tests/test_loadvars_fix.py",
       "path": "tests/test_loadvars_fix.py"
     },
@@ -476,6 +564,30 @@
     {
       "source": "tests/test_menu_words_hd.py",
       "path": "tests/test_menu_words_hd.py"
+    },
+    {
+      "source": "tests/test_mod_library.py",
+      "path": "tests/test_mod_library.py"
+    },
+    {
+      "source": "tests/test_native_outfit_pause.py",
+      "path": "tests/test_native_outfit_pause.py"
+    },
+    {
+      "source": "tests/test_native_outfits.py",
+      "path": "tests/test_native_outfits.py"
+    },
+    {
+      "source": "tests/test_outfit_install.py",
+      "path": "tests/test_outfit_install.py"
+    },
+    {
+      "source": "tests/test_outfit_resources.py",
+      "path": "tests/test_outfit_resources.py"
+    },
+    {
+      "source": "tests/test_pause_resources.py",
+      "path": "tests/test_pause_resources.py"
     },
     {
       "source": "tests/test_player_support.py",
@@ -570,6 +682,14 @@
       "path": "tools/disc_import.py"
     },
     {
+      "source": "tools/discord_levels.py",
+      "path": "tools/discord_levels.py"
+    },
+    {
+      "source": "tools/discord_presence.py",
+      "path": "tools/discord_presence.py"
+    },
+    {
       "source": "tools/doctor.py",
       "path": "tools/doctor.py"
     },
@@ -592,6 +712,10 @@
     {
       "source": "tools/fresh_hdd.py",
       "path": "tools/fresh_hdd.py"
+    },
+    {
+      "source": "tools/game_resources.py",
+      "path": "tools/game_resources.py"
     },
     {
       "source": "tools/graphics_settings.py",
@@ -632,6 +756,18 @@
     {
       "source": "tools/menu_words_hd.py",
       "path": "tools/menu_words_hd.py"
+    },
+    {
+      "source": "tools/native_outfits_fix.py",
+      "path": "tools/native_outfits_fix.py"
+    },
+    {
+      "source": "tools/outfit_install.py",
+      "path": "tools/outfit_install.py"
+    },
+    {
+      "source": "tools/outfit_resources.py",
+      "path": "tools/outfit_resources.py"
     },
     {
       "source": "tools/pipeline.py",

@@ -97,6 +97,13 @@ class PlayerSupportTests(unittest.TestCase):
         self.assertIn('"game_exit_code": null',result['text'])
         self.assertEqual(Path(result['path']).read_text(),result['text'])
 
+    def test_report_recognizes_beta_rc_and_refuses_invalid_versions(self):
+        for value,expected in [('0.2.0-beta.1','0.2.0-beta.1'),('0.2.0-rc.1','0.2.0-rc.1'),('0.2.0','0.2.0'),('0.2.0-beta.1/path','unknown')]:
+            with self.subTest(value=value):
+                (self.root/'VERSION').write_text(value)
+                with patch.object(support.subprocess,'check_output',side_effect=['Apple M4','17179869184']):result=support.report(self.root)
+                self.assertIn('"version": "'+expected+'"',result['text'])
+
     def test_first_launch_without_profile_does_not_create_fake_saves(self):
         import shutil
         shutil.rmtree(self.profile)

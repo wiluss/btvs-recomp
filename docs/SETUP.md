@@ -1,10 +1,10 @@
 # Installation
 
-This alpha builds the game on your Mac from your own compatible ISO. It is a source distribution; the ZIP contains no game executable, disc image, assets, save, generated game code or HD pack.
+This beta builds the game on your Mac from your own compatible ISO. It is a source distribution; the ZIP contains no game executable, disc image, assets, save, generated game code or HD pack.
 
 ## 1. Check compatibility
 
-Use an Apple Silicon Mac and a native ARM64 terminal. The launcher is built for macOS 13 or later; testing so far covers one Mac on macOS 27.2. Intel Macs, Windows, Linux and Android game builds are not supported by this alpha.
+Use an Apple Silicon Mac and a native ARM64 terminal. The launcher is built for macOS 13 or later; testing so far covers one Mac on macOS 27.2. Intel Macs, Windows, Linux and Android game builds are not supported by this beta.
 
 The supported input is the identified USA build of Buffy the Vampire Slayer (2002, original Xbox), not Chaos Bleeds. Setup requires both files from your image:
 
@@ -98,24 +98,66 @@ An isolated source installation without prior private data, generated files, bui
 
 ## Update an existing installation
 
-For the 4K widescreen fix and other launcher-only updates, **do not set up the ISO again and do not rebuild the game**.
+Close the game before updating. In the launcher choose the circular-arrow button
+or **Help → Check for updates**, review the release notes and choose **Install
+update**. Quit and reopen the launcher after success. The updater downloads the
+official source ZIP, verifies its GitHub SHA-256 digest and manifest, and builds
+separately before replacing anything. Compatible launcher-only updates build only
+the launcher. Game/runtime changes automatically regenerate and compile the game
+from the already imported supported files.
 
-1. Download the newest attached source ZIP, verify its checksum and extract it into a **separate folder**.
-2. Close the game and the old launcher.
-3. Double-click **Update btvs-recomp.command** inside the new folder. A small Terminal window opens automatically; you do not need to type commands.
-4. In the folder picker, select your **existing project folder** containing `private`, `build` and `tools` — not the `.app` or the new download folder.
-5. Wait for “Update installed”, then reopen `build/btvs-recomp.app` in the existing folder.
+No ISO reimport, HD redownload or save copying is needed. Native build prerequisites,
+Python 3.12 and internet access for any missing build dependencies are still needed.
+Allow at least **30 GiB free** and several minutes for a game rebuild. Updates do
+not run while a game session or disk-maintenance operation holds the session lock.
+Locally edited source or runtime files are preserved and refused for manual review.
+Official attached kits include `RELEASE_MANIFEST.json`; Git checkouts and GitHub's
+automatic source archives still need a manual developer update.
 
-Only the launcher is compiled. The imported ISO files, game binary, generated code, runtime, saves, HD packs and settings are retained. An earlier installation's Apple build tools are still required. The update is designed for the attached official source kits, which include `RELEASE_MANIFEST.json`; Git clones and GitHub's automatic source archives require manual updates.
+### Upgrade to 0.2 from an alpha
 
-Once this launcher is installed, use the circular-arrow button at the bottom of its window, or **Help → Check for updates**. Review the release notes and choose **Install update**. The launcher downloads the official source ZIP, checks its GitHub SHA-256 digest and archive manifest, builds in a staging folder and installs the update. Quit and reopen the launcher after success.
+Older alphas cannot recognize beta versions or build game updates themselves.
+Choose either route:
 
-This first updater supports **launcher-only releases**. It refuses changed game/runtime build inputs and locally modified source files; those need a manual update. It does not silently start a game recompilation. It checks only when you request it and includes newer alpha releases.
+- **Existing update button (alpha.8/.9):** install **0.1.1 — Updater bridge**,
+  quit and reopen the launcher, then check again and install **0.2.0-beta.1**.
+  Both installations are automatic. The bridge is a launcher-only compatibility
+  update; the game gains the new features in the beta update.
+- **Direct upgrade from the beta ZIP:** download the attached
+  `btvs-recomp-v0.2.0-beta.1-source.zip` and `SHA256SUMS`, verify them, extract into
+  a **separate folder**, close the old game/launcher and double-click
+  **Update btvs-recomp.command** in the new folder. Choose your existing project
+  folder (containing `private`, `build` and `tools`). The new helper handles the
+  game rebuild and launcher update automatically. Use this route for earlier
+  alphas without an update button too.
 
-Build logs, previous source files and the previous launcher are retained under `artifacts/launcher-update-*/`. Failed builds leave the installed version intact; installation errors trigger rollback. If macOS or the updater is forcibly stopped during installation, do not remove the update lock or backups. After the updater process has stopped, recover the interrupted transaction from the project folder with:
+Your existing installation stays in its current folder. Keep an external backup
+of the whole `private/profile/` with the game closed. Neither route reimports the
+ISO or downloads a game. On the next Play, an enabled outfit selector prepares
+its own private resource cache once; this needs additional space/time. Disable
+**Options → Outfit selector** before playing to skip that preparation.
+
+### Failure and recovery
+
+Builds use an isolated directory and their own runtime checkout/tool environment.
+The installed game, launcher and private data remain available if compilation
+fails. During installation, source, native game, generated output, runtime and
+generation records are replaced as one journaled transaction. Errors restore the
+previous versions. The updater retains previous files and logs under
+`artifacts/launcher-update-*/`; game build details are in `game-build.log`.
+
+If macOS or the updater is forcibly stopped during installation, keep the lock
+and backups. Once the updater has stopped, recover from the project folder:
 
 ```sh
 /usr/bin/python3 tools/update_launcher.py --target "$PWD" --recover
 ```
 
-If that helper is unavailable after an interruption, run the helper in the newly downloaded kit with `--target` pointing to the existing folder. Keep backups until the new launcher has been tested. Normal updates do not copy or compress your save disks.
+If that helper is unavailable, run the helper in the downloaded kit with
+`--target` pointing to the existing project folder. Keep backups until the new
+version has been tested. Updates never copy, compact or replace your save disks.
+
+### Optional Discord presence
+
+Discord Rich Presence is off by default. Enable it in Options; the shared project Application ID is already included. see [Discord setup and validation limits](DISCORD.md).
+No Discord account or client is needed to play without this feature.

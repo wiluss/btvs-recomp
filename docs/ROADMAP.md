@@ -1,65 +1,79 @@
 # Roadmap
 
-## Implemented and validated locally
+## Available in 0.2.0-beta.1
 
-- ARM64/Metal integration for the identified original Xbox title.
-- Player launcher, display settings, original controls and persistent saves.
-- Experimental widescreen, high resolutions, arenas and local pack selection.
-- Five launcher languages and keyboard/controller remapping.
-- ISO import with XBE/MAP checks and generation/compilation in a clean local source installation.
-- Blank-disk startup, first-save creation, restart/Load Game and the first level's opening cutscene.
-- Lossless idle partition compression and restoration.
-- Source-only packaging, English public guides and an original launcher icon.
-- A separate prebuilt HD add-on preserving manual refinements, with a pinned catalog and launcher import.
+- Independent original-Xbox Buffy (2002) port for macOS Apple Silicon, using native
+  ARM64 and Metal. Supported USA ISO import and verified local generation/build.
+- Five-language launcher with system-language selection, resolution scaling, 4K,
+  experimental widescreen, fullscreen, VSync and FPS display.
+- Keyboard/controller support and remapping, AZERTY/QWERTY presets, optional arenas.
+- Persistent saves, whole-profile backups/restore and a previewable problem report.
+- Separate optional HD texture/HUD/text pack; custom XRTP texture/skin library.
+- Native Main and Pause outfit selector with animated 3D previews, five stock
+  costumes, immediate application on Resume and remembered choice. A launcher
+  switch enables/disables the selector for the next session (on by default).
+- Opt-in Discord Rich Presence with shared public application metadata, original
+  level names, official logo and elapsed session time.
+- Automatic launcher/game updates with isolated local builds, journaled
+  replacement and rollback. Existing alphas use the small 0.1.1 updater bridge
+  first, or the new kit’s update command. Existing imports, save profiles and HD
+  packs are reused without ISO reimport.
 
-## Before publishing this candidate
+## Before 1.0
 
-- Review the exact source ZIP, notices, checksum and release notes.
-- Test the exported kit and its bootstrap without development-state dependencies.
-- Select the intended GitHub repository and review its public tree/tag.
-- Create and inspect a draft prerelease; publishing is a separate step.
+- Validate the complete campaign and level transitions, including cutscenes and
+  the outfit selector across different player/scene lifetimes.
+- Investigate the intermittent audio crash when reproducible; improve audio
+  stability and assess long sessions. The latest work claims no audio fix.
+- Collect testing from other Macs and macOS versions.
+- Physically test new outfit-menu navigation and custom keyboard/controller maps.
+- Profile reproducible effects/enemy-heavy slowdowns before optimizing.
+- Refine setup/update usability, recovery and error messages from real reports.
 
-## Still open
+Partial campaign completion cannot establish compatibility of the remaining
+missions. Quicksave and arbitrary model/script mods are not implemented. Windows,
+Linux and Android game ports are not supported by this release.
 
-- Intermittent audio crash, stutter and broader stability testing.
-- Complete campaign/progression validation and long sessions.
-- Physical validation of custom controller remapping.
-- Other Apple Silicon models and older macOS versions.
-- Publicly reproducible optional HD asset/font preparation from the player's files.
-- Setup recovery if runtime patch application is interrupted mid-sequence.
-- A standalone installation location, automatic game/runtime upgrades and uninstall flow.
+## Validation
 
-Windows, Linux and Android game ports, quicksave, presence integration and a mod browser are not features of this alpha. Source-only CI on Linux does not establish a Linux game port.
-
-## Project identity
-
-The project and repository are named btvs-recomp. The English README uses a user-requested monochrome Buffy-style lettering adaptation and violet/red navigation graphics. The launcher displays the new name and wordmark. The optional HD v1 payload retains its original bytes under the new filename.
-
-## README presentation
-
-The alpha.6 candidate adds an English AI-assistance disclosure and four unedited owner-supplied launcher/gameplay captures. The exact screenshot paths are audited as a narrow documentation exception; other game assets remain excluded from source. The source packaging regression and the full 152-test suite passed using the existing macOS Python environment, and the GitHub-rendered markup was inspected in a browser. No runtime, HD payload, gameplay or audio change is claimed. Publication remains a separate user action.
-
-## 4K widescreen launcher fix — November 12, 2026
-
-A user report identified a mismatch: the 4K badge showed 16:9 while launcher arguments explicitly selected the saved 4:3 aspect. A compiled Swift regression reproduced that failure before the fix. The launcher now derives its effective aspect from UHD or the scaled-mode preference; the disabled UHD toggle displays the same effective state. Old UHD/4:3 profiles are handled on load, and switching back to scaled rendering preserves the previous choice during the launcher session. The Python CLI still accepts an explicit 4:3 override. Menus keep 4:3 framing. No runtime, projection, XBE address or save handling changed.
-
-Validation: 153 tests passed (39.970 seconds), including the compiled Swift-to-Python launch regression; the ARM64 host probe passed. The native launcher rebuilt successfully with the installed macOS 26.5 SDK selected for that command only. The default 27.2 SDK failed because its SwiftUIMacros plugin was missing; no global toolchain setting was changed. No new gameplay or visual validation on the reporting player's Mac is claimed. The published release has not been replaced.
-
-Alpha.7 packages the 4K launcher fix. HD v1 remains byte-identical and is linked from its existing alpha.6 release; no previous tag or attachment is replaced.
-
-## Launcher-only updates — November 12, 2026
-
-Alpha.8 adds a double-click source-kit updater for existing alpha.6/.7 installations and a five-language update view in the launcher. Official GitHub source downloads are checked against the API SHA-256 digest and archive manifest. Existing tracked sources must match their installed manifest. Changed game/runtime inputs, local edits, symlink destinations and downgrades are refused. The new launcher is built in isolation before replacing allowed source files and the launcher bundle; prior versions and a recovery journal are retained. Saves, game files, HD packs, generated code and runtime are not installed or rebuilt by this helper. Interrupted transactions can be recovered after the updater process stops. Git checkouts without the official kit manifest need manual updating.
-
-Validation: 163 tests passed in 37.946 seconds. Ten updater regressions cover successful installation, failed builds, mid-install rollback, interrupted-transaction recovery, concurrent local edits, symlinks, protected game changes, downgrade refusal and HTTPS/checksum checks. Real compilation and alpha.6-to-alpha.8 migration passed in an isolated kit; private/game/HD/configuration/runtime/generated sentinels stayed byte-identical. The native five-language launcher built, its update screen and current-version check were inspected, and the ARM64 host probe passed. No new gameplay or audio validation.
+246 automated tests, ARM64 host probe and signed launcher build passed for the beta
+candidate. Prior native checks exercised Main/Pause previews, selection/cancel,
+immediate resume, preference persistence and explicit owned-resource teardown.
+The project owner also confirmed the new selector works in a real session.
+These checks do not establish complete campaign or long-session compatibility.
+See [BRINGUP.md](BRINGUP.md) and [known issues](TROUBLESHOOTING.md).
 
 
-## Player support and save backups — November 13, 2026
+### Outfit movement correction
 
-Alpha.9 is a local candidate. The launcher now creates verified full-profile backups before sessions, retaining three distinct automatic copies. The five-language Saves panel creates manual copies and restores a selected copy while retaining the previous profile. Backup/restore uses the existing storage/profile locks, title identity and per-file hashes; interrupted restore recovery runs before the next launcher backup. Raw expanded partitions and oversized profiles are refused rather than copied blindly. This is saved-progress protection, not an in-game quicksave.
+Corrected the cosmetic’s use of simulation position instead of the original
+interpolated render position. Native scripted movement matched source/cosmetic
+root positions across 4,000 samples; the normal binary was rebuilt. This does not
+establish full campaign, animation or long-session validation.
 
-A local problem report previews allowlisted system/settings/session metadata and never uploads anything. Raw logs, personal paths, game files, save contents and serial numbers are excluded. No new audio failure has been reported or reproduced by the user; no speculative audio/runtime correction was made.
 
-Validation: 175 tests passed in 40.160 seconds, including 12 backup/report regressions covering restoration, retention, locks, corrupted archives, traversal, rollback, interrupted recovery and privacy exclusions. The ARM64 host probe passed and the launcher compiled. The native French backup creation/restore confirmation/success and report preview were exercised on a synthetic isolated profile. The personal save profile was not restored or modified; no new gameplay or physical controller test is claimed. Evidence remains in artifacts/player-support/. Publication is separate.
+### Cutscenes and charged attacks
 
-Next priorities: reproducible audio/stability reports and cross-Mac testing, then a clearer compatible texture/skin pack manager. A general scripting mod API and full runtime quicksave remain separate, larger projects.
+Cutscenes use the original level outfit to preserve native facial expressions and
+lip sync; the chosen costume returns automatically in gameplay. Native evidence
+confirms both render paths and changing phoneme frames; full cosmetic facial
+transfer remains future work. Movement jitter was confirmed fixed by the owner.
+A real-controller diagnostic repeated mana attacks without reproducing the crash.
+The reported charged-attack/audio crash remains open; no audio fix is claimed.
+Support reports now recognize beta/rc version numbers.
+
+
+## README wardrobe and Discord captures — November 15, 2026
+
+The owner supplied and selected three additional unedited documentation PNGs:
+outfit-selector.png, outfit-gameplay.png and discord-presence.png under
+docs/screenshots/. The narrow source-image allowlist now contains those three
+plus the original four captures. No other asset or HD payload is authorized.
+README pairs the native Wardrobe preview with alternate-outfit gameplay and
+shows the actual Discord level card. A visible note states that outfit changes
+apply to gameplay; cutscenes retain the original level outfit for facial animation
+and the chosen outfit returns afterward. No gameplay/runtime change.
+
+Validation: all three supplied PNGs are byte-identical after copying; 33 local
+README links/images resolve. The full suite passed: 246 tests (20.962 s), including
+the exact image allowlist, archive integrity and export reproducibility checks.

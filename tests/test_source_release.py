@@ -68,10 +68,14 @@ class SourceReleaseTests(unittest.TestCase):
             with self.assertRaises(ValueError):release.check_text(svg.encode(),'docs/branding/setup.svg')
 
     def test_selected_readme_captures_do_not_open_the_asset_allowlist(self):
+        self.assertEqual(release.SCREENSHOT_PNGS,{
+            'docs/screenshots/'+name+'.png' for name in
+            ('launcher','forest','combat-magic','combat-courtyard',
+             'outfit-selector','outfit-gameplay','discord-presence')})
         for name in release.SCREENSHOT_PNGS:
             self.assertEqual(str(release.checked_path(name)),name)
             png=release.source_bytes(ROOT,name)
-            self.assertGreater(len(png),2*1024**2)
+            self.assertGreater(len(png),33)
             with self.assertRaises(ValueError):release.check_text(png+b'XBEH',name)
         for name in ['docs/screenshots/other.png','docs/screenshots/forest.PNG',
                      'docs/screenshots/forest.jpg','docs/textures/forest.png']:

@@ -25,7 +25,7 @@ class GraphicsTests(unittest.TestCase):
         invalid=[[],None,{'scale':True},{'scale':2.0},{'scale':'2'},{'scale':0},{'scale':5},
                  {'fps':1},{'fullscreen':'false'},{'vsync':None},{'filter':[]},
                  {'filter':'anisotropic'},{'widescreen':True},{'aspect':'21:9'},
-                 {'aspect':True},{'hud':'stretch'},{'hud':None}]
+                 {'aspect':True},{'hud':'stretch'},{'hud':None},{'outfits':1},{'outfits':'false'}]
         for data in invalid:
             with self.subTest(data=data),self.assertRaises(ValueError):
                 graphics.validate_settings(data)
@@ -33,6 +33,18 @@ class GraphicsTests(unittest.TestCase):
         self.assertEqual(data,{'scale':3})
         self.assertEqual(result['scale'],3)
         self.assertEqual(result['fps'],True)
+
+    def test_outfit_preference_roundtrip_cli_and_disabled_bridge(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'graphics.json'
+            self.assertTrue(graphics.load_settings(path)['outfits'])
+            graphics.save_settings(path,{'outfits':False})
+            self.assertFalse(play.selected_settings(play.parse_args(['menu']),path)['outfits'])
+            self.assertTrue(play.selected_settings(play.parse_args(['menu','--outfits']),path)['outfits'])
+            env=play.build_environment(graphics.load_settings(path),folder,0,
+                {'BUFFY_NATIVE_OUTFITS':'1','BUFFY_NATIVE_OUTFITS_PAUSE':'1'})
+            self.assertEqual(env['BUFFY_NATIVE_OUTFITS'],'0')
+            self.assertEqual(env['BUFFY_NATIVE_OUTFITS_PAUSE'],'0')
 
     def test_round_trip_and_cli_override_missing_keys(self):
         with tempfile.TemporaryDirectory() as folder:

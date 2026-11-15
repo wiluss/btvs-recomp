@@ -11,7 +11,7 @@ from texture_profiles import PROFILES, pack_path
 
 DEFAULTS = {'scale': 2, 'fps': True, 'fullscreen': False, 'vsync': True, 'filter': 'linear',
             'aspect': '4:3', 'hud': 'edges', 'textures': 'original', 'text': 'auto',
-            'resolution': 'scale', 'arenas': True}
+            'resolution': 'scale', 'arenas': True, 'outfits': True}
 
 
 def validate_settings(data):
@@ -21,7 +21,7 @@ def validate_settings(data):
     out = dict(DEFAULTS, **data)
     if type(out['scale']) is not int or not 1 <= out['scale'] <= 4:
         raise ValueError('scale doit être un entier de 1 à 4')
-    for key in ('fps', 'fullscreen', 'vsync', 'arenas'):
+    for key in ('fps', 'fullscreen', 'vsync', 'arenas', 'outfits'):
         if type(out[key]) is not bool:
             raise ValueError(key + ' doit être un booléen')
     if type(out['filter']) is not str or out['filter'] not in ('nearest', 'linear'):

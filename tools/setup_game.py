@@ -58,7 +58,7 @@ def ensure_runtime(root, log):
     if status.strip():
         raise ValueError('Outils Xbox partiellement modifiés ; aucune modification existante remplacée')
     patches = [root/p for p in lock['runtime_patches']]
-    if len(patches) != 6 or not all(p.is_file() for p in patches):
+    if len(patches) != 7 or not all(p.is_file() for p in patches):
         raise ValueError('Jeu de correctifs runtime incomplet')
     # Exercise the complete sequence on a copy before modifying the submodule.
     with tempfile.TemporaryDirectory(prefix='buffy-patch-check-') as folder:

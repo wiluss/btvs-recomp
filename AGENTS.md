@@ -16,4 +16,4 @@
 
 - The user also explicitly requested the original-style moon behind that wordmark. docs/branding/moon.png is the only additional approved bitmap; keep the wordmark unchanged and compose the layers in the presentation/launcher.
 
-- README screenshots: the user explicitly selected docs/screenshots/launcher.png, forest.png, combat-magic.png and combat-courtyard.png for documentation. Only those exact PNG paths may ship in Git and the source kit, unchanged from the supplied captures. This does not permit other game assets or installable HD data.
+- README screenshots: the user explicitly selected docs/screenshots/launcher.png, forest.png, combat-magic.png and combat-courtyard.png on November 9, then outfit-selector.png, outfit-gameplay.png and discord-presence.png on November 15, 2026. Only these seven exact PNG paths may ship in Git and the source kit, unchanged from the supplied captures. This does not permit other game assets or installable HD data.

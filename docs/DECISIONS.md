@@ -1,35 +1,69 @@
 # Current engineering decisions
 
-1. Port the original 2002 Xbox game independently, using generic tools; no BuffyNX-specific code, symbols, seeds or overrides.
-2. Pin the generic XboxRecomp fork and keep runtime changes in six separate source patches. Preserve component licenses and notices.
-3. Accept only the identified XBE/MAP hashes. Derive game addresses from the supplied inputs; refuse other editions before adaptation.
-4. Fix generated behavior through the generator adapter, with calling-convention evidence and tests. Preserve guest state and relevant floating-point semantics.
-5. Start the player launcher at the menu, indefinitely, with a title-bound persistent profile. Direct mission boot remains a private-state diagnostic outside the release setup.
-6. Generate a blank disk from generic retail geometry for first-time players. Never use the developer save as the installation seed.
-7. Compress dormant partitions losslessly, restore them before execution, and retain raw data on failure. Do not shrink the geometry seen by the guest.
-8. Keep original assets as the clean-install default. Offer the explicitly approved prebuilt HD add-on separately, with pinned hashes and an immutable local installation. Keep assets out of Git and the source ZIP; editable masters and model weights remain private. The MIT code license does not cover game-art rights.
-9. Use a five-language launcher with persistent keyboard/controller remapping loaded before input threads; no live remapping in a game session.
-10. Validate all ISO paths/extents and resources before extraction. Use staging and macOS exclusive rename; never overwrite an existing installation.
-11. Install Python packages only in the local venv. Native build prerequisites remain explicit. No game download or development AI requirement.
-12. Export a reviewed source-only file list. Keep private development history, generated game data, logs and binaries out of the public package.
-13. Use MIT for original project code, as chosen by the owner on 8 November 2026. Third-party file licenses retain precedence.
-14. Describe the actual validation stage. One Mac, real menu/save/load evidence and existing user gameplay are not proof of full campaign, audio stability or cross-machine support.
+1. Target Buffy the Vampire Slayer (2002, original Xbox), not Chaos Bleeds. Use
+   generic Xbox tooling independently; import no BuffyNX-specific code, symbols,
+   seeds or overrides. Prior research consulted BuffyNX and is acknowledged.
+2. Pin the generic XboxRecomp fork. Keep runtime changes as separate reviewed,
+   tested patches with the original licenses/notices. Do not change vendor code
+   implicitly or ship a modified floating dependency.
+3. Bind every guest-address adaptation to the identified XBE and concordant MAP.
+   Guard injected instruction sites and retain the generator as the source of
+   permanent fixes, never hand-edited generated C.
+4. Preserve guest registers, stack, flags, memory and relevant floating-point
+   behavior. Distinguish compilation, native menu checks, short gameplay and
+   complete progression; a host probe is not gameplay validation.
+5. Build locally from the player's supported ISO. Exclude game inputs, generated
+   game source, game executables, saves, models and private data from source kits.
+   The explicitly approved HD add-on remains a separate attachment. Branding and
+   the seven exact documentation captures have narrowly scoped allowlist exceptions.
+6. Keep player saves in a persistent private profile. Backups capture saved
+   progress; do not present them as in-game quicksaves. Preserve existing data
+   during setup and updates and retain recovery/rollback checks.
+7. Keep the launcher concise, themed and available in five languages. Follow a
+   supported system language until explicitly overridden. Keep diagnostic timers
+   and forced first-mission startup outside the normal player interface.
+8. Keep 4K gameplay widescreen independently of the saved scaled-mode preference.
+   Widescreen uses verified visibility-plane adaptations while retaining the
+   original projection; menus retain their original framing.
+9. Native stock outfits use Main/Pause controls and animated game models from the
+   player's files. Preview is separate from the chosen costume; Back cancels.
+   Confirming in Pause changes appearance immediately on Resume and focuses Resume.
+10. Preserve the original gameplay actor/animation/collision/script ownership.
+    Render separately owned cosmetics with native numeric bone snapshots and light
+    IDs. Check bone names/parents/counts and buffer bounds; release all owners at
+    actor teardown. Protocol 2 gates the reviewed generator bindings and private
+    resource recipe. Do not copy campaign animation tables into cosmetic loads.
+11. Keep outfit packs immutable during play. Persist only the selected preference;
+    reuse prepared resources across choices. The launcher **Outfit selector** switch
+    is on by default, applies next session and disables preparation and extra model
+    loading when off. Retain the preference when disabled. No arbitrary 3D model or
+    gameplay-script import is implied by texture/skin mod support.
+12. Discord presence is optional and off by default. Ship only public application
+    metadata. Observe successful resource-pack opens off the game thread, resolve
+    original level names from the verified user's mission list and fail softly.
+    No token, developer account, external SDK or guest-address hook is required.
+13. Qwen is optional and targeted. Its proposals require review; no AI service or
+    model is required by players. Keep detailed developer traces local.
+14. 0.2.0-beta.1 is a feature milestone rather than a 1.0 claim. Existing alphas
+    use a launcher-only 0.1.1 bridge to recognize betas and enable game updates.
+    Build game changes in isolation, verify inputs/runtime, then install native
+    binary, sources, generated output, runtime and receipts together with rollback.
+    Retain imported game files, saves, settings and HD packs. Refuse local edits
+    rather than overwrite them.
 
-13. Name the project and repository btvs-recomp. Keep save identifiers, the source-folder location and internal runtime filenames compatible. Include only the explicitly requested title-inspired wordmark and original README navigation graphics in source; their narrow allowlist does not admit gameplay assets. The HD v1 bytes are unchanged, with a renamed attachment and updated checksum filename entry.
 
-14. Include the explicitly requested original-style moon as a separate branding layer behind the unchanged wordmark. Permit only docs/branding/moon.png in addition to the existing graphics allowlist. The self-contained presentation SVG has a 6 MiB limit to accommodate its two embedded PNGs; other source/member limits remain unchanged.
-
-15. Present the existing wordmark with neutral silver-grey gradients, edge highlights and darker offset shadows, as requested by the user. Keep the wordmark and moon PNGs unchanged; apply matching SVG/SwiftUI presentation effects. No new bitmap or runtime change.
-
-## README screenshots and AI disclosure — November 9, 2026
-
-The user requested a visual English README, a prominent AI-assistance disclosure and four supplied screenshots. Permit only the four documented docs/screenshots PNGs, unchanged, in Git and the source kit. Each has an 8 MiB ceiling; the 64 MiB archive limit and all other asset exclusions remain. Screenshot game imagery retains its underlying rights and is not covered by the MIT code license. FPS overlays are not benchmarks. Keep the repository private and the release in draft for the user to publish.
-
-## Launcher-only updates — November 12, 2026
-
-Alpha.8 adds a double-click source-kit updater for existing alpha.6/.7 installations and a five-language update view in the launcher. Official GitHub source downloads are checked against the API SHA-256 digest and archive manifest. Existing tracked sources must match their installed manifest. Changed game/runtime inputs, local edits, symlink destinations and downgrades are refused. The new launcher is built in isolation before replacing allowed source files and the launcher bundle; prior versions and a recovery journal are retained. Saves, game files, HD packs, generated code and runtime are not installed or rebuilt by this helper. Interrupted transactions can be recovered after the updater process stops. Git checkouts without the official kit manifest need manual updating.
+For cosmetic placement, use the source animated model’s checked render matrix
+from native UpdateMesh. The actor physics transform can differ between ticks and
+causes visible motion jitter. Preserve simulation and camera behavior; regression
+coverage must deliberately separate rendered and physics positions.
 
 
-## Player support scope — November 13, 2026
+## Cutscene outfit fallback — November 15, 2026
 
-Use launcher-side copies of the complete persistent profile, with verification and retained previous profiles on restore. Do not claim quicksave or capture live CPU/GPU/audio state. Keep support reports local, previewable and limited to explicit metadata; never auto-upload logs or saves. Preserve normal game save/load semantics and avoid a speculative audio patch without reproduction. The user approved making local Qwen assistance optional and targeted after repeated failures; hosted review and required validation remain mandatory. No Qwen mission was launched for this change.
+The cosmetic bone snapshot excludes facial mesh/phoneme channels. Keep the original
+mesh's complete render path while the verified retail cutscene query is true;
+resume the cosmetic during gameplay without changing the remembered choice.
+Do not copy pointer-bearing facial channels or borrow other models' owned parts.
+Full cosmetic facial transfer requires separate compatibility and ownership work.
+An intermittent charged-attack/audio crash remains unresolved despite a successful
+manual retest; do not classify it as fixed or suppress invalid callbacks.

@@ -24,6 +24,9 @@ static const int analog[8] = {XBOX_BUTTON_A,XBOX_BUTTON_B,XBOX_BUTTON_X,XBOX_BUT
 static int pad_sources[16];
 static int sticks[2] = {0,1};
 static InputBindings key_bindings;
+static int remap_enabled;
+static xbox_input_pad_filter_fn overlay_filter;
+void buffy_InputSetOverlay(xbox_input_pad_filter_fn filter) { overlay_filter = filter; }
 
 static int key_supported(int n)
 {
@@ -67,7 +70,7 @@ static BYTE read_button(const XBOX_GAMEPAD *pad, int control)
 }
 void buffy_FilterInput(DWORD port, const struct xbox_host_pad *host, XBOX_INPUT_STATE *state)
 {
-    if (host && host->connected && state) {
+    if (remap_enabled && host && host->connected && state) {
         const XBOX_GAMEPAD *raw = &host->pad.Gamepad;
         XBOX_GAMEPAD mapped;
         memset(&mapped, 0, sizeof mapped);
@@ -96,6 +99,7 @@ void buffy_FilterInput(DWORD port, const struct xbox_host_pad *host, XBOX_INPUT_
         state->Gamepad = mapped;
     }
     xbox_enhance_pad_filter(port, host, state);
+    if (overlay_filter) overlay_filter(port, host, state);
 }
 
 void buffy_ConfigureKeyboard(void)
@@ -139,5 +143,6 @@ void buffy_ConfigureKeyboard(void)
             key_bindings.key[input_index[c]][key_bindings.count[input_index[c]]++] = (uint8_t)codes[j];
     }
     xbox_InputBindingsCommit();
-    if (remap) xbox_InputSetPadFilter(buffy_FilterInput);
+    remap_enabled = remap;
+    if (remap || overlay_filter) xbox_InputSetPadFilter(buffy_FilterInput);
 }

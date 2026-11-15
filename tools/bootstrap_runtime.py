@@ -57,7 +57,7 @@ def bootstrap(root):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--apply-patches',action='store_true',help='apply the six shipped runtime patches to a clean pin')
+    parser.add_argument('--apply-patches',action='store_true',help='apply the seven shipped runtime patches to a clean pin')
     args=parser.parse_args()
     try:
         target=bootstrap(ROOT)

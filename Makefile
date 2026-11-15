@@ -40,6 +40,7 @@ launcher:
 	sh tools/build_launcher.sh
 
 runtime-patch-check:
+	git -C vendor/xboxrecomp apply --reverse --check ../../patches/xboxrecomp/0007-live-texture-overlay.patch
 	git -C vendor/xboxrecomp apply --reverse --check ../../patches/xboxrecomp/0001-screen-w-infinity.patch
 	git -C vendor/xboxrecomp apply --reverse --check ../../patches/xboxrecomp/0002-apu-image-sample-dma.patch
 	git -C vendor/xboxrecomp apply --reverse --check ../../patches/xboxrecomp/0003-metal-compact-vertices.patch

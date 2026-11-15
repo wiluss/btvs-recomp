@@ -33,4 +33,4 @@ The selected `docs/branding/moon.png` branding layer was prepared from the origi
 
 ## Documentation screenshots
 
-The four images listed in [docs/screenshots/README.md](docs/screenshots/README.md) are unedited captures supplied and selected by the project owner for the README. They depict the launcher and actual gameplay with optional HD content. Underlying game artwork and trademarks are not relicensed under MIT. This narrowly selected documentation gallery does not include installable textures or playable game content and does not imply rights-holder endorsement.
+The seven images listed in [docs/screenshots/README.md](docs/screenshots/README.md) are unedited captures supplied and selected by the project owner for the README. They depict the launcher, native wardrobe, actual gameplay with optional HD content and Discord activity. Underlying game artwork and trademarks are not relicensed under MIT. This narrowly selected documentation gallery does not include installable textures or playable game content and does not imply rights-holder endorsement.

@@ -1,10 +1,12 @@
-# Alpha release status
+# Prerelease status
 
-Version: `0.1.0-alpha.9`, source-build prerelease candidate with an optional HD add-on.
+Version: `0.2.0-beta.1`, source-build beta candidate with an optional HD add-on.
 
 Players build locally from their own supported ISO. The source kit contains original project source, public build recipes, metadata, English documentation, runtime patches, license notices and the selected project-branding graphics and four documentation screenshots. A separate optional HD ZIP contains prepared game-derived textures, HUD, text and launcher artwork; see [HD-PACK.md](HD-PACK.md). No ISO, XBE, MAP, save, editable HD master, model, generated game source or recompiled game executable is included in either attachment.
 
-## Verified on the development Mac
+## Earlier ISO setup validation on the development Mac
+
+These setup checks predate 0.2; they have not been repeated as a fresh full-ISO beta installation.
 
 - The user's USA ISO contains the exact XBE and `final.map` required by the manifest.
 - An isolated source installation without prior private data, generated files, build products, logs or venv completed extraction, dependency preparation, generation and ARM64 compilation.
@@ -29,6 +31,31 @@ The source archive is built from `release/files.json`, audited and accompanied b
 
 A prepared local archive or GitHub draft is not a published release. Follow the [release process](../release/PUBLISHING.md) and verify the exact package before publishing.
 
-## Alpha.9 candidate additions
+## 0.2 beta additions
 
-Local automatic/manual profile backups, restore with retention of the previous profile, and a previewable problem report. These are launcher-only changes; the game/runtime and HD pack are unchanged. 175 automated tests, the ARM64 host probe, launcher compilation and native UI checks on a synthetic profile passed. Gameplay, the personal save profile and other Macs were not exercised for this change. No audio fix is claimed.
+246 automated tests, ARM64 host probe and launcher compilation passed. The source ZIP is manifest-audited and reproducible from its extracted kit on the development toolchain.
+
+Native Main/Pause outfit selection with animated 3D previews, immediate cosmetic
+application on Resume, remembered selection and a launcher switch (on by default).
+Discord Rich Presence is opt-in and includes the shared public application ID,
+current level, official logo and session time. Custom XRTP texture mods have a
+local import/priority library. Existing profile backups and problem reports remain.
+
+The project owner confirmed the native Pause selector works in a real session.
+Short native tests cover previews, selection/cancel/resume, remembered choices and
+explicit cleanup. Full campaign transitions, cutscene doubles, long sessions and
+physical controller navigation of the new selector remain outside those checks.
+This is a version milestone, not proof of 1.0 readiness or an audio crash fix.
+
+The updater now handles game regeneration/rebuild automatically, reusing the
+supported import and existing data. Older alphas need the 0.1.1 launcher-only
+updater bridge first, or the beta kit’s update command. See
+[SETUP.md](SETUP.md#upgrade-to-02-from-an-alpha).
+
+
+Cutscenes temporarily use the level's original outfit to preserve facial
+expressions and lip sync, then restore the chosen cosmetic during gameplay.
+A native check confirmed changing phoneme frames and automatic restoration.
+The owner confirmed the movement-jitter fix. A subsequent charged-attack crash
+remains unresolved; a cloned-save controller/CoreAudio retest did not reproduce
+it despite repeated mana-consuming attacks. No new audio fix is claimed.

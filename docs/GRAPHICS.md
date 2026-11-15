@@ -16,9 +16,9 @@ Fullscreen, VSync and the FPS overlay are optional. The overlay reports engine/p
 
 A clean alpha installation uses original game assets. The separate [HD add-on](HD-PACK.md) contains prepared textures, HUD, text and launcher artwork. Download its ZIP from the release page and import it with **Packs & skins → Install the HD pack…**. The launcher enables the HD switches after a successful installation. Editable reconstruction masters are not included.
 
-Select a local `.xrtp` file through Packs & skins, or drop one onto its panel. A pack must match this game/build and pass validation at launch. Selecting a file is not a claim that its contents have been verified. Do not upload game-derived packs to this project's issue tracker.
+The development launcher adds **Buffy’s wardrobe**: import a local `.xrtp` with its matching `.json`, review the outfit cards and choose **Wear this outfit**. Add a matching `.png` screenshot on import or attach one from the card’s photo button. The library retains your selection across restarts and overlays one active mod on your selected HD profile. Choose **Original outfit** to return to your normal graphics. The development build also opens a wardrobe over the game with **F8**: pause first, browse with Left/Right, apply with Enter and close with Escape. The live feature requires rebuilding the game. The published alpha.9 still uses the older session-only pack selector. Read the [mod guide](MODS.md) for compatibility, file locations and creator instructions.
 
-The four arenas can be enabled in Extras. This does not replace campaign progression. Skins use compatible local texture packs; no general mod browser or automatic mod installer is included.
+The four arenas can be enabled in Extras. This does not replace campaign progression. General scripting, level mods and a community download browser remain outside this first manager.
 
 ## Keyboard and controller remapping
 

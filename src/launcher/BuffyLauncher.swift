@@ -20,6 +20,7 @@ struct LaunchSettings {
     var texturesHD = true
     var textHD = true
     var arenas = true
+    var outfits = true
     var customPack: URL?
     let saveProfile: URL
 
@@ -40,6 +41,7 @@ struct LaunchSettings {
         if let textures = prefs["textures"] as? String { texturesHD = textures != "original" }
         if let text = prefs["text"] as? String { textHD = text == "hd" || (text == "auto" && texturesHD) }
         arenas = prefs["arenas"] as? Bool ?? arenas
+        outfits = prefs["outfits"] as? Bool ?? outfits
     }
 
     func arguments() -> [String] {
@@ -56,6 +58,7 @@ struct LaunchSettings {
             args += ["--textures", texturesHD ? "campaign2x" : "original"]
         }
         args += arenas ? ["--unlock-arenas"] : ["--no-unlock-arenas"]
+        args += outfits ? ["--outfits"] : ["--no-outfits"]
         args += ["--profile", saveProfile.path]
         return args
     }
@@ -88,13 +91,18 @@ final class LauncherModel: ObservableObject {
     @Published private(set) var setupFraction: Double?
     @Published private(set) var hdRunning = false
     @Published private(set) var hdStatus = ""
-    var busy: Bool { running || setupRunning || hdRunning || updateRunning || supportRunning }
+    @Published var modsRunning = false
+    @Published var installedMods: [InstalledMod] = []
+    @Published var activeMod: String?
+    @Published var modError: String?
+    var busy: Bool { running || setupRunning || hdRunning || updateRunning || supportRunning || modsRunning }
     @Published var language: LauncherLanguage { didSet { if language != oldValue { saveLanguage() } } }
     @Published private(set) var controls = ControlProfile()
     @Published private(set) var controlsLoadFailed = false
     @Published var preferencesError: String? = nil
     @Published private(set) var exitCode: Int? = nil
     @Published var settings: LaunchSettings
+    @Published private(set) var discord = DiscordPreferences()
     @Published private(set) var running = false
     @Published private(set) var statusKey = "Installation locale détectée"
     @Published private(set) var transcript = ""
@@ -110,6 +118,7 @@ final class LauncherModel: ObservableObject {
         let prefs = (try? Data(contentsOf: languageURL)).flatMap { try? JSONSerialization.jsonObject(with: $0) as? [String: String] }
         language = prefs?["language"].flatMap(LauncherLanguage.init(rawValue:)) ?? .system
         settings = LaunchSettings(root: root)
+        discord = (try? DiscordPreferences.load(root: root)) ?? DiscordPreferences()
         let controlsURL = root.appendingPathComponent("private/config/controls.json")
         if FileManager.default.fileExists(atPath: controlsURL.path) {
             do { controls = try ControlProfile.load(controlsURL) }
@@ -124,6 +133,11 @@ final class LauncherModel: ObservableObject {
     }
 
     func tr(_ key: String) -> String { LauncherText.text(key, language: language) }
+
+    func saveDiscord(_ settings: DiscordPreferences) throws {
+        try settings.save(root: root)
+        discord = settings
+    }
 
     var status: String {
         let text = tr(statusKey)
@@ -323,7 +337,7 @@ final class LauncherModel: ObservableObject {
 
     func choosePack() {
         let panel = NSOpenPanel()
-        panel.message = tr("Choisis un pack XRTP local")
+        panel.message = tr("Choisir un skin XRTP avec son fichier JSON")
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = false
         if let xrtp = UTType(filenameExtension: "xrtp") {
@@ -334,14 +348,14 @@ final class LauncherModel: ObservableObject {
         }
     }
 
-    // Selection only. The existing launch path verifies the pack's contents.
+    // Import a managed copy; activation is explicit and persisted separately.
     @discardableResult
     func selectPack(_ urls: [URL]) -> Bool {
         guard !busy, urls.count == 1, let url = urls.first, url.isFileURL,
               url.pathExtension.lowercased() == "xrtp",
               (try? url.resourceValues(forKeys: [.isRegularFileKey]))?.isRegularFile == true,
               FileManager.default.isReadableFile(atPath: url.path) else { return false }
-        settings.customPack = url
+        modAction(["import", "--file", url.path])
         return true
     }
 
@@ -372,6 +386,11 @@ final class LauncherModel: ObservableObject {
 
     func launchPrepared() {
         guard !busy, process == nil, !showControls, !showJournal, !showSetup, !showUpdates, !showSupport else { return }
+        prepareModsAndLaunch()
+    }
+
+    func startGame(modPack: URL?, wardrobe: String?, wardrobePrefs: String?) {
+        guard !busy, process == nil, !showControls, !showJournal, !showSetup, !showUpdates, !showSupport else { return }
         if FileManager.default.fileExists(atPath: root.appendingPathComponent("private/profile-restore.json").path) {
             preferencesError = tr("Une restauration interrompue doit être récupérée avant de jouer.")
             return
@@ -387,7 +406,13 @@ final class LauncherModel: ObservableObject {
         let task = Process()
         task.executableURL = URL(fileURLWithPath: "/usr/bin/python3")
         task.currentDirectoryURL = root
-        task.arguments = [script.path] + settings.arguments()
+        var environment = ProcessInfo.processInfo.environment
+        environment["BUFFY_WARDROBE"] = wardrobe
+        environment["BUFFY_WARDROBE_PREFS"] = wardrobePrefs
+        task.environment = environment
+        var session = settings
+        session.customPack = modPack
+        task.arguments = [script.path] + session.arguments()
         let journal = Pipe()
         task.standardOutput = journal
         task.standardError = journal

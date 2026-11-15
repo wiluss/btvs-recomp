@@ -18,6 +18,12 @@ If setup fails after import, a completed import receipt allows a retry. Details 
 
 Audio stutter and an intermittent audio crash are known alpha issues. The full campaign and long-session stability are not confirmed. A crash that does not repeat is not evidence that it was fixed.
 
+A charged kick crash was reported with the outfit selector enabled. A later
+controller test completed repeated mana-consuming attacks without reproducing it;
+the crash remains unresolved. If it recurs, include the outfit, checkpoint and
+button sequence. Disabling **Outfit selector** before restarting is a temporary
+workaround that passed the owner's attack test, not a confirmed general fix.
+
 Try a lower internal resolution before interpreting a heavy scene as a new performance regression. Higher scales, effects and enemy counts can cause substantial frame-rate swings. Keep the exact settings and last checkpoint in your report. No fixed 60/120 FPS promise is made.
 
 ## HD options are unavailable

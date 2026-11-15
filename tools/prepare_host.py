@@ -53,14 +53,14 @@ def main():
     anchor = '    host_enhance_init();'
     if source.count(anchor) != 2:  # WinMain and POSIX main in the pinned template
         raise SystemExit('Pinned host initialization differs')
-    source = '#include "controls.h"\n#include "widescreen.h"\n' + source.replace(
-        anchor, anchor + '\n    buffy_ConfigureKeyboard();\n    buffy_ConfigureWidescreen();')
+    source = '#include "controls.h"\n#include "widescreen.h"\n#include "wardrobe.h"\n' + source.replace(
+        anchor, anchor + '\n    buffy_ConfigureWardrobe();\n    buffy_ConfigureKeyboard();\n    buffy_ConfigureWidescreen();')
 
     (target / 'main.c').write_text(source)
     (target / 'recomp_manual.c').write_bytes((vendor / 'templates/new-game/src/recomp_manual.c').read_bytes())
     (target / 'provenance.json').write_text(json.dumps({
         'source':'vendor/xboxrecomp/templates/new-game/src', 'revision':revision,
-        'license':'vendor/xboxrecomp/LICENSE', 'changes':'title, developer paths, inspected entry point, project AZERTY and opt-in HUD initialization, spin default before environment cache',
+        'license':'vendor/xboxrecomp/LICENSE', 'changes':'title, developer paths, inspected entry point, project AZERTY and opt-in HUD and wardrobe initialization, spin default before environment cache',
         'xbe_sha256':title['xbe_sha256'], 'game_overrides':[]}, indent=2) + '\n')
 
 

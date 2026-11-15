@@ -150,3 +150,20 @@ make game-build
 ```
 
 Tests verify rejection of invalid pages and HDD reuse between two processes. The native test covers Arena 1 selection.
+
+## 0007 — live cosmetic texture overlay
+
+`0007-live-texture-overlay.patch` adds an independently owned optional XRTP
+layer above the base pack. Only initialization or the walker's flip hook may
+replace/clear it, after the backend's `on_flip`. Parsing builds a candidate;
+invalid data or cross-layer kind/aspect conflicts preserve the current layer.
+Each entry retains its own owning file path for lazy reads. Success bumps the
+existing texture-pack generation so Metal/D3D caches re-upload on next use.
+Backends synchronously copy CPU texels into GPU textures and keep no entry
+pointer after upload; this is not a general thread-safe hot-load API.
+
+The host wardrobe uses that seam, not guest addresses. Its visible menu is a
+host overlay; the original game pause menu is unchanged. Pause before browsing.
+Apply after patches 0001–0006 and rebuild the game (`make game-build`).
+`make test` includes a clean-pin application of this separate diff and 300
+replacement/clear/failure cycles under AddressSanitizer/UndefinedBehaviorSanitizer.

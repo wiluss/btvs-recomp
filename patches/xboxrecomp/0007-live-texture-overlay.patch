@@ -1,0 +1,216 @@
+--- a/src/kernel/nv2a_tex_pack.c
++++ b/src/kernel/nv2a_tex_pack.c
+@@ -17,11 +17,25 @@
+ #define pack_tell(f)      ftello(f)
+ #endif
+ 
+-static struct nv2a_tex_pack_entry *s_entries;
+-static unsigned  s_count, s_scale, s_text_scale;
+-static unsigned  s_kind_count[XRTP_KIND_COUNT], s_bc3_count;
+-static char     *s_path;
+-static uint64_t  s_hits;
++/* Base and optional cosmetic overlay are owned independently. Mutation is
++ * initialization-only or at the walker flip, after on_flip. No entry pointer
++ * is retained by a backend after its synchronous texture upload. */
++struct pack_state {
++    struct nv2a_tex_pack_entry *entries;
++    unsigned count, scale, text_scale, kind_count[XRTP_KIND_COUNT], bc3_count;
++    char *path;
++    uint64_t hits;
++};
++static struct pack_state s_base, s_overlay;
++static struct pack_state *s_target = &s_base;
++#define s_entries (s_target->entries)
++#define s_count (s_target->count)
++#define s_scale (s_target->scale)
++#define s_text_scale (s_target->text_scale)
++#define s_kind_count (s_target->kind_count)
++#define s_bc3_count (s_target->bc3_count)
++#define s_path (s_target->path)
++#define s_hits (s_target->hits)
+ 
+ /* What find matches: bit k for kind k, PACK_ON for the whole pack.
+  * Kept across unload and load, since the toggles belong to the player,
+@@ -93,6 +107,7 @@
+ void nv2a_tex_pack_unload(void)
+ {
+     unsigned i;
++    if (s_target == &s_base) nv2a_tex_pack_overlay_clear();
+     for (i = 0; i < s_count; i++)
+         free(s_entries[i].data);
+     free(s_entries);
+@@ -105,8 +120,10 @@
+     memset(s_kind_count, 0, sizeof s_kind_count);
+     s_bc3_count = 0;
+     s_hits = 0;
+-    memset(s_miss, 0, sizeof s_miss);
+-    s_miss_n = s_miss_next = 0;
++    if (s_target == &s_base) {
++        memset(s_miss, 0, sizeof s_miss);
++        s_miss_n = s_miss_next = 0;
++    }
+ }
+ 
+ int nv2a_tex_pack_load(const char *path, char *err, size_t errlen)
+@@ -235,6 +252,8 @@
+         return -1;
+     }
+     strcpy(s_path, path);
++    for (i = 0; i < count; i++)
++        entries[i].source_path = s_path;
+     s_entries = entries;
+     s_count = count;
+     s_scale = scale;
+@@ -244,9 +263,47 @@
+     return (int)count;
+ }
+ 
++/* Caller: walker flip or startup, never a UI/input thread. Parsing builds
++ * an isolated candidate: a missing/bad file preserves both current layers. */
++int nv2a_tex_pack_overlay_load(const char *path, char *err, size_t errlen)
++{
++    struct pack_state candidate = {0};
++    int count;
++    s_target = &candidate;
++    count = nv2a_tex_pack_load(path, err, errlen);
++    s_target = &s_base;
++    if (count < 0) return -1;
++    for (unsigned i = 0, j = 0; i < candidate.count; i++) {
++        struct nv2a_tex_pack_entry *a = &candidate.entries[i];
++        while (j < s_base.count && s_base.entries[j].hash < a->hash) j++;
++        if (j < s_base.count && s_base.entries[j].hash == a->hash) {
++            struct nv2a_tex_pack_entry *b = &s_base.entries[j];
++            if (a->kind != b->kind || (uint64_t)a->width*b->height != (uint64_t)b->width*a->height) {
++                s_target = &candidate; nv2a_tex_pack_unload(); s_target = &s_base;
++                fail(err, errlen, "overlay kind/aspect conflict"); return -1;
++            }
++        }
++    }
++    s_target = &s_overlay;
++    nv2a_tex_pack_unload();
++    s_overlay = candidate;
++    s_target = &s_base;
++    atomic_fetch_add_explicit(&s_gen, 1u, memory_order_relaxed);
++    return count;
++}
++
++void nv2a_tex_pack_overlay_clear(void)
++{
++    if (!s_overlay.path) return;
++    s_target = &s_overlay;
++    nv2a_tex_pack_unload();
++    s_target = &s_base;
++    atomic_fetch_add_explicit(&s_gen, 1u, memory_order_relaxed);
++}
++
+ unsigned nv2a_tex_pack_count(void)
+ {
+-    return s_count;
++    return s_count + s_overlay.count;
+ }
+ 
+ unsigned nv2a_tex_pack_scale(void)
+@@ -271,7 +328,7 @@
+ 
+ uint64_t nv2a_tex_pack_hits(void)
+ {
+-    return s_hits;
++    return __atomic_load_n(&s_base.hits, __ATOMIC_RELAXED);
+ }
+ 
+ static void set_mask(unsigned m)
+@@ -300,17 +357,18 @@
+ }
+ 
+ /* The entry for (hash, aspect) whatever the switches say. */
+-static struct nv2a_tex_pack_entry *lookup(uint64_t hash, uint32_t guest_w, uint32_t guest_h)
+-{
+-    unsigned lo = 0, hi = s_count;
++static struct nv2a_tex_pack_entry *lookup_in(struct pack_state *bank, uint64_t hash, uint32_t guest_w, uint32_t guest_h)
++{
++    struct nv2a_tex_pack_entry *entries = bank->entries;
++    unsigned lo = 0, hi = bank->count;
+     while (lo < hi) {
+         unsigned mid = lo + (hi - lo) / 2;
+-        if (s_entries[mid].hash < hash)
++        if (entries[mid].hash < hash)
+             lo = mid + 1;
+-        else if (s_entries[mid].hash > hash)
++        else if (entries[mid].hash > hash)
+             hi = mid;
+         else {
+-            struct nv2a_tex_pack_entry *e = &s_entries[mid];
++            struct nv2a_tex_pack_entry *e = &entries[mid];
+             /* The hash covers the bytes, not the shape: a 64x16 and a 32x32
+              * texture of the same bytes (a uniform fill) hash alike, so an
+              * entry of another aspect is some other texture. */
+@@ -322,6 +380,12 @@
+     return NULL;
+ }
+ 
++static struct nv2a_tex_pack_entry *lookup(uint64_t hash, uint32_t w, uint32_t h)
++{
++    struct nv2a_tex_pack_entry *entry = lookup_in(&s_overlay, hash, w, h);
++    return entry ? entry : lookup_in(&s_base, hash, w, h);
++}
++
+ struct nv2a_tex_pack_entry *nv2a_tex_pack_find(uint64_t hash, uint32_t guest_w,
+                                                uint32_t guest_h)
+ {
+@@ -332,7 +396,7 @@
+     e = lookup(hash, guest_w, guest_h);
+     if (!e || !(m & (1u << e->kind)))
+         return NULL;
+-    s_hits++;
++    __atomic_fetch_add(&s_base.hits, 1u, __ATOMIC_RELAXED);
+     return e;
+ }
+ 
+@@ -348,14 +412,14 @@
+     data = (uint32_t *)malloc(e->bytes);
+     if (!data)
+         return NULL;
+-    f = s_path ? fopen(s_path, "rb") : NULL;
++    f = e->source_path ? fopen(e->source_path, "rb") : NULL;
+     if (!f || pack_seek(f, e->offset) != 0 || fread(data, 1u, e->bytes, f) != e->bytes) {
+         /* Said for the first four failures only: the guest texels are
+          * uploaded instead, and the next upload tries again. */
+         static unsigned said;
+         if (said++ < 4)
+             fprintf(stderr, "[ENHANCE] textures.pack: cannot read entry %016llX from %s\n",
+-                    (unsigned long long)e->hash, s_path ? s_path : "?");
++                    (unsigned long long)e->hash, e->source_path ? e->source_path : "?");
+         if (f)
+             fclose(f);
+         free(data);
+--- a/src/kernel/nv2a_tex_pack.h
++++ b/src/kernel/nv2a_tex_pack.h
+@@ -64,6 +64,7 @@
+     size_t    bytes;          /* of the payload: texels * 4, or the BC3 blocks */
+     uint32_t  kind;           /* XRTP_KIND_* */
+     int       bc3;            /* payload is BC3 blocks */
++    const char *source_path; /* owning bank path; init/flip lifetime */
+     uint32_t *data;           /* read on first use; NULL until then */
+ };
+ 
+@@ -73,6 +74,11 @@
+  * load replaces the first. */
+ int nv2a_tex_pack_load(const char *path, char *err, size_t errlen);
+ void nv2a_tex_pack_unload(void);
++/* Initialization or walker flip only, after backend on_flip. Backends retain
++ * GPU copies, not entries/CPU payloads. Failed replacement preserves the old
++ * overlay. Success bumps gen so cached guest textures upload again. */
++int nv2a_tex_pack_overlay_load(const char *path, char *err, size_t errlen);
++void nv2a_tex_pack_overlay_clear(void);
+ 
+ unsigned nv2a_tex_pack_count(void);
+ unsigned nv2a_tex_pack_scale(void);
+@@ -89,7 +95,7 @@
+  * returns NULL for it, and the guest texture is uploaded as without a
+  * pack. Called at a flip (nv2a_host_opts_apply); a change of what matches
+  * bumps nv2a_tex_pack_gen(), and a texture uploaded under another
+- * generation is uploaded again. Unload is not offered at run time. */
++ * generation is uploaded again. The base pack stays fixed; use the flip-only overlay API for live skins. */
+ void nv2a_tex_pack_set_enabled(int on);
+ void nv2a_tex_pack_set_kind_enabled(uint32_t kind, int on);
+ uint32_t nv2a_tex_pack_gen(void);
