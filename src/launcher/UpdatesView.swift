@@ -28,23 +28,35 @@ final class UpdateModel: ObservableObject {
         do { try task.run() }
         catch { detail = error.localizedDescription; state = "error"; working = false; process = nil; return }
         Task.detached {
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            task.waitUntilExit()
-            let output = String(decoding: data, as: UTF8.self)
-            await MainActor.run {
-                var final: [String: Any]?
-                for line in output.split(separator: "\n") {
-                    if let row = try? JSONSerialization.jsonObject(with: Data(line.utf8)) as? [String: Any] { final = row }
+            var pending = Data(), transcript = ""
+            while true {
+                let chunk = pipe.fileHandleForReading.availableData
+                if chunk.isEmpty { break }
+                pending.append(chunk)
+                while let newline = pending.firstIndex(of: 10) {
+                    let line = Data(pending[..<newline])
+                    pending.removeSubrange(...newline)
+                    transcript = String((transcript + String(decoding: line, as: UTF8.self) + "\n").suffix(65536))
+                    if let row = try? JSONSerialization.jsonObject(with: line) as? [String: Any] {
+                        await MainActor.run {
+                            if let status = row["status"] as? String { self.state = status }
+                            if let message = row["message"] as? String { self.detail = message }
+                            if let tag = row["tag"] as? String { self.tag = tag }
+                            if let notes = row["notes"] as? String { self.notes = notes }
+                        }
+                    }
                 }
+            }
+            task.waitUntilExit()
+            let output = transcript
+            await MainActor.run {
                 self.working = false; self.process = nil
                 if task.terminationStatus != 0 {
-                    self.state = "error"; self.detail = final?["message"] as? String ?? output
-                } else if let final {
-                    self.state = final["status"] as? String ?? "error"
-                    self.tag = final["tag"] as? String
-                    self.notes = final["notes"] as? String ?? ""
-                    self.detail = final["message"] as? String ?? ""
-                } else { self.state = "error"; self.detail = output }
+                    self.state = "error"
+                    if self.detail.isEmpty { self.detail = output }
+                } else if !["available", "current", "complete"].contains(self.state) {
+                    self.state = "error"; self.detail = output
+                }
             }
         }
     }
@@ -62,11 +74,12 @@ struct UpdatesView: View {
         VStack(alignment: .leading, spacing: 18) {
             Label(tr("Mises à jour"), systemImage: "arrow.triangle.2.circlepath")
                 .font(.title2).foregroundStyle(.purple)
-            Text(tr("Le lanceur est mis à jour sans reconstruire le jeu. Vos sauvegardes et packs sont conservés."))
+            Text(tr("Le jeu est reconstruit automatiquement si nécessaire. Vos sauvegardes et packs sont conservés."))
                 .font(.callout)
             if updater.working {
                 ProgressView()
-                Text(tr(updater.state == "installing" ? "Installation du lanceur… Gardez cette fenêtre ouverte." : "Recherche d’une mise à jour…"))
+                Text(tr(updater.detail.isEmpty ? "Recherche d’une mise à jour…" : updater.detail))
+                    .fixedSize(horizontal: false, vertical: true)
             } else if updater.state == "current" {
                 Text(tr("Votre version est à jour."))
             } else if updater.state == "complete" {

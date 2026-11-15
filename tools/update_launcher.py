@@ -1,4 +1,4 @@
-"""Launcher-only source updates. Private/game/runtime files are never replaced."""
+"""Verified source updates with isolated game builds and transactional rollback."""
 import argparse
 import hashlib
 import json
@@ -6,6 +6,9 @@ import os
 from pathlib import Path
 import re
 import shutil
+import signal
+import fcntl
+from contextlib import contextmanager
 import subprocess
 import sys
 import tempfile
@@ -32,13 +35,15 @@ def digest(path):
 
 
 def version(text):
-    match=re.fullmatch(r'(\d+)\.(\d+)\.(\d+)(?:-alpha\.(\d+))?',text)
+    match=re.fullmatch(r'(\d+)\.(\d+)\.(\d+)(?:-(alpha|beta|rc)\.(\d+))?',text)
     if not match:raise ValueError('Unsupported version: '+text)
-    return tuple(int(v) if v is not None else 10**9 for v in match.groups())
+    major,minor,patch,stage,number=match.groups()
+    return (int(major),int(minor),int(patch),
+            {"alpha":0,"beta":1,"rc":2,None:3}[stage],int(number or 0))
 
 
 def safe_path(root,name):
-    if name not in (APP,MANIFEST):source_release.checked_path(name)
+    if name not in (APP,MANIFEST,*GAME_OUTPUTS):source_release.checked_path(name)
     p=Path(root)
     for part in Path(name).parts:
         p=p/part
@@ -62,6 +67,7 @@ def inventory(root):
     version(data['version'])
     if safe_path(root,'VERSION').read_text().strip()!=data['version']:raise ValueError('Version/manifest mismatch')
     for name,entry in data['files'].items():
+        source_release.checked_path(name)
         p=safe_path(root,name)
         if not p.is_file() or p.stat().st_size!=entry['bytes'] or digest(p)!=entry['sha256']:
             raise ValueError('Source file changed or missing; preserved: '+name)
@@ -77,7 +83,6 @@ def plan(source,target):
     names=set(old['files'])|set(new['files'])
     changed=[n for n in sorted(names) if old['files'].get(n)!=new['files'].get(n)]
     for name in changed:
-        if not launcher_only(name):raise ValueError('This update changes game/runtime inputs and requires a manual build: '+name)
         p=safe_path(target,name)
         if name not in old['files'] and p.exists():raise ValueError('Untracked local file preserved: '+name)
     app=safe_path(target,APP)
@@ -155,6 +160,112 @@ def build_launcher(source,log):
     if not (source/APP/'Contents/MacOS/BuffyLauncher').is_file():raise ValueError('Launcher build produced no executable')
 
 
+# Generated/build outputs installed as the same transaction as their source.
+GAME='build/game/buffy-macos'
+GAME_OUTPUTS=[GAME,'generated','vendor/xboxrecomp'] + [
+    'artifacts/pipeline-'+name+'.json' for name in ('inspect','disasm','identify','abi','recomp')]
+
+
+def run_build(argv,cwd,log):
+    """Every child stays in an owned process group; interruption stops descendants."""
+    with Path(log).open('a') as stream:
+        stream.write('\n$ '+repr([str(x) for x in argv])+'\n');stream.flush()
+        child=subprocess.Popen([str(x) for x in argv],cwd=cwd,stdout=stream,
+                               stderr=subprocess.STDOUT,start_new_session=True)
+        try:
+            if child.wait():raise ValueError('Update build failed. Existing installation preserved. Log: '+str(log))
+        except BaseException:
+            # The group belongs to this fresh child, even if its leader exited.
+            try:os.killpg(child.pid,signal.SIGTERM)
+            except ProcessLookupError:pass
+            try:child.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                try:os.killpg(child.pid,signal.SIGKILL)
+                except ProcessLookupError:pass
+                child.wait()
+            raise
+
+
+def runtime_state(folder):
+    diff=subprocess.check_output(['git','-C',str(folder),'diff','--binary','HEAD'])
+    names=subprocess.check_output(['git','-C',str(folder),'ls-files','-z','--others','--exclude-standard']).decode().split('\0')
+    extra=[]
+    for name in sorted(n for n in names if n):
+        path=folder/name
+        if path.is_symlink() or not path.is_file() or folder.resolve() not in path.resolve().parents:
+            raise ValueError('Unexpected runtime file preserved: '+name)
+        extra.append((name,digest(path),path.stat().st_mode&0o111))
+    return diff,extra
+
+
+def prepare_runtime(stage,target,log):
+    """Validate the existing patched pin, then build from an independent checkout."""
+    old=json.loads((target/'dependencies.lock.json').read_text())['xboxrecomp']
+    new=json.loads((stage/'dependencies.lock.json').read_text())['xboxrecomp']
+    if old['path']!='vendor/xboxrecomp' or new['path']!=old['path']:
+        raise ValueError('Unsupported runtime destination')
+    live=safe_path(target,'vendor/xboxrecomp');vendor=stage/new['path']
+    actual=subprocess.check_output(['git','-C',str(live),'rev-parse','HEAD'],text=True).strip()
+    if actual!=old['revision']:raise ValueError('Locally changed runtime revision preserved; manual review required')
+    vendor.parent.mkdir(parents=True,exist_ok=True)
+    run_build(['git','clone','--no-hardlinks','--no-checkout','--',live,vendor],stage,log)
+    run_build(['git','-C',vendor,'checkout','--quiet','--detach',actual],stage,log)
+    for name in old['runtime_patches']:
+        run_build(['git','-C',vendor,'apply',safe_path(target,name)],stage,log)
+    if runtime_state(live)!=runtime_state(vendor):raise ValueError('Locally edited runtime preserved; manual review required')
+    # This reset affects only the new isolated clone, never the installed runtime.
+    extras=runtime_state(vendor)[1]
+    run_build(['git','-C',vendor,'reset','--hard','HEAD'],stage,log)
+    for name,_,_ in extras:(vendor/name).unlink()
+    run_build(['git','-C',vendor,'remote','set-url','origin',new['repository']],stage,log)
+    known=subprocess.run(['git','-C',str(vendor),'cat-file','-e',new['revision']+'^{commit}'],capture_output=True)
+    if known.returncode:
+        run_build(['git','-C',vendor,'fetch','--depth','1','origin',new['revision']],stage,log)
+    run_build(['git','-C',vendor,'checkout','--quiet','--detach',new['revision']],stage,log)
+
+
+def build_game_update(stage,log,target):
+    """Build beside the installation. Only the imported game is shared read-only."""
+    if sys.platform!='darwin' or os.uname().machine!='arm64':
+        raise ValueError('Automatic game builds require macOS Apple Silicon')
+    if shutil.disk_usage(stage).free<30*1024**3:
+        raise ValueError('Allow at least 30 GiB free for the isolated game build')
+    game=target/'private/game'
+    if game.is_symlink() or game.parent.is_symlink():raise ValueError('Symbolic game import refused')
+    title=json.loads((stage/'config/title.json').read_text())
+    for name,expected in [('Default.xbe',title['xbe_sha256']),('final.map',title['symbols']['map_sha256'])]:
+        path=game/name
+        if path.is_symlink() or not path.is_file() or digest(path)!=expected:
+            raise ValueError('Existing game input is missing or incompatible: '+name)
+    cache=target/'build/game/CMakeCache.txt'
+    if cache.is_symlink() or 'XBOXRECOMP_ENHANCE:BOOL=ON' not in cache.read_text():
+        raise ValueError('Installed game build configuration is missing or incompatible')
+    python=shutil.which('python3.12')
+    if not python and Path('/opt/homebrew/bin/python3.12').is_file():python='/opt/homebrew/bin/python3.12'
+    if not python:raise ValueError('Python 3.12 is required; see docs/SETUP.md')
+    (stage/'private').mkdir();(stage/'private/game').symlink_to(game,target_is_directory=True)
+    (stage/'artifacts').mkdir(exist_ok=True)
+    emit(status='building-game',message='Preparing the isolated runtime and build tools…')
+    prepare_runtime(stage,target,log)
+    run_build([sys.executable,stage/'tools/bootstrap_runtime.py','--apply-patches'],stage,log)
+    # Keep this environment at its stable work path, not in the installed .venv.
+    tools=stage.parent/'python';run_build([python,'-m','venv',tools],stage,log)
+    interpreter=tools/'bin/python'
+    run_build([interpreter,'-m','pip','install','--disable-pip-version-check','-r',stage/'requirements-toolkit.txt'],stage,log)
+    emit(status='building-game',message='Generating game code from your existing import…')
+    run_build([interpreter,stage/'tools/pipeline.py'],stage,log)
+    emit(status='building-game',message='Compiling the game locally. This may take several minutes…')
+    run_build(['make','game-build','TOOLKIT_PYTHON=../python/bin/python'],stage,log)
+    binary=stage/GAME
+    if not binary.is_file() or not os.access(binary,os.X_OK):raise ValueError('Game build produced no executable')
+    built_cache=(stage/'build/game/CMakeCache.txt').read_text()
+    if 'XBOXRECOMP_ENHANCE:BOOL=ON' not in built_cache:raise ValueError('Game build omitted required graphics settings')
+    record=json.loads((stage/'artifacts/pipeline-recomp.json').read_text())
+    if record['returncode'] or record['xbe_sha256']!=title['xbe_sha256']:
+        raise ValueError('Generated game provenance differs from the supported import')
+    run_build(['codesign','--force','--sign','-',binary],stage,log)
+
+
 def write_journal(path,data):
     temp=path.with_suffix('.tmp')
     with temp.open('w') as f:
@@ -183,10 +294,30 @@ def game_closed():
         raise ValueError('Close the game before updating.')
 
 
-def install(source,target,builder=build_launcher):
+@contextmanager
+def session_gate(target):
+    private=target/'private'
+    if private.is_symlink():raise ValueError('Symbolic private directory refused')
+    private.mkdir(exist_ok=True)
+    path=private/'hdd-storage.lock'
+    if path.is_symlink():raise ValueError('Symbolic session lock refused')
+    with path.open('a') as handle:
+        try:fcntl.flock(handle,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        except BlockingIOError:raise ValueError('Close the game and wait for other maintenance before updating') from None
+        yield
+
+
+def install(source,target,builder=build_launcher,game_builder=build_game_update):
+    with session_gate(Path(target).resolve()):
+        return _install(source,target,builder,game_builder)
+
+
+def _install(source,target,builder=build_launcher,game_builder=build_game_update):
     source=Path(source).resolve();target=Path(target).resolve()
     new,old,changed=plan(source,target)
     game_closed()
+    rebuild=any(not launcher_only(name) for name in changed)
+    original_game=digest(safe_path(target,GAME)) if rebuild else None
     # One updater at a time; the lock is deliberately retained after a hard kill.
     artifacts=target/'artifacts'
     if artifacts.is_symlink():raise ValueError('Symbolic artifacts folder refused')
@@ -204,12 +335,19 @@ def install(source,target,builder=build_launcher):
         for name in new['files']:
             dst=safe_path(stage,name);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(safe_path(source,name),dst)
         shutil.copy2(source/MANIFEST,stage/MANIFEST)
-        emit(status='building',message='Building the launcher only. Your game and HD pack are reused.')
+        if rebuild:game_builder(stage,work/'game-build.log',target)
+        emit(status='building',message='Building the launcher. Your saves and HD pack are kept.')
         builder(stage,work/'build.log')
         # Revalidate after the build: do not overwrite edits made while it ran.
         plan(source,target)
         game_closed()
-        names=changed+[MANIFEST,APP]
+        if rebuild and digest(safe_path(target,GAME))!=original_game:
+            raise ValueError('Installed game changed during the build; preserving it')
+        names=changed+[MANIFEST,APP]+(GAME_OUTPUTS if rebuild else [])
+        if rebuild:
+            for name in GAME_OUTPUTS:
+                if not safe_path(stage,name).exists():raise ValueError('Missing staged game output: '+name)
+        emit(status='installing',message='Installing the verified update…')
         journal['existed']=[n for n in names if safe_path(target,n).exists()]
         journal['state']='installing';write_journal(work/'journal.json',journal)
         for name in names:
@@ -232,6 +370,10 @@ def install(source,target,builder=build_launcher):
 
 
 def recover(target):
+    with session_gate(Path(target).resolve()):return _recover(target)
+
+
+def _recover(target):
     target=Path(target).resolve();lock=target/'artifacts/launcher-update.lock'
     if lock.is_symlink() or lock.parent.is_symlink():raise ValueError('Symbolic update state refused')
     pid=int((lock/'pid').read_text())

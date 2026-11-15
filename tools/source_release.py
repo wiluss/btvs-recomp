@@ -28,7 +28,7 @@ APPROVED_IMAGES=BRANDING_FILES|SCREENSHOT_PNGS
 BLOCKED_DIRS={'.git','.venv','private','generated','build','artifacts','logs','__pycache__','vendor'}
 BLOCKED_SUFFIXES={'.iso','.xiso','.xbe','.map','.ses','.img','.xrtp','.png','.jpg','.jpeg','.bmp',
                   '.ttf','.otf','.icns','.gguf','.safetensors','.mlmodel','.log','.dylib','.a','.o','.pyc','.zip'}
-ALLOWED_SUFFIXES={'.md','.txt','.json','.py','.c','.h','.swift','.sh','.patch','.yml','.yaml'}
+ALLOWED_SUFFIXES={'.md','.txt','.json','.py','.c','.h','.swift','.m','.sh','.patch','.yml','.yaml'}
 LOCAL_HOME=str(Path.home()).rstrip('/')+'/'
 SECRET=re.compile(r'(?:gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{32,})')
 
